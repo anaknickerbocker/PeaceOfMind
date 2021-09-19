@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Message } from '@peace-of-mind/api-interfaces';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import Preferences from './components/Preferences';
+import Login from './components/Login/Login';
 
 export const App = () => {
-  const [m, setMessage] = useState<Message>({ message: '' });
+  const [token, setToken] = useState('');
 
-  useEffect(() => {
-    fetch('/api')
-      .then((r) => r.json())
-      .then(setMessage);
-  }, []);
+  if (!token) {
+    return <Login setToken={setToken} />;
+  }
 
   return (
     <>
@@ -20,7 +22,19 @@ export const App = () => {
           alt="Nx - Smart, Extensible Build Framework"
         />
       </div>
-      <div>{m.message}</div>
+      <div className="wrapper">
+        <h1>Application</h1>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/dashboard">
+              <Dashboard />
+            </Route>
+            <Route path="/preferences">
+              <Preferences />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </div>
     </>
   );
 };
