@@ -15,17 +15,13 @@ const CLIENT_BUILD_PATH = path.join(__dirname, '../peace-of-mind');
 app.use(express.static(CLIENT_BUILD_PATH));
 // const greeting: Message = { message: 'Welcome to api!' };
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(CLIENT_BUILD_PATH, '/index.html'));
+app.get('/api', async (req, res) => {
+  const allUsers = await prisma.users.findMany({});
+  res.send(allUsers);
 });
 
-app.get('/api', async (req, res) => {
-  try {
-    const allUsers = await prisma.users.findMany({});
-    res.send(allUsers);
-  } finally {
-    res.send('No data');
-  }
+app.get('*', (req, res) => {
+  res.sendFile(path.join(CLIENT_BUILD_PATH, '/index.html'));
 });
 
 const port = process.env.PORT || 3333;
