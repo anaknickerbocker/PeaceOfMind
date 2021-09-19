@@ -2,8 +2,12 @@ import * as express from 'express';
 // import { Message } from '@peace-of-mind/api-interfaces';
 import { PrismaClient } from '@prisma/client';
 import * as path from 'path';
-// import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 // import router from './routes/router';
+
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 const prisma = new PrismaClient();
 const app = express();
@@ -16,11 +20,15 @@ app.get('*', (req, res) => {
 });
 
 app.get('/api', async (req, res) => {
-  const allUsers = await prisma.users.findMany({});
-  res.send(allUsers);
+  try {
+    const allUsers = await prisma.users.findMany({});
+    res.send(allUsers);
+  } finally {
+    res.send('No data');
+  }
 });
 
-const port = process.env.port || 3333;
+const port = process.env.PORT || 3333;
 const server = app.listen(port, () => {
   console.log('Listening at http://localhost:' + port);
 });
