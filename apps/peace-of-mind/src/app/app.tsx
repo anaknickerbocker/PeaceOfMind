@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Message } from '@peace-of-mind/api-interfaces';
+// import { Message } from '@peace-of-mind/api-interfaces';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import Preferences from './components/Preferences';
@@ -7,16 +7,8 @@ import Login from './components/Login/Login';
 
 export const App = () => {
   const [token, setToken] = useState('');
-  const [m, setMessage] = useState<Message>({ message: '' });
-
-  useEffect(() => {
-    fetch('/api')
-      .then((r) => r.json())
-      .then(setMessage);
-  }, []);
 
   if (!token) {
-    console.log('m.message :>> ', m.message);
     return <Login setToken={setToken} />;
   }
 
