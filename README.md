@@ -11,6 +11,10 @@ PORT="3333"
 
 _Ask Ana for the DB_URL._
 
+Documentation on how to query the database: https://rethinkdb.com/docs/cookbook/javascript/
+
+You can run queries against the database in your browser by going to: http://{DB_URL}:8080/#dataexplorer
+
 Run:
 
 `npm install`
