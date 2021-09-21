@@ -20,6 +20,12 @@ app.use(cors());
 const CLIENT_BUILD_PATH = path.join(__dirname, '../peace-of-mind');
 app.use(express.static(CLIENT_BUILD_PATH));
 
+app.use('/api/login', (req, res) => {
+  res.send({
+    token: 'test123',
+  });
+});
+
 app.use('/api/users', users);
 app.use('/api/users/*/tasks', tasks);
 
