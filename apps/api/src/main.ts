@@ -20,8 +20,8 @@ app.use(cors());
 const CLIENT_BUILD_PATH = path.join(__dirname, '../peace-of-mind');
 app.use(express.static(CLIENT_BUILD_PATH));
 
-app.use('/users', users);
-app.use('/users/*/tasks', tasks);
+app.use('/api/users', users);
+app.use('/api/users/*/tasks', tasks);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(CLIENT_BUILD_PATH, '/index.html'));
