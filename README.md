@@ -1,6 +1,8 @@
 # PeaceOfMind
 
-## Run Locally
+## Pre-Requisites
+
+Run `npm install`
 
 Create a `.env` file in the root directory with the following variables:
 
@@ -13,11 +15,9 @@ _Ask Ana for the DB_URL._
 
 Documentation on how to query the database: https://rethinkdb.com/docs/cookbook/javascript/
 
-You can run queries against the database in your browser by going to: http://{DB_URL}:8080/#dataexplorer
+You can run queries against the database in your browser by going to: `http://{DB_URL}:8080/#dataexplorer`
 
-Run:
-
-`npm install`
+## Start the servers locally
 
 `nx serve peace-of-mind`
 
