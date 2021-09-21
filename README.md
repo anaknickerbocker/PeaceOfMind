@@ -13,15 +13,21 @@ PORT="3333"
 
 _Ask Ana for the DB_URL._
 
+Run `npm install -g nx`
+
 Documentation on how to query the database: https://rethinkdb.com/docs/cookbook/javascript/
 
 You can run queries against the database in your browser by going to: `http://{DB_URL}:8080/#dataexplorer`
 
 ## Start the servers locally
 
+`nx build peace-of-mind`
+
 `nx serve peace-of-mind`
 
 Then in a separate terminal, run:
+
+`nx build api`
 
 `nx serve api`
 
