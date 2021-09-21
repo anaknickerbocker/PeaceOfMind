@@ -1,7 +1,7 @@
 {
   "npmScope": "peace-of-mind",
   "affected": {
-    "defaultBase": "master"
+    "defaultBase": "main"
   },
   "implicitDependencies": {
     "package.json": {
@@ -14,7 +14,12 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ]
       }
     }
   },
@@ -38,7 +43,9 @@
     },
     "peace-of-mind-e2e": {
       "tags": [],
-      "implicitDependencies": ["peace-of-mind"]
+      "implicitDependencies": [
+        "peace-of-mind"
+      ]
     }
   }
 }
