@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 // import { Message } from '@peace-of-mind/api-interfaces';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Dashboard from './components/Dashboard';
-import Preferences from './components/Preferences';
+import Profile from './components/Profile';
+import Reminders from './components/Reminders';
+import Home from './components/Home';
 import Login from './components/Login/Login';
 import useToken from './components/useToken';
+import HeaderLink from './components/Header'
 
 export const App = () => {
   const { token, setToken } = useToken();
@@ -15,14 +17,21 @@ export const App = () => {
 
   return (
     <div className="wrapper">
-      <h1>Application</h1>
       <BrowserRouter>
+        <HeaderLink />
+        <h1 style={{textAlign: "center" }}> PEACE OF MIND </h1>
         <Switch>
-          <Route path="/dashboard">
-            <Dashboard />
+          <Route exact path="/">
+            <Home />
           </Route>
-          <Route path="/preferences">
-            <Preferences />
+          <Route path="/home">
+            <Home />
+          </Route>
+          <Route path="/profile">
+            <Profile /> 
+          </Route>
+          <Route path="/reminders">
+            <Reminders />
           </Route>
         </Switch>
       </BrowserRouter>
