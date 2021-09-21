@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function useToken() {
+const useToken = () => {
   const getToken = () => {
     const tokenString = sessionStorage.getItem('token');
     const userToken = tokenString ? JSON.parse(tokenString) : undefined;
@@ -21,4 +21,6 @@ export default function useToken() {
     setToken: saveToken,
     token,
   };
-}
+};
+
+export default useToken;

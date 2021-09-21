@@ -5,8 +5,9 @@ import Dashboard from './components/Dashboard';
 import Preferences from './components/Preferences';
 import Login from './components/Login/Login';
 import useToken from './components/useToken';
+import DarkMode from './components/DarkMode';
 
-export const App = () => {
+const App = () => {
   const { token, setToken } = useToken();
 
   if (!token) {
@@ -15,6 +16,7 @@ export const App = () => {
 
   return (
     <div className="wrapper">
+      <DarkMode />
       <h1>Application</h1>
       <BrowserRouter>
         <Switch>
