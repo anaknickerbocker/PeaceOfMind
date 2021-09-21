@@ -1,24 +1,27 @@
-import * as express from 'express';
-// import { Message } from '@peace-of-mind/api-interfaces';
-import { PrismaClient } from '@prisma/client';
-import * as path from 'path';
-import * as dotenv from 'dotenv';
-// import router from './routes/router';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
+import path from 'path';
+import tasks from './app/routes/tasks';
+import users from './app/routes/users';
+import DataService from './app/services/DataService';
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
 }
 
-const prisma = new PrismaClient();
 const app = express();
+app.set('dataService', new DataService());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cors());
+
 const CLIENT_BUILD_PATH = path.join(__dirname, '../peace-of-mind');
 app.use(express.static(CLIENT_BUILD_PATH));
-// const greeting: Message = { message: 'Welcome to api!' };
 
-app.get('/api', async (req, res) => {
-  const allUsers = await prisma.users.findMany({});
-  res.send(allUsers);
-});
+app.use('/users', users);
+app.use('/users/*/tasks', tasks);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(CLIENT_BUILD_PATH, '/index.html'));

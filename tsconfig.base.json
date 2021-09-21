@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@peace-of-mind/api-interfaces": ["libs/api-interfaces/src/index.ts"]
-    }
+    },
+    "esModuleInterop": true
   },
   "exclude": ["node_modules", "tmp"]
 }
