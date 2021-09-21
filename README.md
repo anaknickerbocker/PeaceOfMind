@@ -1,5 +1,65 @@
 # PeaceOfMind
 
+## Run Locally
+
+Create a `.env` file in the root directory with the following variables:
+
+```
+DB_URL=
+PORT="3333"
+```
+
+_Ask Ana for the DB_URL._
+
+Run:
+`npm install`
+`nx serve peace-of-mind`
+
+Then in a separate terminal, run:
+`nx serve api`
+
+Navigate to `http://localhost:3333` to see the app in the browser.
+
+Access the API via: `http://localhost:3333/api`
+
+## Deployed
+
+See the deployed app: <https://peace-of-mind.herokuapp.com/>
+
+## API Endpoints
+
+- GET `/api/users`
+- GET `/api/users/{userId}`
+- POST `/api/users`
+
+  - Body:
+
+    ```
+    {
+        "name": "",
+        "smsPhoneNumber": "",
+        "voicePhoneNumber": "",
+        "email": ""
+    }
+    ```
+
+- PATCH `/api/users/{userId}`
+
+  - Body:
+
+    ```
+    {
+        "name": "",
+        "smsPhoneNumber": "",
+        "voicePhoneNumber": "",
+        "email": ""
+    }
+    ```
+
+- DELETE `/api/users/{userId}`
+
+## Nx
+
 This project was generated using [Nx](https://nx.dev).
 
 <p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
@@ -47,7 +107,7 @@ Libraries are shareable across libraries and applications. They can be imported 
 
 ## Development server
 
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+Run `nx serve my-app` for a dev server. Navigate to <http://localhost:4200/>. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -76,8 +136,6 @@ Run `nx dep-graph` to see a diagram of the dependencies of your projects.
 ## Further help
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-
 
 ## ☁ Nx Cloud
 
