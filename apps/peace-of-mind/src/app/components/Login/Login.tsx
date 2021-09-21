@@ -2,7 +2,10 @@ import React, { FormEvent, useState } from 'react';
 import './Login.css';
 import PropTypes from 'prop-types';
 
-async function loginUser(credentials: { username: string; password: string }) {
+const loginUser = async (credentials: {
+  username: string;
+  password: string;
+}) => {
   return fetch('/api/login', {
     method: 'POST',
     headers: {
@@ -10,11 +13,9 @@ async function loginUser(credentials: { username: string; password: string }) {
     },
     body: JSON.stringify(credentials),
   }).then((data) => data.json());
-}
+};
 
-export default function Login(props: {
-  setToken: (userToken: { token: string }) => void;
-}) {
+const Login = (props: { setToken: (userToken: { token: string }) => void }) => {
   const [username, setUserName] = useState<string | undefined>();
   const [password, setPassword] = useState<string | undefined>();
 
@@ -50,8 +51,10 @@ export default function Login(props: {
       </form>
     </div>
   );
-}
+};
 
 Login.propTypes = {
   setToken: PropTypes.func.isRequired,
 };
+
+export default Login;

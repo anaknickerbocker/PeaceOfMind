@@ -7,8 +7,9 @@ import Home from './components/Home';
 import Login from './components/Login/Login';
 import useToken from './components/useToken';
 import HeaderLink from './components/Header'
+import DarkMode from './components/DarkMode';
 
-export const App = () => {
+const App = () => {
   const { token, setToken } = useToken();
 
   if (!token) {
@@ -17,6 +18,7 @@ export const App = () => {
 
   return (
     <div className="wrapper">
+      <DarkMode />
       <BrowserRouter>
         <HeaderLink />
         <h1 style={{textAlign: "center" }}> PEACE OF MIND </h1>
