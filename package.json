@@ -9,7 +9,6 @@
   },
   "private": true,
   "dependencies": {
-    "@prisma/client": "^3.0.2",
     "body-parser": "^1.19.0",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
