@@ -12,10 +12,13 @@ PORT="3333"
 _Ask Ana for the DB_URL._
 
 Run:
+
 `npm install`
+
 `nx serve peace-of-mind`
 
 Then in a separate terminal, run:
+
 `nx serve api`
 
 Navigate to `http://localhost:3333` to see the app in the browser.
