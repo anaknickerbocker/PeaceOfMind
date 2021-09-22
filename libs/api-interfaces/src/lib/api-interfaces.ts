@@ -1,5 +1,5 @@
 export interface User {
-  id: string;
+  id: string; // userId in other tables
   name: string;
   sms: string;
   voice: string;
@@ -7,15 +7,24 @@ export interface User {
 }
 
 export interface Tasks {
-  id: string;
-  user_id: string;
+  id: string; // taskId in other tables
+  userId: string;
   description: string;
-  nextNotification: Date;
+  taskDateTime: string; // datetime
+  recurring: boolean;
+}
+
+export interface Alerts {
+  id: string; // alertId in other tables
+  taskId: string;
+  userId: string;
+  alertDue: string; // datetime
 }
 
 export interface AlertsHistory {
   id: string;
-  task_id: string;
-  user_id: string;
-  alertSent: Date;
+  taskId: string;
+  userId: string;
+  alertId: string;
+  alertSent: string; // datetime
 }
