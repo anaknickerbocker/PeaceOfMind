@@ -20,6 +20,8 @@ export interface Alert {
   userId: string;
   alertDue: string; // datetime
   alertType: 'sms' | 'voice' | 'email';
+  alertDestination: string; // phone number or email
+  description: string;
 }
 
 export interface AlertHistory {
@@ -27,5 +29,6 @@ export interface AlertHistory {
   taskId: string;
   userId: string;
   alertId: string;
+  alertType: 'sms' | 'voice' | 'email';
   alertSent: string; // datetime
 }
