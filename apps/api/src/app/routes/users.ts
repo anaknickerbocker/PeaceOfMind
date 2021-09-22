@@ -3,14 +3,12 @@ import UsersService from '../services/UsersService';
 
 const users = express.Router();
 
-users.post('/', (req, res) => {
-  const dataService = req.app.get('dataService');
+users.post('/', async (req, res) => {
   try {
-    UsersService.createUser(
-      dataService.connection,
+    const result = await UsersService.createUser(
       req.body.name,
-      req.body.smsPhoneNumber || '',
-      req.body.voicePhoneNumber || '',
+      req.body.sms || '',
+      req.body.voice || '',
       req.body.email || ''
     );
     res.status(200);
@@ -20,9 +18,8 @@ users.post('/', (req, res) => {
 });
 
 users.get('/', async (req, res) => {
-  const dataService = req.app.get('dataService');
   try {
-    const result = await UsersService.getAllUsers(dataService.connection);
+    const result = await UsersService.getAllUsers();
     res.json(result);
   } catch {
     res.status(401);
@@ -30,12 +27,8 @@ users.get('/', async (req, res) => {
 });
 
 users.get('/:userId', async (req, res) => {
-  const dataService = req.app.get('dataService');
   try {
-    const result = await UsersService.getUser(
-      dataService.connection,
-      req.params.userId
-    );
+    const result = await UsersService.getUser(req.params.userId);
     res.json(result);
   } catch {
     res.status(401);
@@ -43,19 +36,14 @@ users.get('/:userId', async (req, res) => {
 });
 
 users.patch('/:userId', async (req, res) => {
-  const dataService = req.app.get('dataService');
   const changes = {
     name: req.body.name,
-    smsPhoneNumber: req.body.smsPhoneNumber || '',
-    voicePhoneNumber: req.body.voicePhoneNumber || '',
+    sms: req.body.sms || '',
+    voice: req.body.voice || '',
     email: req.body.email || '',
   };
   try {
-    const result = await UsersService.updateUser(
-      dataService.connection,
-      req.params.userId,
-      changes
-    );
+    const result = await UsersService.updateUser(req.params.userId, changes);
     res.json(result);
   } catch {
     res.status(401);
@@ -63,12 +51,8 @@ users.patch('/:userId', async (req, res) => {
 });
 
 users.delete('/:userId', async (req, res) => {
-  const dataService = req.app.get('dataService');
   try {
-    const result = await UsersService.deleteUser(
-      dataService.connection,
-      req.params.userId
-    );
+    const result = await UsersService.deleteUser(req.params.userId);
     res.json(result);
   } catch {
     res.status(401);

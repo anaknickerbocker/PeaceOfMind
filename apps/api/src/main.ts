@@ -5,14 +5,14 @@ import express from 'express';
 import path from 'path';
 import tasks from './app/routes/tasks';
 import users from './app/routes/users';
-import DataService from './app/services/DataService';
+import CronService from './app/services/CronService';
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
 }
 
 const app = express();
-app.set('dataService', new DataService());
+new CronService();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());

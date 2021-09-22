@@ -1,52 +1,33 @@
-import r from 'rethinkdb';
+import DataService from './DataService';
 
 export default class UsersService {
-  static createUser(
-    connection: r.Connection,
-    name: string,
-    smsPhoneNumber: string,
-    voicePhoneNumber: string,
-    email: string
-  ) {
-    return r
-      .table('users')
-      .insert({
-        name,
-        smsPhoneNumber,
-        voicePhoneNumber,
-        email,
-      })
-      .run(connection);
+  private static dataService = DataService.getInstance();
+
+  static createUser(name: string, sms: string, voice: string, email: string) {
+    return this.dataService.createUser(name, sms, voice, email);
   }
 
-  static async getAllUsers(connection: r.Connection) {
-    const cursor = await r.table('users').run(connection);
-    const result = cursor.toArray();
-    return result;
+  static async getAllUsers() {
+    return this.dataService.getAllUsers();
   }
 
-  static getUser(connection: r.Connection, userId: string) {
-    return r.table('users').get(userId).run(connection);
+  static getUser(userId: string) {
+    return this.dataService.getUser(userId);
   }
 
   static updateUser(
-    connection: r.Connection,
     userId: string,
     changes: {
       name: string;
-      smsPhoneNumber: string;
-      voicePhoneNumber: string;
+      sms: string;
+      voice: string;
       email: string;
     }
   ) {
-    return r
-      .table('users')
-      .get(userId)
-      .update({ ...changes })
-      .run(connection);
+    return this.dataService.updateUser(userId, changes);
   }
 
-  static deleteUser(connection: r.Connection, userId: string) {
-    return r.table('users').get(userId).delete().run(connection);
+  static deleteUser(userId: string) {
+    return this.dataService.deleteUser(userId);
   }
 }
