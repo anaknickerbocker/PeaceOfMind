@@ -15,7 +15,7 @@ _Ask Ana for the DB_URL._
 
 Run `npm install -g nx`
 
-Documentation on how to query the database: https://rethinkdb.com/docs/cookbook/javascript/
+Documentation on how to query the database: <https://rethinkdb.com/docs/cookbook/javascript/>
 
 You can run queries against the database in your browser by going to: `http://{DB_URL}:8080/#dataexplorer`
 
@@ -47,12 +47,12 @@ See the deployed app: <https://peace-of-mind.herokuapp.com/>
 
   - Body:
 
-    ```
+    ```json
     {
-        "name": "",
-        "smsPhoneNumber": "",
-        "voicePhoneNumber": "",
-        "email": ""
+      "name": "",
+      "sms": "",
+      "voice": "",
+      "email": ""
     }
     ```
 
@@ -60,12 +60,12 @@ See the deployed app: <https://peace-of-mind.herokuapp.com/>
 
   - Body:
 
-    ```
+    ```json
     {
-        "name": "",
-        "smsPhoneNumber": "",
-        "voicePhoneNumber": "",
-        "email": ""
+      "name": "",
+      "sms": "",
+      "voice": "",
+      "email": ""
     }
     ```
 

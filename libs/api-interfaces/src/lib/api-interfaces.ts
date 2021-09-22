@@ -1,28 +1,29 @@
 export interface User {
-  id: string; // userId in other tables
+  userId: string;
   name: string;
-  sms: string;
-  voice: string;
-  email: string;
+  sms?: string;
+  voice?: string;
+  email?: string;
 }
 
-export interface Tasks {
-  id: string; // taskId in other tables
+export interface Task {
+  taskId: string;
   userId: string;
   description: string;
   taskDateTime: string; // datetime
   recurring: boolean;
 }
 
-export interface Alerts {
-  id: string; // alertId in other tables
+export interface Alert {
+  alertId: string;
   taskId: string;
   userId: string;
   alertDue: string; // datetime
+  alertType: 'sms' | 'voice' | 'email';
 }
 
-export interface AlertsHistory {
-  id: string;
+export interface AlertHistory {
+  alertHistoryId: string;
   taskId: string;
   userId: string;
   alertId: string;
