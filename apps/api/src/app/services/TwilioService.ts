@@ -21,19 +21,13 @@ export default class TwilioService {
     return TwilioService.instance;
   }
 
-  sendMessage(smsNotificationNumber: string) {
+  sendSms(smsNotificationNumber: string, description: string) {
     this.client.messages
       .create({
         from: this.twilioNumber,
         to: smsNotificationNumber,
-        body: 'You just sent an SMS from TypeScript using Twilio!',
+        body: description,
       })
       .then((message) => console.log(message.sid));
-  }
-
-  async sendAlerts() {
-    console.log('Cron job running every minute');
-    const alerts = await this.dataService.getAlertsDueNow();
-    console.log(alerts);
   }
 }

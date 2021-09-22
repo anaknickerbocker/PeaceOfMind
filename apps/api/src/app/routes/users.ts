@@ -11,7 +11,7 @@ users.post('/', async (req, res) => {
       req.body.voice || '',
       req.body.email || ''
     );
-    res.status(200);
+    res.json(result);
   } catch {
     res.status(401);
   }

@@ -1,11 +1,9 @@
-import { User } from '@peace-of-mind/api-interfaces';
+import { Alert, User } from '@peace-of-mind/api-interfaces';
 import r, { Cursor } from 'rethinkdb';
-// import TwilioService from './TwilioService';
 
 export default class DataService {
   private static instance: DataService;
   private connection: r.Connection;
-  // private twilioService = TwilioService.getInstance();
 
   private constructor() {
     r.connect({ host: process.env.DB_URL, port: 28015 }, (err, conn) => {
@@ -57,22 +55,12 @@ export default class DataService {
   async getAlertsDueNow() {
     const cursor: Cursor = await r
       .table('alerts')
-      .filter((alert) =>
-        alert('alertDue')
-          .gt(r.now())
-          .and(alert('alertDue').lt(r.now().add(60)))
+      .filter(
+        (alert) => alert('alertDue').lt(r.now())
+        // .gt(r.now())
+        // .and(alert('alertDue').lt(r.now().add(60)))
       )
       .run(this.connection);
     return cursor.toArray();
   }
-
-  // async getAlertDestination(alertsDueNow: Alerts) {
-  //   alertsDueNow.forEach(async (alert) => {
-  //     const user: User = (await r
-  //       .table('users')
-  //       .get(`${alert.userId}`)
-  //       .run(this.connection)) as User;
-  //     this.twilioService.sendMessage(user.sms);
-  //   });
-  // }
 }

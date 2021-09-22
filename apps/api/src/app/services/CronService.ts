@@ -1,14 +1,13 @@
 import cron from 'cron';
-import TwilioService from './TwilioService';
+import AlertsService from './AlertsService';
 
 export default class CronService {
-  private twilioService: TwilioService;
-
+  private alertsService: AlertsService;
   constructor() {
-    this.twilioService = TwilioService.getInstance();
+    this.alertsService = AlertsService.getInstance();
     new cron.CronJob(
       '* * * * *',
-      () => this.twilioService.sendAlerts(),
+      () => this.alertsService.sendSms(),
       null,
       true,
       ''
