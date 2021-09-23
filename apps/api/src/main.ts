@@ -27,7 +27,14 @@ app.use('/api/login', (req, res) => {
 });
 
 app.use('/api/users', users);
-app.use('/api/users/*/tasks', tasks);
+app.use(
+  '/api/users/:userId/tasks',
+  (req, res, next) => {
+    req.body.userId = req.params.userId;
+    next();
+  },
+  tasks
+);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(CLIENT_BUILD_PATH, '/index.html'));

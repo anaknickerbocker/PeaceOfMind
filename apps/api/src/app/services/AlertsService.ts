@@ -1,5 +1,6 @@
 import TwilioService from './TwilioService';
 import DataService from './DataService';
+import { Alert } from '@peace-of-mind/api-interfaces';
 
 export default class AlertsService {
   private static instance: AlertsService;
@@ -17,16 +18,38 @@ export default class AlertsService {
     return AlertsService.instance;
   }
 
-  async sendSms() {
+  async sendAlerts() {
     console.log('Cron job running every minute');
+
+    // Get alerts due now
     const alerts = await this.dataService.getAlertsDueNow();
     console.log(alerts);
-    alerts.forEach((alert) => {
-      this.twilioService.sendSms(alert.alertDestination, alert.description);
-    });
+
+    // Send the alerts
+    // TODO: Split the alerts by sms/voice/email
+    // await this.sendSms(alerts);
+
+    // TODO: Add alerts to the alertsHistory table
+
+    // TODO: Delete the alerts from the alerts table
   }
 
-  async sendVoice() {}
+  async sendSms(smsAlerts: Array<Alert>): Promise<void> {
+    await Promise.allSettled(
+      smsAlerts.map((alert) =>
+        this.twilioService.sendSms(alert.alertDestination, alert.description)
+      )
+    );
+  }
 
-  async sendEmail() {}
+  async sendVoice(voiceAlerts: Array<Alert>): Promise<void> {
+    await Promise.allSettled(
+      voiceAlerts.map((alert) =>
+        this.twilioService.sendVoice(alert.alertDestination, alert.description)
+      )
+    );
+  }
+
+  // TODO: create a Sendgrid Service for emails
+  async sendEmail(emailAlerts: Array<Alert>): Promise<void> {}
 }

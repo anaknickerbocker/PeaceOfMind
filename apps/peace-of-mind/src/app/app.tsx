@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
-// import { Message } from '@peace-of-mind/api-interfaces';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Profile from './components/Profile';
-import Reminders from './components/Reminders';
+import DarkMode from './components/DarkMode';
+import HeaderLink from './components/Header';
 import Home from './components/Home';
 import Login from './components/Login/Login';
+import Profile from './components/Profile';
+import React, { useEffect, useState } from 'react';
+import Reminders from './components/Reminders';
 import useToken from './components/useToken';
-import HeaderLink from './components/Header'
-import DarkMode from './components/DarkMode';
 
 const App = () => {
   const { token, setToken } = useToken();
@@ -21,7 +20,7 @@ const App = () => {
       <DarkMode />
       <BrowserRouter>
         <HeaderLink />
-        <h1 style={{textAlign: "center" }}> PEACE OF MIND </h1>
+        <h1 style={{ textAlign: 'center' }}> PEACE OF MIND </h1>
         <Switch>
           <Route exact path="/">
             <Home />
@@ -30,7 +29,7 @@ const App = () => {
             <Home />
           </Route>
           <Route path="/profile">
-            <Profile /> 
+            <Profile />
           </Route>
           {/* <Route path="/reminders">
             <Reminders />
