@@ -7,7 +7,7 @@ export default class UsersService {
     return this.dataService.createUser(name, sms, voice, email);
   }
 
-  static async getAllUsers() {
+  static getAllUsers() {
     return this.dataService.getAllUsers();
   }
 

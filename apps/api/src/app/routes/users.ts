@@ -1,8 +1,10 @@
 import express from 'express';
 import UsersService from '../services/UsersService';
+import tasks from './tasks';
 
 const users = express.Router();
 
+// Create a new user
 users.post('/', async (req, res) => {
   try {
     const result = await UsersService.createUser(
@@ -17,6 +19,7 @@ users.post('/', async (req, res) => {
   }
 });
 
+// Get all users
 users.get('/', async (req, res) => {
   try {
     const result = await UsersService.getAllUsers();
@@ -26,6 +29,7 @@ users.get('/', async (req, res) => {
   }
 });
 
+// Get one user
 users.get('/:userId', async (req, res) => {
   try {
     const result = await UsersService.getUser(req.params.userId);
@@ -35,6 +39,7 @@ users.get('/:userId', async (req, res) => {
   }
 });
 
+// Update one user
 users.patch('/:userId', async (req, res) => {
   const changes = {
     name: req.body.name,
@@ -50,6 +55,7 @@ users.patch('/:userId', async (req, res) => {
   }
 });
 
+// Delete one user
 users.delete('/:userId', async (req, res) => {
   try {
     const result = await UsersService.deleteUser(req.params.userId);

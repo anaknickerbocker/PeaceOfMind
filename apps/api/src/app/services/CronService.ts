@@ -7,7 +7,7 @@ export default class CronService {
     this.alertsService = AlertsService.getInstance();
     new cron.CronJob(
       '* * * * *',
-      () => this.alertsService.sendSms(),
+      () => this.alertsService.sendAlerts(),
       null,
       true,
       ''

@@ -21,7 +21,7 @@ export default class TwilioService {
     return TwilioService.instance;
   }
 
-  sendSms(smsNotificationNumber: string, description: string) {
+  sendSms(smsNotificationNumber: string, description: string): void {
     this.client.messages
       .create({
         from: this.twilioNumber,
@@ -29,5 +29,17 @@ export default class TwilioService {
         body: description,
       })
       .then((message) => console.log(message.sid));
+  }
+
+  sendVoice(voiceNotificationNumber: string, description: string): void {
+    this.client.calls
+      .create({
+        twiml: `<Response><Say>${description}</Say></Response>`,
+        to: voiceNotificationNumber,
+        from: this.twilioNumber,
+      })
+      .then((message) => console.log(message.sid));
+
+    // TODO: Add option to complete alert
   }
 }
