@@ -24,17 +24,17 @@ const App = () => {
         <h1 style={{textAlign: "center" }}> PEACE OF MIND </h1>
         <Switch>
           <Route exact path="/">
-            <Profile />
-          </Route>
-          {/* <Route path="/home">
             <Home />
-          </Route> */}
+          </Route>
+          <Route path="/home">
+            <Home />
+          </Route>
           <Route path="/profile">
             <Profile /> 
           </Route>
-          <Route path="/reminders">
+          {/* <Route path="/reminders">
             <Reminders />
-          </Route>
+          </Route> */}
         </Switch>
       </BrowserRouter>
     </div>

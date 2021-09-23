@@ -31,8 +31,9 @@ const Profile = () => {
             name="selectContactMethod" 
             id="selectList"
             onChange={(e) => setContactMethod(e.target.value)}>
-            <option value="option 1">Text Message</option>
+            <option value="option 1">SMS</option>
             <option value="option 2">Email</option>
+            <option value="option 2">Voice</option>
           </select>
         </label>
         <label>
