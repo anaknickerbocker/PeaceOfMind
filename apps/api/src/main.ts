@@ -5,14 +5,14 @@ import express from 'express';
 import path from 'path';
 import tasks from './app/routes/tasks';
 import users from './app/routes/users';
-import DataService from './app/services/DataService';
+import CronService from './app/services/CronService';
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
 }
 
 const app = express();
-app.set('dataService', new DataService());
+new CronService();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
@@ -27,7 +27,14 @@ app.use('/api/login', (req, res) => {
 });
 
 app.use('/api/users', users);
-app.use('/api/users/*/tasks', tasks);
+app.use(
+  '/api/users/:userId/tasks',
+  (req, res, next) => {
+    req.body.userId = req.params.userId;
+    next();
+  },
+  tasks
+);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(CLIENT_BUILD_PATH, '/index.html'));
