@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Profile from './components/Profile';
 import Reminders from './components/Reminders';
-import Home from './components/Home';
+import Home from './components/Home/Home';
 import Login from './components/Login/Login';
 import useToken from './components/useToken';
-import HeaderLink from './components/Header'
+import HeaderLink from './components/Header/Header'
 import DarkMode from './components/DarkMode';
 
 const App = () => {
