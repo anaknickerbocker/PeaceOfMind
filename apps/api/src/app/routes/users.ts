@@ -15,7 +15,7 @@ users.post('/', async (req, res) => {
     );
     res.json(result);
   } catch {
-    res.status(401);
+    res.status(404);
   }
 });
 
@@ -25,7 +25,7 @@ users.get('/', async (req, res) => {
     const result = await UsersService.getAllUsers();
     res.json(result);
   } catch {
-    res.status(401);
+    res.status(404);
   }
 });
 
@@ -35,7 +35,7 @@ users.get('/:userId', async (req, res) => {
     const result = await UsersService.getUser(req.params.userId);
     res.json(result);
   } catch {
-    res.status(401);
+    res.status(404);
   }
 });
 
@@ -51,7 +51,7 @@ users.patch('/:userId', async (req, res) => {
     const result = await UsersService.updateUser(req.params.userId, changes);
     res.json(result);
   } catch {
-    res.status(401);
+    res.status(404);
   }
 });
 
@@ -61,7 +61,7 @@ users.delete('/:userId', async (req, res) => {
     const result = await UsersService.deleteUser(req.params.userId);
     res.json(result);
   } catch {
-    res.status(401);
+    res.status(404);
   }
 });
 
