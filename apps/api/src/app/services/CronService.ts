@@ -1,13 +1,13 @@
 import cron from 'cron';
-import AlertsService from './AlertsService';
+import AlertingService from './AlertingService';
 
 export default class CronService {
-  private alertsService: AlertsService;
+  private alertingService: AlertingService;
   constructor() {
-    this.alertsService = AlertsService.getInstance();
+    this.alertingService = AlertingService.getInstance();
     new cron.CronJob(
       '* * * * *',
-      () => this.alertsService.sendAlerts(),
+      () => this.alertingService.sendAlerts(),
       null,
       true,
       ''

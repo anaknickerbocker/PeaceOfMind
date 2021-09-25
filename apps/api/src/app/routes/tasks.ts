@@ -14,7 +14,7 @@ tasks.post('/', async (req: Request, res: Response) => {
     );
     res.json(result);
   } catch {
-    res.status(401);
+    res.status(404);
   }
 });
 
@@ -24,7 +24,7 @@ tasks.get('/', async (req: Request, res: Response) => {
     const result = await TasksService.getAllTasksForUser(req.body.userId);
     res.json(result);
   } catch {
-    res.status(401);
+    res.status(404);
   }
 });
 
@@ -34,7 +34,7 @@ tasks.get('/:taskId', async (req: Request, res: Response) => {
     const result = await TasksService.getTask(req.params.taskId);
     res.json(result);
   } catch {
-    res.status(401);
+    res.status(404);
   }
 });
 
@@ -50,7 +50,7 @@ tasks.patch('/:taskId', async (req: Request, res: Response) => {
     const result = await TasksService.updateTask(req.params.taskId, changes);
     res.json(result);
   } catch {
-    res.status(401);
+    res.status(404);
   }
 });
 
@@ -60,7 +60,7 @@ tasks.delete('/:taskId', async (req: Request, res: Response) => {
     const result = await TasksService.deleteTask(req.params.taskId);
     res.json(result);
   } catch {
-    res.status(401);
+    res.status(404);
   }
 });
 
