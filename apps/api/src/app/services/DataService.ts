@@ -1,4 +1,4 @@
-import { Alert, Task, User } from '@peace-of-mind/api-interfaces';
+import { Alert, AlertHistory, Task, User } from '@peace-of-mind/api-interfaces';
 import r, { Cursor } from 'rethinkdb';
 
 export default class DataService {
@@ -88,6 +88,121 @@ export default class DataService {
     return r.table('tasks').get(taskId).delete().run(this.connection);
   }
 
+  createAlert(
+    userId: string,
+    taskId: string,
+    alertDue: string,
+    alertType: 'sms' | 'voice' | 'email',
+    alertDestination: string,
+    description: string
+  ) {
+    return r
+      .table('alerts')
+      .insert({
+        userId,
+        taskId,
+        alertDue,
+        alertType,
+        alertDestination,
+        description,
+      })
+      .run(this.connection);
+  }
+
+  async getAllAlertsForUser(userId: string) {
+    const cursor = await r
+      .table('alerts')
+      .filter({ userId })
+      .run(this.connection);
+    return cursor.toArray();
+  }
+
+  async getAllAlertsForTask(taskId: string) {
+    const cursor = await r
+      .table('alerts')
+      .filter({ taskId })
+      .run(this.connection);
+    return cursor.toArray();
+  }
+
+  getAlert(alertId: string) {
+    return r.table('alerts').get(alertId).run(this.connection);
+  }
+
+  updateAlert(alertId: string, changes: Partial<Alert>) {
+    return r
+      .table('alerts')
+      .get(alertId)
+      .update({ ...changes })
+      .run(this.connection);
+  }
+
+  deleteAlert(alertId: string) {
+    return r.table('alerts').get(alertId).delete().run(this.connection);
+  }
+
+  createAlertHistory(
+    userId: string,
+    taskId: string,
+    alertId: string,
+    alertType: 'sms' | 'voice' | 'email',
+    alertDestination: string,
+    description: string
+  ) {
+    return r.table('alertHistories').insert({
+      userId,
+      taskId,
+      alertId,
+      alertType,
+      alertDestination,
+      description,
+    });
+  }
+
+  async getAllAlertHistoriesForUser(userId: string) {
+    const cursor = await r
+      .table('alertHistories')
+      .filter({ userId })
+      .run(this.connection);
+    return cursor.toArray();
+  }
+
+  async getAllAlertHistoriesForTask(taskId: string) {
+    const cursor = await r
+      .table('alertHistories')
+      .filter({ taskId })
+      .run(this.connection);
+    return cursor.toArray();
+  }
+
+  async getAllAlertHistoriesForAlert(alertId: string) {
+    const cursor = await r
+      .table('alertHistories')
+      .filter({ alertId })
+      .run(this.connection);
+    return cursor.toArray();
+  }
+
+  getAlertHistory(alertId: string) {
+    return r.table('alertHistories').get(alertId).run(this.connection);
+  }
+
+  updateAlertHistory(alertHistoryId: string, changes: Partial<AlertHistory>) {
+    return r
+      .table('alertHistories')
+      .get(alertHistoryId)
+      .update({ ...changes })
+      .run(this.connection);
+  }
+
+  deleteAlertHistory(alertHistoryId: string) {
+    return r
+      .table('alertHistories')
+      .get(alertHistoryId)
+      .delete()
+      .run(this.connection);
+  }
+
   async getAlertsDueNow() {
     const cursor: Cursor = await r
       .table('alerts')
@@ -98,19 +213,5 @@ export default class DataService {
       // .orderBy('alertDue')
       .run(this.connection);
     return cursor.toArray();
-  }
-
-  createAlertHistory(alert: Alert) {
-    return r.table('alertHistories').insert({
-      taskId: alert.taskId,
-      userId: alert.userId,
-      alertId: alert.alertId,
-      alertType: alert.alertType,
-      alertSent: alert.alertDue, // TODO: this date should be the date it actually sent
-    });
-  }
-
-  deleteAlert(alertId: string) {
-    return r.table('alerts').get(alertId).delete();
   }
 }

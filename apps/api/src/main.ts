@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
+import alertHistories from './app/routes/alertHistories';
+import alerts from './app/routes/alerts';
 import tasks from './app/routes/tasks';
 import users from './app/routes/users';
 import CronService from './app/services/CronService';
@@ -34,6 +36,26 @@ app.use(
     next();
   },
   tasks
+);
+app.use(
+  '/api/users/:userId/tasks/:taskId/alerts',
+  (req, res, next) => {
+    req.body.userId = req.params.userId;
+    req.body.taskId = req.params.taskId;
+    next();
+  },
+  alerts
+);
+
+app.use(
+  '/api/users/:userId/tasks/:taskId/alerts/:alertId',
+  (req, res, next) => {
+    req.body.userId = req.params.userId;
+    req.body.taskId = req.params.taskId;
+    req.body.alertId = req.params.alertId;
+    next();
+  },
+  alertHistories
 );
 
 app.get('*', (req, res) => {

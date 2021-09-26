@@ -7,8 +7,8 @@ import React, { useEffect, useState } from 'react';
 import Reminders from './components/Reminders';
 import useToken from './components/useToken';
 import HeaderLink from './components/Header/Header'
-import DarkMode from './components/DarkMode';
 import GlobalState from './components/context/GlobalState'
+import DarkMode from './components/DarkMode/DarkMode';
 
 const App = () => {
   const { token, setToken } = useToken();
