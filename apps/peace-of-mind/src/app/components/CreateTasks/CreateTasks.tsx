@@ -1,11 +1,12 @@
-import React, { FormEvent, useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AppContext from '../context/AppContext'
 
-import './Home.css';
 
-const Home = () => {
+import './CreateTasks.css';
+
+const Tasks = () => {
   const [formData, setFormData] = useState({
     taskDescription: "",
-    currentDate: Date().toLocaleString(),
     reminderOneNumber: "",
     reminderOneMethod: "",
     reminderOneInterval: "",
@@ -14,16 +15,32 @@ const Home = () => {
     reminderTwoInterval: "",
     reminderNumberThree: "",
     reminderThreeInterval: "",
-    reminderThreeMethod: ""
+    reminderThreeMethod: "",
+    currentDate: Date().toLocaleString(),
     });
+
+    const {
+        id,
+        setId,
+        name, 
+        setName,
+        taskReminders,
+        setTaskReminders,
+        // formData,
+        // setFormData
+      } = useContext(AppContext)
+
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
     console.log(formData)
+    // setTaskReminders(formData)
+    setTaskReminders([...taskReminders, formData])
 }
 
   return (
     <div className="task-wrapper">
+    <h2> Welcome {name}</h2>
     <h2>Create Your Task Reminders</h2>
       <form onSubmit={handleSubmit}>
         <div className='input'>
@@ -81,7 +98,7 @@ const Home = () => {
                     type="text"
                     id='reminderNumberTwo'
                     name='reminderNumberTwo'
-                    onChange={(e)=>setFormData({...formData, reminderNumberTwo: e.target.value})}
+                    onChange={ (e)=>setFormData({...formData, reminderNumberTwo: e.target.value})}
                 />
             </div>
             <select 
@@ -154,4 +171,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Tasks;
