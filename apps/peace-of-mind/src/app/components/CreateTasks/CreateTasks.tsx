@@ -5,6 +5,7 @@ import AppContext from '../context/AppContext'
 import './CreateTasks.css';
 
 const Tasks = () => {
+  const [newTask, setNewTask] = useState(false)
   const [formData, setFormData] = useState({
     taskDescription: "",
     reminderOneNumber: "",
@@ -26,22 +27,36 @@ const Tasks = () => {
         setName,
         taskReminders,
         setTaskReminders,
-        // formData,
-        // setFormData
       } = useContext(AppContext)
 
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
     console.log(formData)
-    // setTaskReminders(formData)
     setTaskReminders([...taskReminders, formData])
+    setNewTask(false)
+}
+
+const addTask = () => {
+    console.log(newTask)
+    setNewTask(true)
+    console.log(newTask)
 }
 
   return (
     <div className="task-wrapper">
     <h2> Welcome {name}</h2>
     <h2>Create Your Task Reminders</h2>
+
+    <div>
+        <button 
+            type="submit"
+            onClick={addTask}
+        >
+            Add Task
+        </button>
+    </div>
+    {newTask === true && 
       <form onSubmit={handleSubmit}>
         <div className='input'>
             <p>Task Description: </p>
@@ -73,7 +88,8 @@ const Tasks = () => {
                 value={formData.reminderOneInterval}
                 onChange={(e)=>setFormData({...formData, reminderOneInterval: e.target.value})}
             >
-                  <option value="Minutes">Minutes</option>
+                    <option value="selectOne">---</option> 
+                    <option value="Minutes">Minutes</option>
                    <option value="Hours">Hours</option>
                    <option value="Days">Days</option>
             </select>
@@ -84,7 +100,8 @@ const Tasks = () => {
                 value={formData.reminderOneMethod}
                 onChange={(e)=>setFormData({...formData, reminderOneMethod: e.target.value})}
             >
-              <option value="SMS">SMS</option>
+                <option value="selectOne">---</option>
+                <option value="SMS">SMS</option>
                <option value="Email">Email</option>
                <option value="Voice">Voice</option>
             </select>
@@ -108,7 +125,8 @@ const Tasks = () => {
                 id="reminderTwoInterval"
                 onChange={(e)=>setFormData({...formData, reminderTwoInterval: e.target.value})}
             >
-                  <option value="Minutes">Minutes</option>
+                <option value="selectOne">---</option>  
+                <option value="Minutes">Minutes</option>
                    <option value="Hours">Hours</option>
                    <option value="Days">Days</option>
             </select>
@@ -119,7 +137,8 @@ const Tasks = () => {
                 id="selectList"
                 onChange={(e)=>setFormData({...formData, reminderTwoMethod: e.target.value})}
             >
-              <option value="SMS">SMS</option>
+                <option value="selectOne">---</option>    
+                <option value="SMS">SMS</option>
                <option value="Email">Email</option>
                <option value="Voice">Voice</option>
             </select>
@@ -143,7 +162,8 @@ const Tasks = () => {
                 id="reminderThreeInterval"
                 onChange={(e)=>setFormData({...formData, reminderThreeInterval: e.target.value})}
             >
-                  <option value="Minutes">Minutes</option>
+                    <option value="selectOne">---</option>    
+                    <option value="Minutes">Minutes</option>
                    <option value="Hours">Hours</option>
                    <option value="Days">Days</option>
             </select>
@@ -154,7 +174,8 @@ const Tasks = () => {
                 id="reminderThreeMethod"
                 onChange={(e)=>setFormData({...formData, reminderThreeMethod: e.target.value})}
             >
-              <option value="SMS">SMS</option>
+                <option value="selectOne">---</option>  
+                <option value="SMS">SMS</option>
                <option value="Email">Email</option>
                <option value="Voice">Voice</option>
             </select>
@@ -167,6 +188,7 @@ const Tasks = () => {
             </button>
         </div>
       </form>
+    }
     </div>
   );
 };
