@@ -1,12 +1,13 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Home from './components/Home/Home';
+import Tasks from './components/CreateTasks/CreateTasks';
 import Login from './components/Login/Login';
-import Profile from './components/Profile';
+import Profile from './components/Profile/Profile';
 import React, { useEffect, useState } from 'react';
 import Reminders from './components/Reminders';
 import useToken from './components/useToken';
 import HeaderLink from './components/Header/Header'
+import GlobalState from './components/context/GlobalState'
 import DarkMode from './components/DarkMode/DarkMode';
 
 const App = () => {
@@ -19,24 +20,26 @@ const App = () => {
   return (
     <div className="wrapper">
       <DarkMode />
-      <BrowserRouter>
-        <HeaderLink />
-        <h1 style={{ textAlign: 'center' }}> PEACE OF MIND </h1>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/home">
-            <Home />
-          </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
-          {/* <Route path="/reminders">
-            <Reminders />
-          </Route> */}
-        </Switch>
-      </BrowserRouter>
+      <GlobalState>
+        <BrowserRouter>
+          <HeaderLink />
+          <h1 style={{ textAlign: 'center' }}> PEACE OF MIND </h1>
+          <Switch>
+            <Route exact path="/">
+              <Profile />
+            </Route>
+            <Route path="/tasks">
+              <Tasks />
+            </Route>
+            <Route path="/profile">
+              <Profile />
+            </Route>
+            <Route path="/reminders">
+              <Reminders />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </GlobalState>
     </div>
   );
 };

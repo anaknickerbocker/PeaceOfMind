@@ -11,9 +11,9 @@ const HeaderLink = ({ page }) => {
 const Header = () => {
     return (
       <div className='header'>
-        <HeaderLink page='home' />
         <HeaderLink page='profile' />
-        {/* <HeaderLink page='reminders' /> */}
+        <HeaderLink page='tasks' />
+        <HeaderLink page='reminders' />
       </div>
     );
   };
