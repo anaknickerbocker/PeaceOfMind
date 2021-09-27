@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Theme } from '@twilio-paste/core/theme';
-import DarkMode from './components/DarkMode/DarkMode';
+// import DarkMode from './components/DarkMode/DarkMode';
 import GlobalState from './components/context/GlobalState';
 import HeaderLink from './components/Header/Header';
 import Login from './components/Login/Login';
