@@ -48,7 +48,7 @@ app.use(
 );
 
 app.use(
-  '/api/users/:userId/tasks/:taskId/alerts/:alertId',
+  '/api/users/:userId/tasks/:taskId/alerts/:alertId/alertHistories',
   (req, res, next) => {
     req.body.userId = req.params.userId;
     req.body.taskId = req.params.taskId;

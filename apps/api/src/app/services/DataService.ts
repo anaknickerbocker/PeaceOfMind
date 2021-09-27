@@ -19,6 +19,7 @@ export default class DataService {
     return DataService.instance;
   }
 
+  // Users
   createUser(name: string, sms: string, voice: string, email: string) {
     return r
       .table('users')
@@ -52,6 +53,7 @@ export default class DataService {
     return r.table('users').get(userId).delete().run(this.connection);
   }
 
+  // Tasks
   createTask(
     userId: string,
     description: string,
@@ -88,6 +90,7 @@ export default class DataService {
     return r.table('tasks').get(taskId).delete().run(this.connection);
   }
 
+  // Alerts
   createAlert(
     userId: string,
     taskId: string,
@@ -141,6 +144,7 @@ export default class DataService {
     return r.table('alerts').get(alertId).delete().run(this.connection);
   }
 
+  // Alert Histories
   createAlertHistory(
     userId: string,
     taskId: string,
@@ -156,7 +160,7 @@ export default class DataService {
       alertType,
       alertDestination,
       description,
-    });
+    }).run(this.connection);
   }
 
   async getAllAlertHistoriesForUser(userId: string) {

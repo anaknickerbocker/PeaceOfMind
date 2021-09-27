@@ -8,32 +8,10 @@ alertHistories.post('/', async (req: Request, res: Response) => {
     const result = await AlertHistoriesService.createAlertHistory(
       req?.body?.userId || '',
       req?.body?.taskId || '',
-      req?.body?.alertDue || '',
+      req?.body?.alertId || '',
       req?.body?.alertType || '',
       req?.body?.alertDestination || '',
       req?.body?.description || ''
-    );
-    res.json(result);
-  } catch {
-    res.status(404);
-  }
-});
-
-alertHistories.get('/', async (req: Request, res: Response) => {
-  try {
-    const result = await AlertHistoriesService.getAllAlertHistoriesForUser(
-      req.body.userId
-    );
-    res.json(result);
-  } catch {
-    res.status(404);
-  }
-});
-
-alertHistories.get('/', async (req: Request, res: Response) => {
-  try {
-    const result = await AlertHistoriesService.getAllAlertHistoriesForTask(
-      req.body.taskId
     );
     res.json(result);
   } catch {
@@ -67,9 +45,13 @@ alertHistories.patch(
   '/:alertHistoryId',
   async (req: Request, res: Response) => {
     try {
-      const changes = {};
+      const changes = {
+        alertType: req?.body?.alertType || '',
+        alertDestination: req?.body?.alertDestination || '',
+        description: req?.body?.description || ''
+      };
       const result = await AlertHistoriesService.updateAlertHistory(
-        req.params.alertId,
+        req.params.alertHistoryId,
         changes
       );
       res.json(result);
@@ -84,7 +66,7 @@ alertHistories.delete(
   async (req: Request, res: Response) => {
     try {
       const result = await AlertHistoriesService.deleteAlertHistory(
-        req.params.alertId
+        req.params.alertHistoryId
       );
       res.json(result);
     } catch {

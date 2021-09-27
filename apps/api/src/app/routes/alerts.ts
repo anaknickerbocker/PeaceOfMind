@@ -39,7 +39,12 @@ alerts.get('/:alertId', async (req: Request, res: Response) => {
 
 alerts.patch('/:alertId', async (req: Request, res: Response) => {
   try {
-    const changes = {};
+    const changes = {
+      alertDestination: req.body.alertDestination || '',
+      alertDue: req.body.alertDue || '',
+      alertType: req.body.alertType || '',
+      description: req.body.description || ''
+    };
     const result = await AlertsService.updateAlert(req.params.alertId, changes);
     res.json(result);
   } catch {
