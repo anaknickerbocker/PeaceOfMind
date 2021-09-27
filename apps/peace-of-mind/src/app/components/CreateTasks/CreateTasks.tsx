@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react';
-import AppContext from '../context/AppContext'; 
+import AppContext from '../context/AppContext';
 import { BsFillBellFill } from 'react-icons/bs';
 
 import './CreateTasks.css';
+import { TaskList } from '../TaskList/TaskList';
+import { initialTasks } from '../TaskList/initialTasks';
 
 const Tasks = () => {
   const [newTask, setNewTask] = useState(false)
@@ -23,7 +25,7 @@ const Tasks = () => {
     const {
         id,
         setId,
-        name, 
+        name,
         setName,
         taskReminders,
         setTaskReminders,
@@ -45,12 +47,12 @@ const addTask = () => {
 
   return (
     <div className="task-wrapper">
-
+    <TaskList tasks={initialTasks}/>
 
     {!newTask &&
         <div>
             <h2>Create Your Task Reminders</h2>
-            <button 
+            <button
                 style={{borderRadius: '100px', marginLeft: '120px', paddingTop: '5px', paddingBottom: '5px'}}
                 type="submit"
                 onClick={addTask}
@@ -59,7 +61,7 @@ const addTask = () => {
             </button>
         </div>
     }
-    {newTask === true && 
+    {newTask === true &&
       <form onSubmit={handleSubmit}>
       <p>Task description: </p>
         <div className='input'>
@@ -86,14 +88,14 @@ const addTask = () => {
             </div>
             <select
                 style={{
-                    marginRight: "10px", 
+                    marginRight: "10px",
                     marginTop: '30px',
                     paddingRight: '20px',
-                    paddingTop: '5px', 
+                    paddingTop: '5px',
                     paddingBottom: '5px',
-                    borderRadius: '100px', 
+                    borderRadius: '100px',
                 }}
-                name="reminderOneInterval" 
+                name="reminderOneInterval"
                 id="reminderOneInterval"
                 value={formData.reminderOneInterval}
                 onChange={(e)=>setFormData({...formData, reminderOneInterval: e.target.value})}
@@ -104,27 +106,27 @@ const addTask = () => {
                    <option value="Days">Days</option>
             </select>
             <BsFillBellFill style={{
-                backgroundColor: 'white', 
-                borderRadius: '100px', 
-                marginLeft: '50px', 
-                marginRight: '10px', 
-                paddingTop: '5px', 
+                backgroundColor: 'white',
+                borderRadius: '100px',
+                marginLeft: '50px',
+                marginRight: '10px',
+                paddingTop: '5px',
                 paddingBottom: '5px',
                 paddingRight: '5px',
-                paddingLeft: '5px', 
+                paddingLeft: '5px',
                 marginTop: '30px'
             }}
             />
             <select
                 value={formData.reminderOneMethod}
-                style={{ 
-                    paddingTop: '5px', 
-                    paddingBottom: '5px', 
-                    paddingRight: '30px', 
+                style={{
+                    paddingTop: '5px',
+                    paddingBottom: '5px',
+                    paddingRight: '30px',
                     marginTop: '30px',
                     borderRadius: '100px'
-                }}                
-                name="reminderOneMethod" 
+                }}
+                name="reminderOneMethod"
                 id="reminderOneMethod"
                 onChange={(e)=>setFormData({...formData, reminderOneMethod: e.target.value})}
             >
@@ -146,51 +148,51 @@ const addTask = () => {
                     onChange={ (e)=>setFormData({...formData, reminderNumberTwo: e.target.value})}
                 />
             </div>
-            <select 
+            <select
                 value={formData.reminderTwoInterval}
                 style={{
-                    marginRight: "10px", 
+                    marginRight: "10px",
                     marginTop: '30px',
                     paddingRight: '20px',
-                    paddingTop: '5px', 
+                    paddingTop: '5px',
                     paddingBottom: '5px',
-                    borderRadius: '100px', 
+                    borderRadius: '100px',
                 }}
-                name="reminderTwoInterval" 
+                name="reminderTwoInterval"
                 id="reminderTwoInterval"
                 onChange={(e)=>setFormData({...formData, reminderTwoInterval: e.target.value})}
             >
-                <option value="selectOne">---</option>  
+                <option value="selectOne">---</option> 
                 <option value="Minutes">Minutes</option>
                    <option value="Hours">Hours</option>
                    <option value="Days">Days</option>
             </select>
             <BsFillBellFill style={{
-                backgroundColor: 'white', 
-                borderRadius: '100px', 
-                marginLeft: '50px', 
-                marginRight: '10px', 
-                paddingTop: '5px', 
+                backgroundColor: 'white',
+                borderRadius: '100px',
+                marginLeft: '50px',
+                marginRight: '10px',
+                paddingTop: '5px',
                 paddingBottom: '5px',
                 paddingRight: '5px',
-                paddingLeft: '5px', 
+                paddingLeft: '5px',
                 marginTop: '30px'
             }}
-            />            
+            />
             <select
                 value={formData.reminderTwoMethod}
-                style={{ 
-                    paddingTop: '5px', 
-                    paddingBottom: '5px', 
-                    paddingRight: '30px', 
+                style={{
+                    paddingTop: '5px',
+                    paddingBottom: '5px',
+                    paddingRight: '30px',
                     marginTop: '30px',
                     borderRadius: '100px'
-                }}                
-                name="selectContactMethod" 
+                }}
+                name="selectContactMethod"
                 id="selectList"
                 onChange={(e)=>setFormData({...formData, reminderTwoMethod: e.target.value})}
             >
-                <option value="selectOne">---</option>    
+                <option value="selectOne">---</option>   
                 <option value="SMS">SMS</option>
                <option value="Email">Email</option>
                <option value="Voice">Voice</option>
@@ -208,58 +210,58 @@ const addTask = () => {
                     onChange={(e)=>setFormData({...formData, reminderNumberThree: e.target.value})}
                 />
             </div>
-            <select 
+            <select
                 value={formData.reminderThreeInterval}
                 style={{
-                    marginRight: "10px", 
+                    marginRight: "10px",
                     marginTop: '30px',
                     paddingRight: '20px',
-                    paddingTop: '5px', 
+                    paddingTop: '5px',
                     paddingBottom: '5px',
-                    borderRadius: '100px', 
+                    borderRadius: '100px',
                 }}
-                name="reminderThreeInterval" 
+                name="reminderThreeInterval"
                 id="reminderThreeInterval"
                 onChange={(e)=>setFormData({...formData, reminderThreeInterval: e.target.value})}
             >
-                    <option value="selectOne">---</option>    
+                    <option value="selectOne">---</option>   
                     <option value="Minutes">Minutes</option>
                    <option value="Hours">Hours</option>
                    <option value="Days">Days</option>
             </select>
             <BsFillBellFill style={{
-                backgroundColor: 'white', 
-                borderRadius: '100px', 
-                marginLeft: '50px', 
-                marginRight: '10px', 
-                paddingTop: '5px', 
+                backgroundColor: 'white',
+                borderRadius: '100px',
+                marginLeft: '50px',
+                marginRight: '10px',
+                paddingTop: '5px',
                 paddingBottom: '5px',
                 paddingRight: '5px',
-                paddingLeft: '5px', 
+                paddingLeft: '5px',
                 marginTop: '30px'
             }}
             />
             <select
                 value={formData.reminderThreeMethod}
-                style={{ 
-                    paddingTop: '5px', 
-                    paddingBottom: '5px', 
-                    paddingRight: '30px', 
+                style={{
+                    paddingTop: '5px',
+                    paddingBottom: '5px',
+                    paddingRight: '30px',
                     marginTop: '30px',
                     borderRadius: '100px'
                 }}
-                name="reminderThreeMethod" 
+                name="reminderThreeMethod"
                 id="reminderThreeMethod"
                 onChange={(e)=>setFormData({...formData, reminderThreeMethod: e.target.value})}
             >
-                <option value="selectOne">---</option>  
+                <option value="selectOne">---</option> 
                 <option value="SMS">SMS</option>
                <option value="Email">Email</option>
                <option value="Voice">Voice</option>
             </select>
         </div>
         <div className='submit'>
-            <button 
+            <button
                 type="submit"
                 style={{borderRadius: '100px', marginTop: '20px', paddingTop: '5px', paddingBottom: '5px'}}
             >

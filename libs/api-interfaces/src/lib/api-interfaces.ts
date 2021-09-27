@@ -12,6 +12,7 @@ export interface Task {
   description: string;
   taskDateTime: string; // datetime
   recurring: boolean;
+  complete: boolean;
 }
 
 export interface Alert {
