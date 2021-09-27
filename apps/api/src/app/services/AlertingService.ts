@@ -23,13 +23,12 @@ export default class AlertingService {
 
     // Get alerts due now
     const alerts = await this.dataService.getAlertsDueNow();
-    console.log(alerts);
 
     // Send the alerts
     // TODO: Split the alerts by sms/voice/email
     // await this.sendSms(alerts);
 
-    // TODO: Add alerts to the alertsHistory table
+    // TODO: Add alerts to the alertHistories table
 
     // TODO: Delete the alerts from the alerts table
   }
