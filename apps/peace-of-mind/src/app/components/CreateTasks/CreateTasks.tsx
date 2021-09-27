@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-import AppContext from '../context/AppContext'
-
+import AppContext from '../context/AppContext'; 
+import { BsFillBellFill } from 'react-icons/bs';
 
 import './CreateTasks.css';
 
@@ -45,27 +45,30 @@ const addTask = () => {
 
   return (
     <div className="task-wrapper">
-    <h2> Welcome {name}</h2>
-    <h2>Create Your Task Reminders</h2>
 
-    <div>
-        <button 
-            type="submit"
-            onClick={addTask}
-        >
-            Add Task
-        </button>
-    </div>
+
+    {!newTask &&
+        <div>
+            <h2>Create Your Task Reminders</h2>
+            <button 
+                style={{borderRadius: '100px', marginLeft: '120px', paddingTop: '5px', paddingBottom: '5px'}}
+                type="submit"
+                onClick={addTask}
+            >
+                Add Task
+            </button>
+        </div>
+    }
     {newTask === true && 
       <form onSubmit={handleSubmit}>
+      <p>Task description: </p>
         <div className='input'>
-            <p>Task Description: </p>
             <input
                 value={formData.taskDescription}
                 type="text"
                 id='taskDescription'
                 name="taskDescription"
-                style={{marginLeft: '10px'}}
+                style={{ borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', paddingRight: '100px'}}
                 onChange={(e)=>setFormData({...formData, taskDescription: e.target.value})}
             />
         </div>
@@ -73,8 +76,8 @@ const addTask = () => {
             <div className='input-style'>
                 <input
                     value={formData.reminderOneNumber}
-                    placeholder="#"
-                    style={{width: '30px' }}
+                    placeholder="  #"
+                    style={{width: '30px', borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginTop: '30px' }}
                     type="text"
                     id='reminderOneNumber'
                     name='reminderOneNumber'
@@ -82,7 +85,14 @@ const addTask = () => {
                 />
             </div>
             <select
-                style={{marginRight: "10px"}}
+                style={{
+                    marginRight: "10px", 
+                    marginTop: '30px',
+                    paddingRight: '20px',
+                    paddingTop: '5px', 
+                    paddingBottom: '5px',
+                    borderRadius: '100px', 
+                }}
                 name="reminderOneInterval" 
                 id="reminderOneInterval"
                 value={formData.reminderOneInterval}
@@ -93,11 +103,29 @@ const addTask = () => {
                    <option value="Hours">Hours</option>
                    <option value="Days">Days</option>
             </select>
-            <p style={{marginRight: "10px"}}>After Task Time</p> 
+            <BsFillBellFill style={{
+                backgroundColor: 'white', 
+                borderRadius: '100px', 
+                marginLeft: '50px', 
+                marginRight: '10px', 
+                paddingTop: '5px', 
+                paddingBottom: '5px',
+                paddingRight: '5px',
+                paddingLeft: '5px', 
+                marginTop: '30px'
+            }}
+            />
             <select
+                value={formData.reminderOneMethod}
+                style={{ 
+                    paddingTop: '5px', 
+                    paddingBottom: '5px', 
+                    paddingRight: '30px', 
+                    marginTop: '30px',
+                    borderRadius: '100px'
+                }}                
                 name="reminderOneMethod" 
                 id="reminderOneMethod"
-                value={formData.reminderOneMethod}
                 onChange={(e)=>setFormData({...formData, reminderOneMethod: e.target.value})}
             >
                 <option value="selectOne">---</option>
@@ -110,8 +138,8 @@ const addTask = () => {
             <div className='input-style'>
                 <input
                     value={formData.reminderNumberTwo}
-                    placeholder="#"
-                    style={{width: '30px'}}
+                    placeholder="  #"
+                    style={{width: '30px', borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginTop: '30px'}}
                     type="text"
                     id='reminderNumberTwo'
                     name='reminderNumberTwo'
@@ -120,7 +148,14 @@ const addTask = () => {
             </div>
             <select 
                 value={formData.reminderTwoInterval}
-                style={{marginRight: "10px"}}
+                style={{
+                    marginRight: "10px", 
+                    marginTop: '30px',
+                    paddingRight: '20px',
+                    paddingTop: '5px', 
+                    paddingBottom: '5px',
+                    borderRadius: '100px', 
+                }}
                 name="reminderTwoInterval" 
                 id="reminderTwoInterval"
                 onChange={(e)=>setFormData({...formData, reminderTwoInterval: e.target.value})}
@@ -130,9 +165,27 @@ const addTask = () => {
                    <option value="Hours">Hours</option>
                    <option value="Days">Days</option>
             </select>
-            <p style={{marginRight: "10px"}}>After Task Time</p> 
+            <BsFillBellFill style={{
+                backgroundColor: 'white', 
+                borderRadius: '100px', 
+                marginLeft: '50px', 
+                marginRight: '10px', 
+                paddingTop: '5px', 
+                paddingBottom: '5px',
+                paddingRight: '5px',
+                paddingLeft: '5px', 
+                marginTop: '30px'
+            }}
+            />            
             <select
                 value={formData.reminderTwoMethod}
+                style={{ 
+                    paddingTop: '5px', 
+                    paddingBottom: '5px', 
+                    paddingRight: '30px', 
+                    marginTop: '30px',
+                    borderRadius: '100px'
+                }}                
                 name="selectContactMethod" 
                 id="selectList"
                 onChange={(e)=>setFormData({...formData, reminderTwoMethod: e.target.value})}
@@ -147,8 +200,8 @@ const addTask = () => {
             <div className='input-style'>
                 <input
                     value={formData.reminderNumberThree}
-                    placeholder='#'
-                    style={{width: '30px'}}
+                    placeholder='  #'
+                    style={{width: '30px', borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginTop: '30px'}}
                     type='text'
                     name='reminderNumberThree'
                     id='reminderNumberThree'
@@ -157,7 +210,14 @@ const addTask = () => {
             </div>
             <select 
                 value={formData.reminderThreeInterval}
-                style={{marginRight: "10px"}}
+                style={{
+                    marginRight: "10px", 
+                    marginTop: '30px',
+                    paddingRight: '20px',
+                    paddingTop: '5px', 
+                    paddingBottom: '5px',
+                    borderRadius: '100px', 
+                }}
                 name="reminderThreeInterval" 
                 id="reminderThreeInterval"
                 onChange={(e)=>setFormData({...formData, reminderThreeInterval: e.target.value})}
@@ -167,9 +227,27 @@ const addTask = () => {
                    <option value="Hours">Hours</option>
                    <option value="Days">Days</option>
             </select>
-            <p style={{marginRight: "10px"}}>After Task Time</p> 
+            <BsFillBellFill style={{
+                backgroundColor: 'white', 
+                borderRadius: '100px', 
+                marginLeft: '50px', 
+                marginRight: '10px', 
+                paddingTop: '5px', 
+                paddingBottom: '5px',
+                paddingRight: '5px',
+                paddingLeft: '5px', 
+                marginTop: '30px'
+            }}
+            />
             <select
                 value={formData.reminderThreeMethod}
+                style={{ 
+                    paddingTop: '5px', 
+                    paddingBottom: '5px', 
+                    paddingRight: '30px', 
+                    marginTop: '30px',
+                    borderRadius: '100px'
+                }}
                 name="reminderThreeMethod" 
                 id="reminderThreeMethod"
                 onChange={(e)=>setFormData({...formData, reminderThreeMethod: e.target.value})}
@@ -183,6 +261,7 @@ const addTask = () => {
         <div className='submit'>
             <button 
                 type="submit"
+                style={{borderRadius: '100px', marginTop: '20px', paddingTop: '5px', paddingBottom: '5px'}}
             >
                 Save Task
             </button>
