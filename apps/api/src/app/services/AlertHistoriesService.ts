@@ -13,12 +13,14 @@ export default class AlertHistoriesService {
     description: string
   ) {
     return this.dataService.createAlertHistory(
-      userId,
-      taskId,
-      alertId,
-      alertType,
-      alertDestination,
-      description
+      {
+        userId,
+        taskId,
+        alertId,
+        alertType,
+        alertDestination,
+        description
+      }
     );
   }
 
