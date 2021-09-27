@@ -42,35 +42,7 @@ See the deployed app: <https://peace-of-mind.herokuapp.com/>
 
 ## API Endpoints
 
-- GET `/api/users`
-- GET `/api/users/{userId}`
-- POST `/api/users`
-
-  - Body:
-
-    ```json
-    {
-      "name": "",
-      "sms": "",
-      "voice": "",
-      "email": ""
-    }
-    ```
-
-- PATCH `/api/users/{userId}`
-
-  - Body:
-
-    ```json
-    {
-      "name": "",
-      "sms": "",
-      "voice": "",
-      "email": ""
-    }
-    ```
-
-- DELETE `/api/users/{userId}`
+Postman documentation: <https://documenter.getpostman.com/view/7169097/UUxwDpMq>
 
 ## Nx
 
