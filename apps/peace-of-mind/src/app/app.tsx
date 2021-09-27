@@ -18,7 +18,7 @@ const App = () => {
   }
 
   return (
-    <div className="wrapper">
+    <div style={{ minHeight: '100vh', backgroundColor: '#E5C2F9'}} >
       <DarkMode />
       <GlobalState>
         <BrowserRouter>

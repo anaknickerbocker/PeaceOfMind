@@ -28,10 +28,10 @@ const Profile = () => {
     <div className="profile-wrapper">
     {id}
     <h2>Create Your User Profile</h2>
-      {/* <form> */}
         <label>
           <p>First Name</p>
           <input
+            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
             type="text"
             onChange={(e) => setFirstName(e.target.value)}
           />
@@ -39,6 +39,7 @@ const Profile = () => {
         <label>
           <p>Last Name</p>
           <input
+            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
             type="text"
             onChange={(e) => setLastName(e.target.value)}
           />
@@ -46,28 +47,28 @@ const Profile = () => {
         <label>
           <p>Contact Details</p>
           <input
+            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
             type="text"
-            placeholder="Enter Email"
             onChange={(e) => setEmailDetails(e.target.value)}
           />
         </label>
         <label>
           <p>Phone Details</p>
           <input
+            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
             type="text"
-            placeholder="Enter Phone"
             onChange={(e) => setPhoneDetails(e.target.value)}
           />
         </label>
         <div className='submit'>
           <button 
+            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
             type="submit"
             onClick={handleSubmit}
           >
             Submit
           </button>
         </div>
-      {/* </form> */}
     </div>
   );
 };
