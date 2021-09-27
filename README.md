@@ -14,6 +14,7 @@ PORT="3333"
 _Ask Ana for the DB_URL._
 
 Run `npm install -g nx`
+Run `npm run-script build`
 
 Documentation on how to query the database: <https://rethinkdb.com/docs/cookbook/javascript/>
 

@@ -45,7 +45,7 @@ const Profile = () => {
           />
         </label>
         <label>
-          <p>Contact Details</p>
+          <p>Email Details</p>
           <input
             style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
             type="text"

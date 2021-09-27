@@ -10,10 +10,12 @@ export default function Reminders() {
   } = useContext(AppContext)
 
   console.log(taskReminders)
+  const taskList = JSON.stringify(taskReminders)
   
   return (
     <div>
       {JSON.stringify(taskReminders)}
+      {/* {taskList[0]} */}
     </div>
   )
 }
