@@ -146,20 +146,11 @@ export default class DataService {
 
   // Alert Histories
   createAlertHistory(
-    userId: string,
-    taskId: string,
-    alertId: string,
-    alertType: 'sms' | 'voice' | 'email',
-    alertDestination: string,
-    description: string
+    alert: Alert | Partial<Alert>
   ) {
     return r.table('alertHistories').insert({
-      userId,
-      taskId,
-      alertId,
-      alertType,
-      alertDestination,
-      description,
+      ...alert,
+      alertSent: new Date()
     }).run(this.connection);
   }
 
@@ -210,11 +201,20 @@ export default class DataService {
   async getAlertsDueNow() {
     const cursor: Cursor = await r
       .table('alerts')
+      .filter((alert) => alert('alertDue')
+      .gt(r.now())
+      .and(alert('alertDue').lt(r.now().add(60))))
+      .orderBy('alertDue')
+      .run(this.connection);
+    return cursor.toArray();
+  }
+
+  // Get all alerts, for testing purposes
+  async getAlertsAnytime() {
+    const cursor: Cursor = await r
+      .table('alerts')
       .filter((alert) => alert('alertDue').lt(r.now()))
       .orderBy('alertDue')
-      // .gt(r.now())
-      // .and(alert('alertDue').lt(r.now().add(60)))
-      // .orderBy('alertDue')
       .run(this.connection);
     return cursor.toArray();
   }
