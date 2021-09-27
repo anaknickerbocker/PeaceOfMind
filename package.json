@@ -9,6 +9,8 @@
   },
   "private": true,
   "dependencies": {
+    "@twilio-paste/core": "^10.12.0",
+    "@twilio-paste/icons": "^5.5.0",
     "body-parser": "^1.19.0",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
