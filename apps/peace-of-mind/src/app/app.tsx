@@ -14,7 +14,11 @@ const App = () => {
   const { token, setToken } = useToken();
 
   if (!token) {
-    return <Login setToken={setToken} />;
+    return (
+    <div style={{ minHeight: '100vh', backgroundColor: '#E5C2F9'}} >
+    <Login setToken={setToken} />
+    </div>
+    );
   }
 
   return (
