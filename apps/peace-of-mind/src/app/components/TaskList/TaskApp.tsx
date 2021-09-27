@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { initialTasks } from "./initialTasks";
-import { TaskList } from "./TaskList";
-import { AddTaskForm } from "./AddTaskForm";
+import React, { useState } from 'react';
+import { initialTasks } from './initialTasks';
+import { TaskList } from './TaskList';
+import { AddTaskForm } from './AddTaskForm';
+import { Task, ToggleComplete, AddTask } from './types';
 
 const TaskApp: React.FC = () => {
   const [tasks, setTasks] = useState<Array<Task>>(initialTasks);
 
-  const toggleComplete: ToggleComplete = selectedTask => {
-    const updatedTasks = tasks.map(task => {
+  const toggleComplete: ToggleComplete = (selectedTask) => {
+    const updatedTasks = tasks.map((task) => {
       if (task === selectedTask) {
         return { ...task, complete: !task.complete };
       }
@@ -16,8 +17,8 @@ const TaskApp: React.FC = () => {
     setTasks(updatedTasks);
   };
 
-  const addTask: AddTask = newTask => {
-    newTask.trim() !== "" &&
+  const addTask: AddTask = (newTask) => {
+    newTask.trim() !== '' &&
       setTasks([...tasks, { text: newTask, complete: false }]);
   };
 

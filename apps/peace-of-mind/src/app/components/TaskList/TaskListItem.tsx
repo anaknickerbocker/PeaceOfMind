@@ -1,5 +1,6 @@
-import React from "react";
-import "./TaskListItem.css";
+import React from 'react';
+import './TaskListItem.css';
+import { Task, ToggleComplete } from './types';
 
 interface TaskListItemProps {
   task: Task;
@@ -8,11 +9,11 @@ interface TaskListItemProps {
 
 export const TaskListItem: React.FC<TaskListItemProps> = ({
   task,
-  toggleComplete
+  toggleComplete,
 }) => {
   return (
     <li>
-      <label className={task.complete ? "complete" : undefined}>
+      <label className={task.complete ? 'complete' : undefined}>
         <input
           type="checkbox"
           onChange={() => toggleComplete(task)}
