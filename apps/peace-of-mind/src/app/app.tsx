@@ -24,7 +24,7 @@ const App = () => {
   return (
     <Theme.Provider theme="default">
       <div style={{ minHeight: '100vh', backgroundColor: '#E5C2F9'}} >
-        <DarkMode />
+        {/*<DarkMode />*/}
         <GlobalState>
           <BrowserRouter>
             <HeaderLink />
