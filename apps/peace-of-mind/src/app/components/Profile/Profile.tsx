@@ -1,5 +1,7 @@
 import React, { FormEvent, useState, useContext } from 'react';
 import AppContext from '../context/AppContext';
+import { UserIcon } from '@twilio-paste/icons/esm/UserIcon';
+import { InformationIcon } from '@twilio-paste/icons/esm/InformationIcon';
 
 import './Profile.css';
 
@@ -8,22 +10,17 @@ const Profile = () => {
   const [lastName, setLastName] = useState<string | undefined>();
   const [phoneDetails, setPhoneDetails] = useState<string | undefined>();
   const [emailDetails, setEmailDetails] = useState<string | undefined>();
-  
-  const {
-    id,
-    setId,
-    name, 
-    setName
-  } = useContext(AppContext)
 
-  console.log(id)
+  const { id, setId, name, setName } = useContext(AppContext);
+
+  console.log(id);
 
   const handleSubmit = () => {
     if (firstName) {
-      setName(firstName)
+      setName(firstName);
     }
-  }
-  
+  };
+
   return (
     <div className="profile-wrapper">
     {id}
@@ -61,13 +58,15 @@ const Profile = () => {
           />
         </label>
         <div className='submit'>
-          <button 
+          <button
             style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
             type="submit"
             onClick={handleSubmit}
           >
             Submit
           </button>
+          <InformationIcon decorative={false} title="Description of icon" />
+          <UserIcon decorative={false} title="Description of icon" />
         </div>
     </div>
   );
