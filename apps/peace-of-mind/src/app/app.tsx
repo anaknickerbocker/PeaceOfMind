@@ -6,7 +6,7 @@ import HeaderLink from './components/Header/Header';
 import Login from './components/Login/Login';
 import Profile from './components/Profile/Profile';
 import React from 'react';
-import Reminders from './components/Reminders';
+import Reminders from './components/Reminders/Reminders';
 import Tasks from './components/CreateTasks/CreateTasks';
 import useToken from './components/useToken';
 
@@ -15,15 +15,21 @@ const App = () => {
 
   if (!token) {
     return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#E5C2F9'}} >
-    <Login setToken={setToken} />
-    </div>
+      <div style={{ minHeight: '100vh', backgroundColor: '#E5C2F9' }}>
+        <Login setToken={setToken} />
+      </div>
     );
   }
 
   return (
     // <Theme.Provider theme="default">
-    <div style={{ minHeight: '100vh', backgroundColor: '#E5C2F9', fontFamily: 'Verdana'}} >
+    <div
+      style={{
+        minHeight: '100vh',
+        backgroundColor: '#E5C2F9',
+        fontFamily: 'Verdana',
+      }}
+    >
       {/* <DarkMode /> */}
       <GlobalState>
         <BrowserRouter>
@@ -34,7 +40,7 @@ const App = () => {
               <Profile />
             </Route>
             <Route path="/tasks">
-              <Tasks />
+              <CreateTasks />
             </Route>
             <Route path="/profile">
               <Profile />
@@ -46,7 +52,7 @@ const App = () => {
         </BrowserRouter>
       </GlobalState>
     </div>
-  //  </Theme.Provider>
+    //  </Theme.Provider>
   );
 };
 
