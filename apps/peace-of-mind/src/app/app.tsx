@@ -1,14 +1,14 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
-import Tasks from './components/CreateTasks/CreateTasks';
+import { Theme } from '@twilio-paste/core/theme';
+// import DarkMode from './components/DarkMode/DarkMode';
+import GlobalState from './components/context/GlobalState';
+import HeaderLink from './components/Header/Header';
 import Login from './components/Login/Login';
 import Profile from './components/Profile/Profile';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Reminders from './components/Reminders';
+import Tasks from './components/CreateTasks/CreateTasks';
 import useToken from './components/useToken';
-import HeaderLink from './components/Header/Header'
-import GlobalState from './components/context/GlobalState'
-import DarkMode from './components/DarkMode/DarkMode';
 
 const App = () => {
   const { token, setToken } = useToken();
@@ -22,6 +22,7 @@ const App = () => {
   }
 
   return (
+    <Theme.Provider theme="default">
     <div style={{ minHeight: '100vh', backgroundColor: '#E5C2F9', fontFamily: 'Verdana'}} >
       <DarkMode />
       <GlobalState>
@@ -45,6 +46,7 @@ const App = () => {
         </BrowserRouter>
       </GlobalState>
     </div>
+   </Theme.Provider>
   );
 };
 

@@ -6,6 +6,7 @@ export default class AlertingService {
   private static instance: AlertingService;
   private twilioService: TwilioService;
   private dataService: DataService;
+
   private constructor() {
     this.twilioService = TwilioService.getInstance();
     this.dataService = DataService.getInstance();
@@ -23,33 +24,65 @@ export default class AlertingService {
 
     // Get alerts due now
     const alerts = await this.dataService.getAlertsDueNow();
-    console.log(alerts);
+    // const alerts = await this.dataService.getAlertsAnytime();
 
+    // Split the alerts by sms/voice/email
+    const sms = [];
+    const voice = [];
+    const email = [];
+    alerts.forEach((alert) => {
+      if (alert.alertType === 'sms') {
+        sms.push(alert);
+      } else if (alert.alertType === 'voice') {
+        voice.push(alert);
+      } else if (alert.alertType === 'email') {
+        email.push(alert);
+      }
+    });
     // Send the alerts
-    // TODO: Split the alerts by sms/voice/email
-    // await this.sendSms(alerts);
-
-    // TODO: Add alerts to the alertsHistory table
-
-    // TODO: Delete the alerts from the alerts table
+    await Promise.allSettled([
+      this.sendSms(sms),
+      this.sendVoice(voice),
+      this.sendEmail(email),
+    ]);
   }
 
   async sendSms(smsAlerts: Array<Alert>): Promise<void> {
     await Promise.allSettled(
-      smsAlerts.map((alert) =>
-        this.twilioService.sendSms(alert.alertDestination, alert.description)
-      )
+      smsAlerts.map(async (alert) => {
+        await this.dataService.createAlertHistory(alert);
+        await this.dataService.deleteAlert(alert.alertId);
+        return this.twilioService.sendSms(
+          alert.alertDestination,
+          alert.description
+        );
+      })
     );
   }
 
   async sendVoice(voiceAlerts: Array<Alert>): Promise<void> {
     await Promise.allSettled(
-      voiceAlerts.map((alert) =>
-        this.twilioService.sendVoice(alert.alertDestination, alert.description)
-      )
+      voiceAlerts.map(async (alert) => {
+        await this.dataService.createAlertHistory(alert);
+        await this.dataService.deleteAlert(alert.alertId);
+        return this.twilioService.sendVoice(
+          alert.alertDestination,
+          alert.description
+        );
+      })
     );
   }
 
-  // TODO: create a Sendgrid Service for emails
-  async sendEmail(emailAlerts: Array<Alert>): Promise<void> {}
+  async sendEmail(emailAlerts: Array<Alert>): Promise<void> {
+    await Promise.allSettled(
+      emailAlerts.map(async (alert) => {
+        await this.dataService.createAlertHistory(alert);
+        await this.dataService.deleteAlert(alert.alertId);
+        return this.twilioService.sendEmail(
+          alert.alertDestination,
+          alert.description
+        );
+      })
+    );
+  }
 }

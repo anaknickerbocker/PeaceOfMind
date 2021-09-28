@@ -1,23 +1,16 @@
 import React from "react";
-import { Task, ToggleComplete } from "./types";
+import {Task} from '@peace-of-mind/api-interfaces'
 import { TaskListItem } from "./TaskListItem";
 
-interface TaskListProps {
-  tasks: Array<Task>;
-  toggleComplete: ToggleComplete;
-}
-
-export const TaskList: React.FC<TaskListProps> = ({
-  tasks,
-  toggleComplete
+export const TaskList = (props: {
+  tasks: Array<Partial<Task>>,
 }) => {
   return (
     <ul>
-      {tasks.map(task => (
+      {props.tasks.map(task => (
         <TaskListItem
-          key={task.text}
+          key={task.description}
           task={task}
-          toggleComplete={toggleComplete}
         />
       ))}
     </ul>

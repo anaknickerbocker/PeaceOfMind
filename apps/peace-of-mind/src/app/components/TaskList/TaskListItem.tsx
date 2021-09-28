@@ -1,25 +1,12 @@
 import React from 'react';
 import './TaskListItem.css';
-import { Task, ToggleComplete } from './types';
+import { Task } from '@peace-of-mind/api-interfaces';
 
-interface TaskListItemProps {
-  task: Task;
-  toggleComplete: ToggleComplete;
-}
-
-export const TaskListItem: React.FC<TaskListItemProps> = ({
-  task,
-  toggleComplete,
-}) => {
+export const TaskListItem = (props: {task: Partial<Task>}) => {
   return (
     <li>
-      <label className={task.complete ? 'complete' : undefined}>
-        <input
-          type="checkbox"
-          onChange={() => toggleComplete(task)}
-          checked={task.complete}
-        />
-        {task.text}
+      <label className={props.task.complete ? 'complete' : undefined}>
+        {props.task.description}
       </label>
     </li>
   );

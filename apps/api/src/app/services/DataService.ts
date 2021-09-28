@@ -19,6 +19,7 @@ export default class DataService {
     return DataService.instance;
   }
 
+  // Users
   createUser(name: string, sms: string, voice: string, email: string) {
     return r
       .table('users')
@@ -52,6 +53,7 @@ export default class DataService {
     return r.table('users').get(userId).delete().run(this.connection);
   }
 
+  // Tasks
   createTask(
     userId: string,
     description: string,
@@ -88,6 +90,7 @@ export default class DataService {
     return r.table('tasks').get(taskId).delete().run(this.connection);
   }
 
+  // Alerts
   createAlert(
     userId: string,
     taskId: string,
@@ -141,22 +144,14 @@ export default class DataService {
     return r.table('alerts').get(alertId).delete().run(this.connection);
   }
 
+  // Alert Histories
   createAlertHistory(
-    userId: string,
-    taskId: string,
-    alertId: string,
-    alertType: 'sms' | 'voice' | 'email',
-    alertDestination: string,
-    description: string
+    alert: Alert | Partial<Alert>
   ) {
     return r.table('alertHistories').insert({
-      userId,
-      taskId,
-      alertId,
-      alertType,
-      alertDestination,
-      description,
-    });
+      ...alert,
+      alertSent: new Date()
+    }).run(this.connection);
   }
 
   async getAllAlertHistoriesForUser(userId: string) {
@@ -206,11 +201,20 @@ export default class DataService {
   async getAlertsDueNow() {
     const cursor: Cursor = await r
       .table('alerts')
+      .filter((alert) => alert('alertDue')
+      .gt(r.now())
+      .and(alert('alertDue').lt(r.now().add(60))))
+      .orderBy('alertDue')
+      .run(this.connection);
+    return cursor.toArray();
+  }
+
+  // Get all alerts, for testing purposes
+  async getAlertsAnytime() {
+    const cursor: Cursor = await r
+      .table('alerts')
       .filter((alert) => alert('alertDue').lt(r.now()))
       .orderBy('alertDue')
-      // .gt(r.now())
-      // .and(alert('alertDue').lt(r.now().add(60)))
-      // .orderBy('alertDue')
       .run(this.connection);
     return cursor.toArray();
   }

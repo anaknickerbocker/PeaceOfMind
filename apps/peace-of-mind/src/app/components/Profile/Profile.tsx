@@ -1,8 +1,9 @@
 import React, { FormEvent, useState, useContext } from 'react';
 import AppContext from '../context/AppContext';
 import {Card} from 'antd';
-// import styled from 'styled-components';
 import "antd/dist/antd.css";
+import { UserIcon } from '@twilio-paste/icons/esm/UserIcon';
+import { InformationIcon } from '@twilio-paste/icons/esm/InformationIcon';
 
 import './Profile.css';
 
@@ -44,7 +45,6 @@ const Profile = () => {
 
 }
 
-  
   return (
     <div className="profile-wrapper">
     {profileCreated &&
@@ -119,6 +119,8 @@ const Profile = () => {
           >
             Submit
           </button>
+          <InformationIcon decorative={false} title="Description of icon" />
+          <UserIcon decorative={false} title="Description of icon" />
         </div>
       </div>
     }
