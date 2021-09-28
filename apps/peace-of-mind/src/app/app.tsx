@@ -23,30 +23,30 @@ const App = () => {
 
   return (
     <Theme.Provider theme="default">
-      <div style={{ minHeight: '100vh', backgroundColor: '#E5C2F9'}} >
-        {/*<DarkMode />*/}
-        <GlobalState>
-          <BrowserRouter>
-            <HeaderLink />
-            <h1 style={{ textAlign: 'center' }}> PEACE OF MIND </h1>
-            <Switch>
-              <Route exact path="/">
-                <Profile />
-              </Route>
-              <Route path="/tasks">
-                <Tasks />
-              </Route>
-              <Route path="/profile">
-                <Profile />
-              </Route>
-              <Route path="/reminders">
-                <Reminders />
-              </Route>
-            </Switch>
-          </BrowserRouter>
-        </GlobalState>
-      </div>
-    </Theme.Provider>
+    <div style={{ minHeight: '100vh', backgroundColor: '#E5C2F9', fontFamily: 'Verdana'}} >
+      <DarkMode />
+      <GlobalState>
+        <BrowserRouter>
+          <HeaderLink />
+          <h1 style={{ textAlign: 'center' }}> PEACE OF MIND </h1>
+          <Switch>
+            <Route exact path="/">
+              <Profile />
+            </Route>
+            <Route path="/tasks">
+              <Tasks />
+            </Route>
+            <Route path="/profile">
+              <Profile />
+            </Route>
+            <Route path="/reminders">
+              <Reminders />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </GlobalState>
+    </div>
+   </Theme.Provider>
   );
 };
 
