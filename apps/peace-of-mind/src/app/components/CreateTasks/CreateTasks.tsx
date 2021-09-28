@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { FormEvent, useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
 import { BsFillBellFill } from 'react-icons/bs';
 
@@ -6,272 +6,240 @@ import './CreateTasks.css';
 import { TaskList } from '../TaskList/TaskList';
 import { initialTasks } from '../TaskList/initialTasks';
 
-const Tasks = () => {
-  const [newTask, setNewTask] = useState(false)
-  const [formData, setFormData] = useState({
-    taskDescription: "",
-    reminderOneNumber: "",
-    reminderOneMethod: "",
-    reminderOneInterval: "",
-    reminderNumberTwo: "",
-    reminderTwoMethod: "",
-    reminderTwoInterval: "",
-    reminderNumberThree: "",
-    reminderThreeInterval: "",
-    reminderThreeMethod: "",
-    currentDate: Date().toLocaleString(),
-    });
+const CreateTasks = () => {
+  const [newTask, setNewTask] = useState(false);
 
-    const {
-        id,
-        setId,
-        name,
-        setName,
-        taskReminders,
-        setTaskReminders,
-      } = useContext(AppContext)
+  interface AlertData {
+    reminderNumber: string;
+    reminderMethod: string;
+    reminderInterval: string;
+    currentDate: string;
+  }
 
+  interface FormData {
+    taskDescription: string;
+    alerts: Array<AlertData>;
+  }
+
+  const initialFormData: FormData = {
+    taskDescription: '',
+    alerts: [
+      {
+        reminderNumber: '',
+        reminderMethod: '',
+        reminderInterval: '',
+        currentDate: Date().toLocaleString(),
+      },
+    ],
+  };
+
+  const [formData, setFormData] = useState<FormData>();
+
+  const { id, setId, name, setName, taskReminders, setTaskReminders } =
+    useContext(AppContext);
 
   const handleSubmit = (e: any) => {
-    e.preventDefault()
-    console.log(formData)
-    setTaskReminders([...taskReminders, formData])
-    setNewTask(false)
-}
+    e.preventDefault();
+    console.log(formData);
+    setTaskReminders([...taskReminders, formData]);
+    setNewTask(false);
+  };
 
-const addTask = () => {
-    console.log(newTask)
-    setNewTask(true)
-    console.log(newTask)
-}
+  const addTask = () => {
+    console.log(newTask);
+    setFormData(initialFormData);
+    setNewTask(true);
+    console.log(newTask);
+  };
+
+  const removeTask = (index: number) => {
+    setFormData(undefined);
+  };
+
+  const addAlert = () => {
+    if (formData) {
+      const existingAlerts = formData?.alerts;
+      setFormData({
+        ...formData,
+        alerts: [
+          ...existingAlerts,
+          {
+            reminderNumber: '',
+            reminderMethod: '',
+            reminderInterval: '',
+            currentDate: Date().toLocaleString(),
+          },
+        ],
+      });
+    }
+  };
+
+  const removeAlert = (index: number) => {
+    if (formData) {
+      const existingAlerts = formData?.alerts;
+      setFormData({
+        ...formData,
+        alerts: [...existingAlerts.filter((alert, i) => i !== index)],
+      });
+    }
+  };
+
+  const changeHandler = (e: any, field: keyof AlertData, index: number) => {
+    if (formData?.alerts) {
+      const existingAlerts = formData?.alerts;
+      existingAlerts[index][field] = e?.target?.value;
+      setFormData({ ...formData, alerts: [...existingAlerts] });
+    }
+  };
+
+  // eslint-disable-next-line no-shadow
+  const PrettyDiv = (props: { data: Record<string, unknown> }): JSX.Element => (
+    <div>
+      <pre>{JSON.stringify(props.data, null, 2)}</pre>
+    </div>
+  );
 
   return (
     <div className="task-wrapper">
-    <TaskList tasks={initialTasks}/>
-
-    {!newTask &&
-        <div>
-            <h2>Create Your Task Reminders</h2>
-            <button
-                style={{borderRadius: '100px', marginLeft: '120px', paddingTop: '5px', paddingBottom: '5px'}}
-                type="submit"
-                onClick={addTask}
-            >
-                Add Task
-            </button>
-        </div>
-    }
-    {newTask === true &&
-      <form onSubmit={handleSubmit}>
-      <p>Task description: </p>
-        <div className='input'>
+      <PrettyDiv data={{ formData }} />
+      <TaskList tasks={initialTasks} />
+      <div>
+        <h2>Create Your Task Reminders</h2>
+        <button
+          style={{
+            borderRadius: '100px',
+            marginLeft: '120px',
+            paddingTop: '5px',
+            paddingBottom: '5px',
+          }}
+          type="submit"
+          onClick={addTask}
+        >
+          Add Task
+        </button>
+      </div>
+      {formData && (
+        <form onSubmit={handleSubmit}>
+          <p>Task description: </p>
+          <div className="input">
             <input
-                value={formData.taskDescription}
-                type="text"
-                id='taskDescription'
-                name="taskDescription"
-                style={{ borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', paddingRight: '100px'}}
-                onChange={(e)=>setFormData({...formData, taskDescription: e.target.value})}
+              value={formData.taskDescription}
+              type="text"
+              id={'taskDescription'}
+              name="taskDescription"
+              style={{
+                borderRadius: '100px',
+                paddingTop: '5px',
+                paddingBottom: '5px',
+                paddingRight: '100px',
+              }}
+              onChange={(e) =>
+                setFormData({ ...formData, taskDescription: e.target.value })
+              }
             />
-        </div>
-        <div className='input'>
-            <div className='input-style'>
-                <input
-                    value={formData.reminderOneNumber}
+          </div>
+          {formData?.alerts?.map((row, index) => (
+            <>
+              <div className="input">
+                <div className="input-style">
+                  <input
+                    value={row.reminderNumber}
                     placeholder="  #"
-                    style={{width: '30px', borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginTop: '30px' }}
+                    style={{
+                      width: '30px',
+                      borderRadius: '100px',
+                      paddingTop: '5px',
+                      paddingBottom: '5px',
+                      marginTop: '30px',
+                    }}
                     type="text"
-                    id='reminderOneNumber'
-                    name='reminderOneNumber'
-                    onChange={(e)=>setFormData({...formData, reminderOneNumber: e.target.value})}
-                />
-            </div>
-            <select
-                style={{
-                    marginRight: "10px",
+                    id={`reminderNumber-${index}`}
+                    name="reminderNumber"
+                    onChange={(e) => changeHandler(e, `reminderNumber`, index)}
+                  />
+                </div>
+                <select
+                  style={{
+                    marginRight: '10px',
                     marginTop: '30px',
                     paddingRight: '20px',
                     paddingTop: '5px',
                     paddingBottom: '5px',
                     borderRadius: '100px',
-                }}
-                name="reminderOneInterval"
-                id="reminderOneInterval"
-                value={formData.reminderOneInterval}
-                onChange={(e)=>setFormData({...formData, reminderOneInterval: e.target.value})}
-            >
-                    <option value="selectOne">---</option> 
-                    <option value="Minutes">Minutes</option>
-                   <option value="Hours">Hours</option>
-                   <option value="Days">Days</option>
-            </select>
-            <BsFillBellFill style={{
-                backgroundColor: 'white',
-                borderRadius: '100px',
-                marginLeft: '50px',
-                marginRight: '10px',
-                paddingTop: '5px',
-                paddingBottom: '5px',
-                paddingRight: '5px',
-                paddingLeft: '5px',
-                marginTop: '30px'
-            }}
-            />
-            <select
-                value={formData.reminderOneMethod}
-                style={{
-                    paddingTop: '5px',
-                    paddingBottom: '5px',
-                    paddingRight: '30px',
-                    marginTop: '30px',
-                    borderRadius: '100px'
-                }}
-                name="reminderOneMethod"
-                id="reminderOneMethod"
-                onChange={(e)=>setFormData({...formData, reminderOneMethod: e.target.value})}
-            >
-                <option value="selectOne">---</option>
-                <option value="SMS">SMS</option>
-               <option value="Email">Email</option>
-               <option value="Voice">Voice</option>
-            </select>
-        </div>
-        <div className='input'>
-            <div className='input-style'>
-                <input
-                    value={formData.reminderNumberTwo}
-                    placeholder="  #"
-                    style={{width: '30px', borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginTop: '30px'}}
-                    type="text"
-                    id='reminderNumberTwo'
-                    name='reminderNumberTwo'
-                    onChange={ (e)=>setFormData({...formData, reminderNumberTwo: e.target.value})}
-                />
-            </div>
-            <select
-                value={formData.reminderTwoInterval}
-                style={{
-                    marginRight: "10px",
-                    marginTop: '30px',
-                    paddingRight: '20px',
-                    paddingTop: '5px',
-                    paddingBottom: '5px',
+                  }}
+                  name="reminderInterval"
+                  id={`reminderInterval-${index}`}
+                  value={row.reminderInterval}
+                  onChange={(e) => changeHandler(e, `reminderInterval`, index)}
+                >
+                  <option value="selectOne">---</option>
+                  <option value="Minutes">Minutes</option>{' '}
+                  <option value="Hours">Hours</option>{' '}
+                  <option value="Days">Days</option>
+                </select>
+                <BsFillBellFill
+                  style={{
+                    backgroundColor: 'white',
                     borderRadius: '100px',
-                }}
-                name="reminderTwoInterval"
-                id="reminderTwoInterval"
-                onChange={(e)=>setFormData({...formData, reminderTwoInterval: e.target.value})}
-            >
-                <option value="selectOne">---</option> 
-                <option value="Minutes">Minutes</option>
-                   <option value="Hours">Hours</option>
-                   <option value="Days">Days</option>
-            </select>
-            <BsFillBellFill style={{
-                backgroundColor: 'white',
-                borderRadius: '100px',
-                marginLeft: '50px',
-                marginRight: '10px',
-                paddingTop: '5px',
-                paddingBottom: '5px',
-                paddingRight: '5px',
-                paddingLeft: '5px',
-                marginTop: '30px'
-            }}
-            />
-            <select
-                value={formData.reminderTwoMethod}
-                style={{
+                    marginLeft: '50px',
+                    marginRight: '10px',
                     paddingTop: '5px',
                     paddingBottom: '5px',
-                    paddingRight: '30px',
+                    paddingRight: '5px',
+                    paddingLeft: '5px',
                     marginTop: '30px',
-                    borderRadius: '100px'
-                }}
-                name="selectContactMethod"
-                id="selectList"
-                onChange={(e)=>setFormData({...formData, reminderTwoMethod: e.target.value})}
-            >
-                <option value="selectOne">---</option>   
-                <option value="SMS">SMS</option>
-               <option value="Email">Email</option>
-               <option value="Voice">Voice</option>
-            </select>
-        </div>
-        <div className='input'>
-            <div className='input-style'>
-                <input
-                    value={formData.reminderNumberThree}
-                    placeholder='  #'
-                    style={{width: '30px', borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginTop: '30px'}}
-                    type='text'
-                    name='reminderNumberThree'
-                    id='reminderNumberThree'
-                    onChange={(e)=>setFormData({...formData, reminderNumberThree: e.target.value})}
+                  }}
                 />
-            </div>
-            <select
-                value={formData.reminderThreeInterval}
-                style={{
-                    marginRight: "10px",
-                    marginTop: '30px',
-                    paddingRight: '20px',
-                    paddingTop: '5px',
-                    paddingBottom: '5px',
-                    borderRadius: '100px',
-                }}
-                name="reminderThreeInterval"
-                id="reminderThreeInterval"
-                onChange={(e)=>setFormData({...formData, reminderThreeInterval: e.target.value})}
-            >
-                    <option value="selectOne">---</option>   
-                    <option value="Minutes">Minutes</option>
-                   <option value="Hours">Hours</option>
-                   <option value="Days">Days</option>
-            </select>
-            <BsFillBellFill style={{
-                backgroundColor: 'white',
-                borderRadius: '100px',
-                marginLeft: '50px',
-                marginRight: '10px',
-                paddingTop: '5px',
-                paddingBottom: '5px',
-                paddingRight: '5px',
-                paddingLeft: '5px',
-                marginTop: '30px'
-            }}
-            />
-            <select
-                value={formData.reminderThreeMethod}
-                style={{
+                <select
+                  value={row.reminderMethod}
+                  style={{
                     paddingTop: '5px',
                     paddingBottom: '5px',
                     paddingRight: '30px',
                     marginTop: '30px',
-                    borderRadius: '100px'
-                }}
-                name="reminderThreeMethod"
-                id="reminderThreeMethod"
-                onChange={(e)=>setFormData({...formData, reminderThreeMethod: e.target.value})}
-            >
-                <option value="selectOne">---</option> 
-                <option value="SMS">SMS</option>
-               <option value="Email">Email</option>
-               <option value="Voice">Voice</option>
-            </select>
-        </div>
-        <div className='submit'>
+                    borderRadius: '100px',
+                  }}
+                  name="reminderMethod"
+                  id={`reminderMethod-${index}`}
+                  onChange={(e) => changeHandler(e, `reminderMethod`, index)}
+                >
+                  <option value="selectOne">---</option>
+                  <option value="SMS">SMS</option>
+                  <option value="Email">Email</option>{' '}
+                  <option value="Voice">Voice</option>
+                </select>
+              </div>
+            </>
+          ))}
+          <button
+            style={{
+              borderRadius: '100px',
+              marginLeft: '120px',
+              paddingTop: '5px',
+              paddingBottom: '5px',
+            }}
+            type="submit"
+            onClick={addAlert}
+          >
+            Add Alert
+          </button>
+          <div className="submit">
             <button
-                type="submit"
-                style={{borderRadius: '100px', marginTop: '20px', paddingTop: '5px', paddingBottom: '5px'}}
+              type="submit"
+              style={{
+                borderRadius: '100px',
+                marginTop: '20px',
+                paddingTop: '5px',
+                paddingBottom: '5px',
+              }}
             >
-                Save Task
+              Save Task
             </button>
-        </div>
-      </form>
-    }
+          </div>
+        </form>
+      )}
     </div>
   );
 };
 
-export default Tasks;
+export default CreateTasks;
