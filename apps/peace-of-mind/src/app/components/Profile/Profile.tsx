@@ -2,8 +2,8 @@ import React, { FormEvent, useState, useContext } from 'react';
 import AppContext from '../context/AppContext';
 import {Card} from 'antd';
 import "antd/dist/antd.css";
-import { UserIcon } from '@twilio-paste/icons/esm/UserIcon';
-import { InformationIcon } from '@twilio-paste/icons/esm/InformationIcon';
+// import { UserIcon } from '@twilio-paste/icons/esm/UserIcon';
+// import { InformationIcon } from '@twilio-paste/icons/esm/InformationIcon';
 
 import './Profile.css';
 
@@ -119,8 +119,8 @@ const Profile = () => {
           >
             Submit
           </button>
-          <InformationIcon decorative={false} title="Description of icon" />
-          <UserIcon decorative={false} title="Description of icon" />
+          {/* <InformationIcon decorative={false} title="Description of icon" />
+          <UserIcon decorative={false} title="Description of icon" /> */}
         </div>
       </div>
     }

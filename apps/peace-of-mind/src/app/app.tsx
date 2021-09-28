@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Theme } from '@twilio-paste/core/theme';
+// import { Theme } from '@twilio-paste/core/theme';
 // import DarkMode from './components/DarkMode/DarkMode';
 import GlobalState from './components/context/GlobalState';
 import HeaderLink from './components/Header/Header';
@@ -22,9 +22,9 @@ const App = () => {
   }
 
   return (
-    <Theme.Provider theme="default">
+    // <Theme.Provider theme="default">
     <div style={{ minHeight: '100vh', backgroundColor: '#E5C2F9', fontFamily: 'Verdana'}} >
-      <DarkMode />
+      {/* <DarkMode /> */}
       <GlobalState>
         <BrowserRouter>
           <HeaderLink />
@@ -46,7 +46,7 @@ const App = () => {
         </BrowserRouter>
       </GlobalState>
     </div>
-   </Theme.Provider>
+  //  </Theme.Provider>
   );
 };
 
