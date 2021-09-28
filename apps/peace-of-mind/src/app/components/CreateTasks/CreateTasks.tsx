@@ -1,6 +1,9 @@
 import React, { useState, useContext } from 'react';
 import AppContext from '../context/AppContext';
 import { BsFillBellFill } from 'react-icons/bs';
+import "antd/dist/antd.css";
+import {BellOutlined} from '@ant-design/icons';
+
 
 import './CreateTasks.css';
 import { TaskList } from '../TaskList/TaskList';
@@ -105,7 +108,7 @@ const addTask = () => {
                    <option value="Hours">Hours</option>
                    <option value="Days">Days</option>
             </select>
-            <BsFillBellFill style={{
+            <BellOutlined style={{
                 backgroundColor: 'white',
                 borderRadius: '100px',
                 marginLeft: '50px',
@@ -116,7 +119,20 @@ const addTask = () => {
                 paddingLeft: '5px',
                 marginTop: '30px'
             }}
-            />
+            >
+            </BellOutlined>
+            {/* <BsFillBellFill style={{
+                backgroundColor: 'white',
+                borderRadius: '100px',
+                marginLeft: '50px',
+                marginRight: '10px',
+                paddingTop: '5px',
+                paddingBottom: '5px',
+                paddingRight: '5px',
+                paddingLeft: '5px',
+                marginTop: '30px'
+            }}
+            /> */}
             <select
                 value={formData.reminderOneMethod}
                 style={{
@@ -167,7 +183,7 @@ const addTask = () => {
                    <option value="Hours">Hours</option>
                    <option value="Days">Days</option>
             </select>
-            <BsFillBellFill style={{
+            <BellOutlined style={{
                 backgroundColor: 'white',
                 borderRadius: '100px',
                 marginLeft: '50px',
@@ -178,7 +194,8 @@ const addTask = () => {
                 paddingLeft: '5px',
                 marginTop: '30px'
             }}
-            />
+            >
+            </BellOutlined>
             <select
                 value={formData.reminderTwoMethod}
                 style={{
@@ -229,7 +246,7 @@ const addTask = () => {
                    <option value="Hours">Hours</option>
                    <option value="Days">Days</option>
             </select>
-            <BsFillBellFill style={{
+            <BellOutlined style={{
                 backgroundColor: 'white',
                 borderRadius: '100px',
                 marginLeft: '50px',
@@ -240,7 +257,8 @@ const addTask = () => {
                 paddingLeft: '5px',
                 marginTop: '30px'
             }}
-            />
+            >
+            </BellOutlined>
             <select
                 value={formData.reminderThreeMethod}
                 style={{

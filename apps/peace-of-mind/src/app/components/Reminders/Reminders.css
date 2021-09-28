@@ -1,0 +1,7 @@
+.reminders-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  justify-content: center;
+}
+
