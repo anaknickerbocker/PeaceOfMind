@@ -5,30 +5,35 @@ import { BsFillBellFill } from 'react-icons/bs';
 import './CreateTasks.css';
 import { TaskList } from '../TaskList/TaskList';
 import { initialTasks } from '../TaskList/initialTasks';
+import DataService from '../../services/DataService';
+
+export interface AlertData {
+  reminderNumber: string;
+  reminderMethod: string;
+  reminderInterval: string;
+  alertDue: string;
+}
+
+export interface FormData {
+  taskDescription: string;
+  taskDateTime: string;
+  complete: boolean;
+  alerts: Array<AlertData>;
+}
 
 const CreateTasks = () => {
+  const userId = '9c96b141-083f-4d0e-94f6-6ce76d463c16';
   const [newTask, setNewTask] = useState(false);
-
-  interface AlertData {
-    reminderNumber: string;
-    reminderMethod: string;
-    reminderInterval: string;
-    currentDate: string;
-  }
-
-  interface FormData {
-    taskDescription: string;
-    alerts: Array<AlertData>;
-  }
-
   const initialFormData: FormData = {
     taskDescription: '',
+    taskDateTime: '',
+    complete: false,
     alerts: [
       {
         reminderNumber: '',
         reminderMethod: '',
         reminderInterval: '',
-        currentDate: Date().toLocaleString(),
+        alertDue: '',
       },
     ],
   };
@@ -41,6 +46,22 @@ const CreateTasks = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log(formData);
+    if (formData) {
+      const taskResponse = DataService.createTask(userId, formData)
+        .then((res) => res.json())
+        .then((res) => res.generated_keys[0])
+        .then((taskId) =>
+          formData.alerts.forEach(async (alert: AlertData) => {
+            const alertResponse = await DataService.createAlert(
+              userId,
+              taskId,
+              alert,
+              'ana.knickerbocker@gmail.com', // Ana's email
+              formData.taskDescription
+            );
+          })
+        );
+    }
     setTaskReminders([...taskReminders, formData]);
     setNewTask(false);
   };
@@ -67,7 +88,7 @@ const CreateTasks = () => {
             reminderNumber: '',
             reminderMethod: '',
             reminderInterval: '',
-            currentDate: Date().toLocaleString(),
+            alertDue: '',
           },
         ],
       });
@@ -93,15 +114,15 @@ const CreateTasks = () => {
   };
 
   // eslint-disable-next-line no-shadow
-  const PrettyDiv = (props: { data: Record<string, unknown> }): JSX.Element => (
-    <div>
-      <pre>{JSON.stringify(props.data, null, 2)}</pre>
-    </div>
-  );
+  // const PrettyDiv = (props: { data: Record<string, unknown> }): JSX.Element => (
+  //   <div>
+  //     <pre>{JSON.stringify(props.data, null, 2)}</pre>
+  //   </div>
+  // );
 
   return (
     <div className="task-wrapper">
-      <PrettyDiv data={{ formData }} />
+      {/*<PrettyDiv data={{ formData }} />*/}
       <TaskList tasks={initialTasks} />
       <div>
         <h2>Create Your Task Reminders</h2>
@@ -204,9 +225,9 @@ const CreateTasks = () => {
                   onChange={(e) => changeHandler(e, `reminderMethod`, index)}
                 >
                   <option value="selectOne">---</option>
-                  <option value="SMS">SMS</option>
-                  <option value="Email">Email</option>{' '}
-                  <option value="Voice">Voice</option>
+                  <option value="sms">SMS</option>
+                  <option value="email">Email</option>{' '}
+                  <option value="voice">Voice</option>
                 </select>
               </div>
             </>
