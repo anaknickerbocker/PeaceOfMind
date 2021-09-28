@@ -6,8 +6,8 @@ import HeaderLink from './components/Header/Header';
 import Login from './components/Login/Login';
 import Profile from './components/Profile/Profile';
 import React from 'react';
-import Reminders from './components/Reminders';
-import CreateTasks from './components/CreateTasks/CreateTasks';
+import Reminders from './components/Reminders/Reminders';
+import Tasks from './components/CreateTasks/CreateTasks';
 import useToken from './components/useToken';
 
 const App = () => {
