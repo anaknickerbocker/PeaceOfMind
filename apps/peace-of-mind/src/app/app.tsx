@@ -22,7 +22,7 @@ const App = () => {
   }
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#E5C2F9'}} >
+    <div style={{ minHeight: '100vh', backgroundColor: '#E5C2F9', fontFamily: 'Verdana'}} >
       <DarkMode />
       <GlobalState>
         <BrowserRouter>
