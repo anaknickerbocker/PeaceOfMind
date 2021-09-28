@@ -1,7 +1,8 @@
 import React, { FormEvent, useState, useContext } from 'react';
 import AppContext from '../context/AppContext';
-import {Card} from 'antd';
+import {Card, Button} from 'antd';
 import "antd/dist/antd.css";
+
 // import { UserIcon } from '@twilio-paste/icons/esm/UserIcon';
 // import { InformationIcon } from '@twilio-paste/icons/esm/InformationIcon';
 
@@ -58,13 +59,14 @@ const Profile = () => {
         <p>Email: {email}</p>
         <p>Phone number: {phone}</p>
         </Card>
-          <button 
+          <Button type= "primary"> Edit Profile</Button>
+          {/* <button 
             style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginLeft: '90px', marginTop: '30px'}}
             type="submit"
             onClick={handleEdit}
           >
             Edit Profile
-          </button>
+          </button> */}
       </div>
     }
     {!profileCreated && 
@@ -111,14 +113,14 @@ const Profile = () => {
           />
         </label>
       </Card>
-      <div className='submit'>
-          <button 
-            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
-            type="submit"
+      <div >
+          <Button 
+            //  style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
+             type ="primary"
             onClick={handleSubmit}
           >
             Submit
-          </button>
+          </Button>
           {/* <InformationIcon decorative={false} title="Description of icon" />
           <UserIcon decorative={false} title="Description of icon" /> */}
         </div>
