@@ -16,6 +16,7 @@ const Header = () => {
         <HeaderLink page='profile' />
         <HeaderLink page='tasks' />
         <HeaderLink page='reminders' />
+        <HeaderLink page='tracking' />
       </div>
     );
   };

@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // import { Theme } from '@twilio-paste/core/theme';
 // import DarkMode from './components/DarkMode/DarkMode';
+import React from 'react';
 import GlobalState from './components/context/GlobalState';
 import HeaderLink from './components/Header/Header';
 import Login from './components/Login/Login';
 import Profile from './components/Profile/Profile';
-import React from 'react';
+import Tracking from './components/Tracking/Tracking';
 import Reminders from './components/Reminders/Reminders';
 import CreateTasks from './components/CreateTasks/CreateTasks';
 import useToken from './components/useToken';
@@ -47,6 +48,9 @@ const App = () => {
             </Route>
             <Route path="/reminders">
               <Reminders />
+            </Route>
+            <Route path="/tracking">
+              <Tracking />
             </Route>
           </Switch>
         </BrowserRouter>
