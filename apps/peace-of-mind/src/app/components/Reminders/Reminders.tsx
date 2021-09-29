@@ -18,26 +18,29 @@ export default function Reminders() {
     <div style={{display: "flex", flex: "row", justifyContent: "center"}}>
     <div>
       <Divider orientation="left">Upcoming Task Alerts</Divider>
-        <Row gutter={{ md: 24 }}>
-          <Col className="gutter-row" span={8}>
-          <Card
-              title="Take a leisure Walk"
-              style={{backgroundColor: '#E5C2F9'}}
-              extra={<Switch defaultChecked checkedChildren="Alert on" unCheckedChildren="Alert off"/>}
-            >
-            <Steps
-              current={1}
-              size="small"
-              direction="vertical"
-              style={{marginLeft: '50px', paddingRight: '100px'}}
-            >
-              <Steps.Step title="Alert 1" description="1 minute"/>
-              <Steps.Step title="Alert 2" description="2 minutes"/>
-              <Steps.Step title="Alert 3" description="3 minutes"/>
-            </Steps>
-            </Card>
-          </Col>
-          <Col className="gutter-row" span={8}>
+        <Row>
+          <Col className="gutter-row">
+            <Card
+                title="Take a leisure Walk"
+                style={{backgroundColor: '#E5C2F9'}}
+                extra={<Switch defaultChecked checkedChildren="Alert on" unCheckedChildren="Alert off"/>}
+              >
+              <Steps
+                current={1}
+                size="small"
+                direction="vertical"
+                style={{width: '350px'}}
+              >
+                <Steps.Step title="Alert 1" description="1 minute"/>
+                <Steps.Step title="Alert 2" description="2 minutes"/>
+                <Steps.Step title="Alert 3" description="3 minutes"/>
+              </Steps>
+              </Card>
+            </Col>
+        </Row>
+        <Divider orientation="left"></Divider>
+        <Row>
+          <Col className="gutter-row">
           <Card
               title="A minute of deep breathing"
               style={{backgroundColor: '#E5C2F9'}}
@@ -48,14 +51,17 @@ export default function Reminders() {
               current={0}
               size="small"
               direction="vertical"
-              style={{marginLeft: '50px', paddingRight: '100px'}}
+              style={{width: '350px'}}
             >
               <Steps.Step title="Alert 1" description="1 hours"/>
               <Steps.Step title="Alert 2" description="2 hours"/>
             </Steps>
             </Card>
           </Col>
-          <Col className="gutter-row" span={8}>
+        </Row>
+        <Divider orientation="left"></Divider>
+        <Row>
+          <Col className="gutter-row">
             <Card
                 title="Go for a walk"
                 style={{backgroundColor: '#E5C2F9'}}
@@ -66,7 +72,7 @@ export default function Reminders() {
                 current={3}
                 size="small"
                 direction="vertical"
-                style={{marginLeft: '50px', paddingRight: '100px'}}
+                style={{width: '350px'}}
               >
                 <Steps.Step title="Alert 1" description="1 days"/>
                 <Steps.Step title="Alert 2" description="2 days"/>
@@ -76,8 +82,8 @@ export default function Reminders() {
           </Col>
         </Row>
         <Divider orientation="left"></Divider>
-        <Row gutter={{ md: 24 }}>
-          <Col className="gutter-row" span={8}>
+        <Row>
+          <Col className="gutter-row">
           <Card
               title="Eat vegetables"
               style={{backgroundColor: '#E5C2F9'}}
@@ -87,7 +93,7 @@ export default function Reminders() {
               current={0}
               size="small"
               direction="vertical"
-              style={{marginLeft: '50px', paddingRight: '100px'}}
+              style={{width: '350px'}}
             >
               <Steps.Step title="Alert 1" description="1 minute"/>
               <Steps.Step title="Alert 2" description="2 minutes"/>
@@ -95,7 +101,10 @@ export default function Reminders() {
             </Steps>
             </Card>
           </Col>
-          <Col className="gutter-row" span={8}>
+          </Row>
+          <Divider orientation="left"></Divider>
+          <Row>
+          <Col className="gutter-row">
           <Card
               title="Call a family member"
               style={{backgroundColor: '#E5C2F9'}}
@@ -106,7 +115,7 @@ export default function Reminders() {
               current={2}
               size="small"
               direction="vertical"
-              style={{marginLeft: '50px', paddingRight: '100px'}}
+              style={{width: '350px'}}
             >
               <Steps.Step title="Alert 1" description="1 hours"/>
               <Steps.Step title="Alert 2" description="2 hours"/>
@@ -115,7 +124,10 @@ export default function Reminders() {
             </Steps>
             </Card>
           </Col>
-          <Col className="gutter-row" span={8}>
+          </Row>
+          <Divider orientation="left"></Divider>
+          <Row>
+          <Col className="gutter-row">
             <Card
                 title="Text a friend"
                 style={{backgroundColor: '#E5C2F9'}}
@@ -126,7 +138,7 @@ export default function Reminders() {
                 current={2}
                 size="small"
                 direction="vertical"
-                style={{marginLeft: '50px', paddingRight: '100px'}}
+                style={{width: '350px'}}
               >
                 <Steps.Step title="Alert 1" description="1 days"/>
                 <Steps.Step title="Alert 2" description="2 days"/>
@@ -135,6 +147,7 @@ export default function Reminders() {
             </Card>
           </Col>
         </Row>
+        <Divider orientation="left"></Divider>
       {/* <Card
           title="Take a leisure Walk"
           style={{backgroundColor: '#E5C2F9'}}
