@@ -9,12 +9,14 @@ import dev from './app/routes/dev';
 import tasks from './app/routes/tasks';
 import users from './app/routes/users';
 import CronService from './app/services/CronService';
+import helmet from 'helmet';
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
 }
 
 const app = express();
+app.use(helmet());
 new CronService();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
