@@ -25,6 +25,7 @@ export default class AlertingService {
     // Get alerts due now
     const alerts = await this.dataService.getAlertsDueNow();
     // const alerts = await this.dataService.getAlertsAnytime();
+    console.log('alerts due now: ', alerts);
 
     // Split the alerts by sms/voice/email
     const sms = [];

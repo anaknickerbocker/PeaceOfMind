@@ -1,14 +1,17 @@
 import React, { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
-
 import './CreateTasks.css';
 import { TaskList } from '../TaskList/TaskList';
 import DataService from '../../services/DataService';
-import { add } from 'date-fns';
+import { add, formatISO } from 'date-fns';
 import { Task } from '@peace-of-mind/api-interfaces';
 import { BellOutlined } from '@ant-design/icons';
 import { Card, Layout } from 'antd';
 import 'antd/dist/antd.css';
+import { DatePicker, formatReturnDate } from '@twilio-paste/core/date-picker';
+import { TimePicker, formatReturnTime } from '@twilio-paste/core/time-picker';
+import { HelpText, Label } from '@twilio-paste/core';
+import { Box } from '@twilio-paste/core';
 
 export interface AlertData {
   reminderNumber: string;
@@ -19,7 +22,8 @@ export interface AlertData {
 
 export interface FormData {
   taskDescription: string;
-  taskDateTime: string;
+  taskDueDate: string;
+  taskDueTime: string;
   complete: boolean;
   alerts: Array<AlertData>;
 }
@@ -32,7 +36,8 @@ const CreateTasks = () => {
   const [tasks, setTasks] = React.useState<Array<Task>>([]);
   const initialFormData: FormData = {
     taskDescription: '',
-    taskDateTime: '',
+    taskDueDate: '',
+    taskDueTime: '',
     complete: false,
     alerts: [
       {
@@ -61,26 +66,45 @@ const CreateTasks = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (formData) {
+      const dueDate = Date.parse(
+        `${formData.taskDueDate} ${formData.taskDueTime}`
+      );
       const newAlerts: {
         alertDue: string;
         alertType: string;
         description: string;
         alertDestination: string;
         userId: number;
-      }[] = formData.alerts.map((alert) => ({
-        userId,
-        alertDue: add(new Date(), { seconds: 60 }).toISOString(),
-        alertType: alert.alertType,
-        alertDestination: 'ana.knickerbocker@gmail.com', // Ana's email
-        description: formData.taskDescription,
-      }));
-      const taskResponse = DataService.createTask(
-        userId,
-        formData,
-        newAlerts
-      ).then(() => {
-        setFormData(undefined);
+      }[] = formData.alerts.map((alert) => {
+        let secondsToAdd: number;
+        const alertNumber = alert.reminderNumber
+          ? parseInt(alert.reminderNumber)
+          : 1;
+        switch (alert.reminderInterval) {
+          case 'Hours':
+            secondsToAdd = alertNumber * 60 * 60;
+            break;
+          case 'Days':
+            secondsToAdd = alertNumber * 60 * 60 * 24;
+            break;
+          case 'Minutes':
+          default:
+            secondsToAdd = alertNumber * 60;
+            break;
+        }
+        return {
+          userId,
+          alertDue: add(new Date(dueDate), {
+            seconds: secondsToAdd,
+          }).toISOString(),
+          alertType: alert.alertType,
+          alertDestination: 'ana.knickerbocker@gmail.com', // Ana's email
+          description: formData.taskDescription,
+        };
+      });
+      DataService.createTask(userId, formData, newAlerts).then(() => {
         setReloadTasks(true);
+        setFormData(initialFormData);
       });
     }
     setTaskReminders([...taskReminders, formData]);
@@ -132,13 +156,6 @@ const CreateTasks = () => {
     }
   };
 
-  // eslint-disable-next-line no-shadow
-  const PrettyDiv = (props: { data: Record<string, unknown> }): JSX.Element => (
-    <div>
-      <pre>{JSON.stringify(props.data, null, 2)}</pre>
-    </div>
-  );
-
   return (
     <div className="task-wrapper">
       {!formData && (
@@ -165,15 +182,16 @@ const CreateTasks = () => {
       )}
       {formData && (
         <form>
-          <PrettyDiv data={{ formData }} />
-          <PrettyDiv data={{ taskReminders }} />
           <Card style={{ backgroundColor: '#E5C2F9' }}>
             <h3>Task description: </h3>
             <div className="input">
+              <Label htmlFor="taskDescription" required>
+                Task Description:
+              </Label>
               <input
                 value={formData.taskDescription}
                 type="text"
-                id={'taskDescription'}
+                id="taskDescription"
                 name="taskDescription"
                 style={{
                   borderRadius: '100px',
@@ -185,6 +203,50 @@ const CreateTasks = () => {
                   setFormData({ ...formData, taskDescription: e.target.value })
                 }
               />
+              <Box
+                backgroundColor="colorBackgroundSuccessWeakest"
+                display="inline-block"
+                padding="space40"
+              >
+                <Label htmlFor="taskDueDate" required>
+                  Task Due Date
+                </Label>
+                <DatePicker
+                  aria-describedby="taskDueDate"
+                  id="taskDueDate"
+                  name="taskDueDate"
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      taskDueDate: formatReturnDate(e.target.value, 'P'),
+                    })
+                  }
+                  required
+                />
+                <HelpText id="taskDueDate">Please select a date.</HelpText>
+              </Box>
+              <Box
+                backgroundColor="colorBackgroundSuccessWeakest"
+                display="inline-block"
+                padding="space40"
+              >
+                <Label htmlFor="taskDueTime" required>
+                  Start time
+                </Label>
+                <TimePicker
+                  aria-describedby="taskDueTime"
+                  id="taskDueTime"
+                  name="taskDueTime"
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      taskDueTime: formatReturnTime(e.target.value, 'p'),
+                    })
+                  }
+                  required
+                />
+                <HelpText id="taskDueTime">Please select a time.</HelpText>
+              </Box>
             </div>
           </Card>
           <Card style={{ backgroundColor: '#E5C2F9' }}>
@@ -227,6 +289,8 @@ const CreateTasks = () => {
                   <option value="Hours">Hours</option>{' '}
                   <option value="Days">Days</option>
                 </select>
+                <p>After Task Due</p>
+                <br />
                 <BellOutlined
                   style={{
                     backgroundColor: 'white',
@@ -239,6 +303,7 @@ const CreateTasks = () => {
                     paddingLeft: '5px',
                   }}
                 />
+                <p>via</p>
                 <select
                   value={row.alertType}
                   style={{

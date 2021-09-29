@@ -210,12 +210,12 @@ export default class DataService {
         AND: [
           {
             alertDue: {
-              gte: new Date(),
+              gte: new Date().toISOString(),
             },
           },
           {
             alertDue: {
-              lt: add(new Date(), { seconds: 60 }),
+              lt: add(new Date(), { seconds: 60 }).toISOString(),
             },
           },
         ],
