@@ -1,15 +1,14 @@
 import React, { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
 
-
 import './CreateTasks.css';
 import { TaskList } from '../TaskList/TaskList';
 import DataService from '../../services/DataService';
 import { add } from 'date-fns';
 import { Task } from '@peace-of-mind/api-interfaces';
-import {BellOutlined} from '@ant-design/icons';
-import {Card, Layout} from 'antd';
-import "antd/dist/antd.css";
+import { BellOutlined } from '@ant-design/icons';
+import { Card, Layout } from 'antd';
+import 'antd/dist/antd.css';
 
 export interface AlertData {
   reminderNumber: string;
@@ -25,7 +24,7 @@ export interface FormData {
   alerts: Array<AlertData>;
 }
 
-const { Footer } = Layout
+const { Footer } = Layout;
 
 const CreateTasks = () => {
   const userId = 1;
@@ -95,8 +94,9 @@ const CreateTasks = () => {
     setFormData(undefined);
   };
 
-  const addAlert = () => {
-    if (formData) {
+  const addAlert = (e: any) => {
+    e.preventDefault();
+    if (formData?.alerts) {
       const existingAlerts = formData?.alerts;
       setFormData({
         ...formData,
@@ -124,6 +124,7 @@ const CreateTasks = () => {
   };
 
   const changeHandler = (e: any, field: keyof AlertData, index: number) => {
+    e.preventDefault();
     if (formData?.alerts) {
       const existingAlerts = formData?.alerts;
       existingAlerts[index][field] = e?.target?.value;
@@ -132,147 +133,144 @@ const CreateTasks = () => {
   };
 
   // eslint-disable-next-line no-shadow
-  // const PrettyDiv = (props: { data: Record<string, unknown> }): JSX.Element => (
-  //   <div>
-  //     <pre>{JSON.stringify(props.data, null, 2)}</pre>
-  //   </div>
-  // );
+  const PrettyDiv = (props: { data: Record<string, unknown> }): JSX.Element => (
+    <div>
+      <pre>{JSON.stringify(props.data, null, 2)}</pre>
+    </div>
+  );
 
   return (
     <div className="task-wrapper">
-    {!formData &&
-      <Card 
-        title='Tasks'
-        style={{backgroundColor: '#E5C2F9'}}> 
-      <TaskList tasks={tasks} setTasks={setTasks} />
-      </Card>
-    }
-      {!formData &&
-      <div>
-        <h2>Create a New Task</h2>
-        <button
-          style={{
-            borderRadius: '100px',
-            marginLeft: '70px',
-            paddingTop: '5px',
-            paddingBottom: '5px',
-          }}
-          type="submit"
-          onClick={addTask}
-        >
-          Add Task
-        </button>
-      </div>
-      }
-      {formData && (
-        <form onSubmit={handleSubmit}>
-        <Card 
-          style={{backgroundColor: '#E5C2F9'}}> 
-          <h3>Task description: </h3>
-          <div className="input">
-            <input
-              value={formData.taskDescription}
-              type="text"
-              id={'taskDescription'}
-              name="taskDescription"
-              style={{
-                borderRadius: '100px',
-                paddingTop: '5px',
-                paddingBottom: '5px',
-                paddingRight: '100px',
-              }}
-              onChange={(e) =>
-                setFormData({ ...formData, taskDescription: e.target.value })
-              }
-            />
-          </div>
-          </Card>
-          <Card 
-            style={{backgroundColor: '#E5C2F9'}}> 
-          <h3>Create Alerts for Your Task:</h3>
-          {formData?.alerts?.map((row, index) => (
-            <div className="input">
-              <div className="input-style">
-                <input
-                  value={row.reminderNumber}
-                  placeholder="  #"
-                  style={{
-                    width: '30px',
-                    borderRadius: '100px',
-                    paddingTop: '5px',
-                    paddingBottom: '5px',
-                  }}
-                  type="text"
-                  id={`reminderNumber-${index}`}
-                  key={`reminderNumber-${index}`}
-                  name="reminderNumber"
-                  onChange={(e) => changeHandler(e, `reminderNumber`, index)}
-                />
-              </div>
-              <select
-                style={{
-                  marginRight: '10px',
-                  paddingRight: '20px',
-                  paddingTop: '5px',
-                  paddingBottom: '5px',
-                  borderRadius: '100px',
-                }}
-                name="reminderInterval"
-                id={`reminderInterval-${index}`}
-                key={`reminderInterval-${index}`}
-                value={row.reminderInterval}
-                onChange={(e) => changeHandler(e, `reminderInterval`, index)}
-              >
-                <option value="selectOne">---</option>
-                <option value="Minutes">Minutes</option>{' '}
-                <option value="Hours">Hours</option>{' '}
-                <option value="Days">Days</option>
-              </select>
-              <BellOutlined
-                style={{
-                  backgroundColor: 'white',
-                  borderRadius: '100px',
-                  marginLeft: '50px',
-                  marginRight: '10px',
-                  paddingTop: '5px',
-                  paddingBottom: '5px',
-                  paddingRight: '5px',
-                  paddingLeft: '5px',
-                }}
-              />
-              <select
-                value={row.alertType}
-                style={{
-                  paddingTop: '5px',
-                  paddingBottom: '5px',
-                  paddingRight: '30px',
-                  borderRadius: '100px',
-                }}
-                name="reminderMethod"
-                id={`reminderMethod-${index}`}
-                key={`reminderMethod-${index}`}
-                onChange={(e) => changeHandler(e, `alertType`, index)}
-              >
-                <option value="selectOne">---</option>
-                <option value="sms">SMS</option>
-                <option value="email">Email</option>{' '}
-                <option value="voice">Voice</option>
-              </select>
-            </div>
-          ))}
+      {!formData && (
+        <Card title="Tasks" style={{ backgroundColor: '#E5C2F9' }}>
+          <TaskList tasks={tasks} setTasks={setTasks} />
+        </Card>
+      )}
+      {!formData && (
+        <div>
+          <h2>Create a New Task</h2>
           <button
             style={{
               borderRadius: '100px',
-              marginTop: '20 px',
-              marginLeft: '120px',
+              marginLeft: '70px',
               paddingTop: '5px',
               paddingBottom: '5px',
             }}
             type="submit"
-            onClick={addAlert}
+            onClick={addTask}
           >
-            Add Alert
+            Add Task
           </button>
+        </div>
+      )}
+      {formData && (
+        <form>
+          <PrettyDiv data={{ formData }} />
+          <PrettyDiv data={{ taskReminders }} />
+          <Card style={{ backgroundColor: '#E5C2F9' }}>
+            <h3>Task description: </h3>
+            <div className="input">
+              <input
+                value={formData.taskDescription}
+                type="text"
+                id={'taskDescription'}
+                name="taskDescription"
+                style={{
+                  borderRadius: '100px',
+                  paddingTop: '5px',
+                  paddingBottom: '5px',
+                  paddingRight: '100px',
+                }}
+                onChange={(e) =>
+                  setFormData({ ...formData, taskDescription: e.target.value })
+                }
+              />
+            </div>
+          </Card>
+          <Card style={{ backgroundColor: '#E5C2F9' }}>
+            <h3>Create Alerts for Your Task:</h3>
+            {formData?.alerts?.map((row, index) => (
+              <div className="input">
+                <div className="input-style">
+                  <input
+                    value={row.reminderNumber}
+                    placeholder="  #"
+                    style={{
+                      width: '30px',
+                      borderRadius: '100px',
+                      paddingTop: '5px',
+                      paddingBottom: '5px',
+                    }}
+                    type="text"
+                    id={`reminderNumber-${index}`}
+                    key={`reminderNumber-${index}`}
+                    name="reminderNumber"
+                    onChange={(e) => changeHandler(e, `reminderNumber`, index)}
+                  />
+                </div>
+                <select
+                  style={{
+                    marginRight: '10px',
+                    paddingRight: '20px',
+                    paddingTop: '5px',
+                    paddingBottom: '5px',
+                    borderRadius: '100px',
+                  }}
+                  name="reminderInterval"
+                  id={`reminderInterval-${index}`}
+                  key={`reminderInterval-${index}`}
+                  value={row.reminderInterval}
+                  onChange={(e) => changeHandler(e, `reminderInterval`, index)}
+                >
+                  <option value="selectOne">---</option>
+                  <option value="Minutes">Minutes</option>{' '}
+                  <option value="Hours">Hours</option>{' '}
+                  <option value="Days">Days</option>
+                </select>
+                <BellOutlined
+                  style={{
+                    backgroundColor: 'white',
+                    borderRadius: '100px',
+                    marginLeft: '50px',
+                    marginRight: '10px',
+                    paddingTop: '5px',
+                    paddingBottom: '5px',
+                    paddingRight: '5px',
+                    paddingLeft: '5px',
+                  }}
+                />
+                <select
+                  value={row.alertType}
+                  style={{
+                    paddingTop: '5px',
+                    paddingBottom: '5px',
+                    paddingRight: '30px',
+                    borderRadius: '100px',
+                  }}
+                  name="alertType"
+                  id={`alertType-${index}`}
+                  key={`alertType-${index}`}
+                  onChange={(e) => changeHandler(e, `alertType`, index)}
+                >
+                  <option value="selectOne">---</option>
+                  <option value="sms">SMS</option>
+                  <option value="email">Email</option>{' '}
+                  <option value="voice">Voice</option>
+                </select>
+              </div>
+            ))}
+            <button
+              style={{
+                borderRadius: '100px',
+                marginTop: '20 px',
+                marginLeft: '120px',
+                paddingTop: '5px',
+                paddingBottom: '5px',
+              }}
+              onClick={(e) => addAlert(e)}
+            >
+              Add Alert
+            </button>
           </Card>
           <div className="submit">
             <button
@@ -283,14 +281,22 @@ const CreateTasks = () => {
                 paddingTop: '5px',
                 paddingBottom: '5px',
               }}
+              onClick={(e) => handleSubmit(e)}
             >
               Save Task
             </button>
           </div>
         </form>
       )}
-      <Footer style={{ textAlign: 'center', backgroundColor: '#E5C2F9', width: '400px'}}>
-      “Nothing is worth more than laughter. It is strength to laugh and to abandon oneself, to be light.” – Frida Kahlo
+      <Footer
+        style={{
+          textAlign: 'center',
+          backgroundColor: '#E5C2F9',
+          width: '400px',
+        }}
+      >
+        “Nothing is worth more than laughter. It is strength to laugh and to
+        abandon oneself, to be light.” – Frida Kahlo
       </Footer>
     </div>
   );
