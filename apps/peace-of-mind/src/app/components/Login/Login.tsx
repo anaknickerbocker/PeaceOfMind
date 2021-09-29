@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import 'antd/dist/antd.css';
 import { Image } from 'antd';
 // import logo from '../logo.png'
-import {Card, Button} from 'antd';
-import "antd/dist/antd.css";
+import { Card, Button } from 'antd';
+import 'antd/dist/antd.css';
 
 // console.log(logo);
 
@@ -26,7 +26,7 @@ const Login = (props: { setToken: (userToken: { token: string }) => void }) => {
   const [username, setUserName] = useState<string | undefined>();
   const [password, setPassword] = useState<string | undefined>();
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: any) => {
     if (username?.length && password?.length) {
       e.preventDefault();
       const token = await loginUser({
@@ -41,30 +41,45 @@ const Login = (props: { setToken: (userToken: { token: string }) => void }) => {
     <div className="login-wrapper">
       <h1>Please Log In</h1>
       {/*<Image width={200} src={logo} alt="logo" />*/}
-      <form onSubmit={handleSubmit}>
+      <form>
         <label>
           <p>Username:</p>
           <input
-            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
-            type="text" 
-            onChange={(e) => setUserName(e.target.value)} 
+            style={{
+              borderRadius: '100px',
+              paddingTop: '5px',
+              paddingBottom: '5px',
+            }}
+            type="text"
+            onChange={(e) => setUserName(e.target.value)}
           />
         </label>
         <label>
-          <p style={{marginTop: '20px'}}>Password:</p>
+          <p style={{ marginTop: '20px' }}>Password:</p>
           <input
             type="password"
             onChange={(e) => setPassword(e.target.value)}
-            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
+            style={{
+              borderRadius: '100px',
+              paddingTop: '5px',
+              paddingBottom: '5px',
+            }}
           />
         </label>
         <div>
-          <Button 
-            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginLeft: '30px', marginTop: '30px'}}
+          <Button
+            style={{
+              borderRadius: '100px',
+              paddingTop: '5px',
+              paddingBottom: '5px',
+              marginLeft: '30px',
+              marginTop: '30px',
+            }}
             type="default"
+            onClick={(e) => handleSubmit(e)}
           >
             Submit
-          </Button >
+          </Button>
         </div>
       </form>
     </div>
