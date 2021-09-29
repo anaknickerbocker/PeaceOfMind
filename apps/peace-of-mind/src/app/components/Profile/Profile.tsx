@@ -1,7 +1,9 @@
 import React, { FormEvent, useState, useContext } from 'react';
 import AppContext from '../context/AppContext';
-import {Card, Button} from 'antd';
+import {Card, Button, Layout} from 'antd';
 import "antd/dist/antd.css";
+
+const { Footer } = Layout
 
 // import { UserIcon } from '@twilio-paste/icons/esm/UserIcon';
 // import { InformationIcon } from '@twilio-paste/icons/esm/InformationIcon';
@@ -125,6 +127,10 @@ const Profile = () => {
         </div>
       </div>
     }
+
+    <Footer style={{ textAlign: 'center', backgroundColor: '#E5C2F9', width: '400px'}}>
+    “I really think a champion is defined not by their wins but by how they can recover when they fall.” – Serena Williams
+    </Footer>
     </div>
   );
 };

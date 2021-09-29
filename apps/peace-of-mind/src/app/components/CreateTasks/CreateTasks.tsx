@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
-import { BsFillBellFill } from 'react-icons/bs';
+
 
 import './CreateTasks.css';
 import { TaskList } from '../TaskList/TaskList';
@@ -8,7 +8,7 @@ import DataService from '../../services/DataService';
 import { add } from 'date-fns';
 import { Task } from '@peace-of-mind/api-interfaces';
 import {BellOutlined} from '@ant-design/icons';
-import {Card} from 'antd';
+import {Card, Layout} from 'antd';
 import "antd/dist/antd.css";
 
 export interface AlertData {
@@ -24,6 +24,8 @@ export interface FormData {
   complete: boolean;
   alerts: Array<AlertData>;
 }
+
+const { Footer } = Layout
 
 const CreateTasks = () => {
   const userId = 1;
@@ -287,6 +289,9 @@ const CreateTasks = () => {
           </div>
         </form>
       )}
+      <Footer style={{ textAlign: 'center', backgroundColor: '#E5C2F9', width: '400px'}}>
+      “Nothing is worth more than laughter. It is strength to laugh and to abandon oneself, to be light.” – Frida Kahlo
+      </Footer>
     </div>
   );
 };
