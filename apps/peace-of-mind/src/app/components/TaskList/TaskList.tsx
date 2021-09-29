@@ -1,17 +1,15 @@
-import React from "react";
-import {Task} from '@peace-of-mind/api-interfaces'
-import { TaskListItem } from "./TaskListItem";
+import React from 'react';
+import { Task } from '@peace-of-mind/api-interfaces';
+import { TaskListItem } from './TaskListItem';
 
 export const TaskList = (props: {
-  tasks: Array<Partial<Task>>,
+  tasks: Array<Task>;
+  setTasks: (tasks: Array<Task>) => void;
 }) => {
   return (
     <ul>
-      {props.tasks.map(task => (
-        <TaskListItem
-          key={task.description}
-          task={task}
-        />
+      {props.tasks.map((task) => (
+        <TaskListItem key={task.description} task={task} />
       ))}
     </ul>
   );

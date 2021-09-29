@@ -4,9 +4,9 @@ import { BsFillBellFill } from 'react-icons/bs';
 
 import './CreateTasks.css';
 import { TaskList } from '../TaskList/TaskList';
-import { initialTasks } from '../TaskList/initialTasks';
 import DataService from '../../services/DataService';
 import { add } from 'date-fns';
+import { Task } from '@peace-of-mind/api-interfaces';
 
 export interface AlertData {
   reminderNumber: string;
@@ -24,6 +24,8 @@ export interface FormData {
 
 const CreateTasks = () => {
   const userId = 1;
+  const [reloadTasks, setReloadTasks] = React.useState(true);
+  const [tasks, setTasks] = React.useState<Array<Task>>([]);
   const initialFormData: FormData = {
     taskDescription: '',
     taskDateTime: '',
@@ -42,6 +44,15 @@ const CreateTasks = () => {
 
   const { id, setId, name, setName, taskReminders, setTaskReminders } =
     useContext(AppContext);
+
+  React.useEffect(() => {
+    if (reloadTasks) {
+      DataService.getAllTasks(1)
+        .then((res) => res.json())
+        .then((res) => setTasks(res));
+      setReloadTasks(false);
+    }
+  }, [reloadTasks]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -64,7 +75,10 @@ const CreateTasks = () => {
         userId,
         formData,
         newAlerts
-      ).then(() => setFormData(undefined));
+      ).then(() => {
+        setFormData(undefined);
+        setReloadTasks(true);
+      });
     }
     setTaskReminders([...taskReminders, formData]);
   };
@@ -123,7 +137,7 @@ const CreateTasks = () => {
   return (
     <div className="task-wrapper">
       {/*<PrettyDiv data={{ formData }} />*/}
-      <TaskList tasks={initialTasks} />
+      <TaskList tasks={tasks} setTasks={setTasks} />
       <div>
         <h2>Create a New Task</h2>
         <button
@@ -175,6 +189,7 @@ const CreateTasks = () => {
                   }}
                   type="text"
                   id={`reminderNumber-${index}`}
+                  key={`reminderNumber-${index}`}
                   name="reminderNumber"
                   onChange={(e) => changeHandler(e, `reminderNumber`, index)}
                 />
@@ -190,6 +205,7 @@ const CreateTasks = () => {
                 }}
                 name="reminderInterval"
                 id={`reminderInterval-${index}`}
+                key={`reminderInterval-${index}`}
                 value={row.reminderInterval}
                 onChange={(e) => changeHandler(e, `reminderInterval`, index)}
               >
@@ -222,6 +238,7 @@ const CreateTasks = () => {
                 }}
                 name="reminderMethod"
                 id={`reminderMethod-${index}`}
+                key={`reminderMethod-${index}`}
                 onChange={(e) => changeHandler(e, `alertType`, index)}
               >
                 <option value="selectOne">---</option>
