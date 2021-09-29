@@ -1,14 +1,14 @@
 import { AlertData, FormData } from '../components/CreateTasks/CreateTasks';
 
 export default class DataService {
-  static getUser = (userId: string) => {
+  static getUser = (userId: number) => {
     return fetch(`/api/users/${userId}`);
   };
-  static getAllTasks = (userId: string) => {
+  static getAllTasks = (userId: number) => {
     return fetch(`/api/users/${userId}/tasks`);
   };
 
-  static getTask = (userId: string, taskId: string) => {
+  static getTask = (userId: number, taskId: number) => {
     return fetch(`/api/users/${userId}/tasks/${taskId}`);
   };
 
