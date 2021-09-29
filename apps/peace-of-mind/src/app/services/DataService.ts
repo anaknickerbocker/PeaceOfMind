@@ -1,5 +1,4 @@
 import { AlertData, FormData } from '../components/CreateTasks/CreateTasks';
-import { Alert } from '@peace-of-mind/api-interfaces';
 
 export default class DataService {
   static getUser = (userId: string) => {
@@ -57,7 +56,7 @@ export default class DataService {
       userId,
       taskId,
       alertDue: alert.alertDue,
-      alertType: alert.reminderMethod,
+      alertType: alert.alertType,
       alertDestination,
       description,
     };
