@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import 'antd/dist/antd.css';
 import { Image } from 'antd';
 // import logo from '../logo.png'
+import {Card, Button} from 'antd';
+import "antd/dist/antd.css";
 
 // console.log(logo);
 
@@ -41,18 +43,28 @@ const Login = (props: { setToken: (userToken: { token: string }) => void }) => {
       {/*<Image width={200} src={logo} alt="logo" />*/}
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Username</p>
-          <input type="text" onChange={(e) => setUserName(e.target.value)} />
+          <p>Username:</p>
+          <input
+            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
+            type="text" 
+            onChange={(e) => setUserName(e.target.value)} 
+          />
         </label>
         <label>
-          <p>Password</p>
+          <p style={{marginTop: '20px'}}>Password:</p>
           <input
             type="password"
             onChange={(e) => setPassword(e.target.value)}
+            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
           />
         </label>
         <div>
-          <button type="submit">Submit</button>
+          <Button 
+            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginLeft: '30px', marginTop: '30px'}}
+            type="default"
+          >
+            Submit
+          </Button >
         </div>
       </form>
     </div>
