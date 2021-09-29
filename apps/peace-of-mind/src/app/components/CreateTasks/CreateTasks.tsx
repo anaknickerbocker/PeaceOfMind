@@ -56,7 +56,6 @@ const CreateTasks = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(formData);
     if (formData) {
       const newAlerts: {
         alertDue: string;

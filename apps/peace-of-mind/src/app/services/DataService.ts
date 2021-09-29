@@ -31,7 +31,6 @@ export default class DataService {
       recurring: false,
       alerts,
     };
-    console.log(JSON.stringify(body, null, 2));
     return fetch(`/api/users/${userId}/tasks`, {
       method: 'POST',
       headers: {

@@ -8,8 +8,8 @@ export const TaskList = (props: {
 }) => {
   return (
     <ul>
-      {props.tasks.map((task) => (
-        <TaskListItem key={task.description} task={task} />
+      {props.tasks.map((task, index) => (
+        <TaskListItem key={`${task.description}-${index}`} task={task} />
       ))}
     </ul>
   );
