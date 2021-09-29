@@ -1,12 +1,11 @@
 import React, { FormEvent, useState } from 'react';
- import './Login.css';
+import './Login.css';
 import PropTypes from 'prop-types';
-import 'antd/dist/antd.css'
-import { Image, Button } from 'antd'
-import logo from '../logo.png'
+import 'antd/dist/antd.css';
+import { Image, Button } from 'antd';
+// import logo from '../logo.png'
 
-console.log(logo)
-
+// console.log(logo);
 
 const loginUser = async (credentials: {
   username: string;
@@ -39,11 +38,11 @@ const Login = (props: { setToken: (userToken: { token: string }) => void }) => {
   return (
     <div className="login-wrapper">
       <h1>Please Log In</h1>
-      <Image
-      width={200}
-      src={logo}
-      alt="logo"
-      />
+      {/*<Image*/}
+      {/*width={200}*/}
+      {/*src={logo}*/}
+      {/*alt="logo"*/}
+      {/*/>*/}
       <form onSubmit={handleSubmit}>
         <label>
           <p>Username</p>

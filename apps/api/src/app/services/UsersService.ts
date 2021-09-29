@@ -11,12 +11,12 @@ export default class UsersService {
     return this.dataService.getAllUsers();
   }
 
-  static getUser(userId: string) {
+  static getUser(userId: number) {
     return this.dataService.getUser(userId);
   }
 
   static updateUser(
-    userId: string,
+    userId: number,
     changes: {
       name: string;
       sms: string;
@@ -27,7 +27,7 @@ export default class UsersService {
     return this.dataService.updateUser(userId, changes);
   }
 
-  static deleteUser(userId: string) {
+  static deleteUser(userId: number) {
     return this.dataService.deleteUser(userId);
   }
 }

@@ -5,49 +5,47 @@ export default class AlertHistoriesService {
   private static dataService = DataService.getInstance();
 
   static createAlertHistory(
-    userId: string,
-    taskId: string,
-    alertId: string,
+    userId: number,
+    taskId: number,
+    alertId: number,
     alertType: 'sms' | 'voice' | 'email',
     alertDestination: string,
     description: string
   ) {
-    return this.dataService.createAlertHistory(
-      {
-        userId,
-        taskId,
-        alertId,
-        alertType,
-        alertDestination,
-        description
-      }
-    );
+    return this.dataService.createAlertHistory({
+      userId,
+      taskId,
+      alertId,
+      alertType,
+      alertDestination,
+      description,
+    });
   }
 
-  static getAllAlertHistoriesForUser(userId: string) {
+  static getAllAlertHistoriesForUser(userId: number) {
     return this.dataService.getAllAlertHistoriesForUser(userId);
   }
 
-  static getAllAlertHistoriesForTask(taskId: string) {
+  static getAllAlertHistoriesForTask(taskId: number) {
     return this.dataService.getAllAlertHistoriesForTask(taskId);
   }
 
-  static getAllAlertHistoriesForAlert(alertId: string) {
+  static getAllAlertHistoriesForAlert(alertId: number) {
     return this.dataService.getAllAlertHistoriesForAlert(alertId);
   }
 
-  static getAlertHistory(alertHistoryId: string) {
+  static getAlertHistory(alertHistoryId: number) {
     return this.dataService.getAlertHistory(alertHistoryId);
   }
 
   static updateAlertHistory(
-    alertHistoryId: string,
+    alertHistoryId: number,
     changes: Partial<AlertHistory>
   ) {
     return this.dataService.updateAlertHistory(alertHistoryId, changes);
   }
 
-  static deleteAlertHistory(alertHistoryId: string) {
+  static deleteAlertHistory(alertHistoryId: number) {
     return this.dataService.deleteAlertHistory(alertHistoryId);
   }
 }

@@ -1,5 +1,5 @@
-import add from 'date-fns/add';
 import { AlertData, FormData } from '../components/CreateTasks/CreateTasks';
+import { Alert } from '@peace-of-mind/api-interfaces';
 
 export default class DataService {
   static getUser = (userId: string) => {
@@ -13,14 +13,26 @@ export default class DataService {
     return fetch(`/api/users/${userId}/tasks/${taskId}`);
   };
 
-  static createTask = (userId: string, formData: FormData) => {
+  static createTask = (
+    userId: number,
+    formData: FormData,
+    alerts: {
+      alertDue: string;
+      alertType: string;
+      description: string;
+      alertDestination: string;
+      userId: number;
+    }[]
+  ) => {
     const body = {
       userId,
       description: formData.taskDescription,
       taskDateTime: formData.taskDateTime,
       complete: formData.complete,
       recurring: false,
+      alerts,
     };
+    console.log(JSON.stringify(body, null, 2));
     return fetch(`/api/users/${userId}/tasks`, {
       method: 'POST',
       headers: {
@@ -30,13 +42,13 @@ export default class DataService {
     });
   };
 
-  static getAlerts = (userId: string, taskId: string) => {
+  static getAlerts = (userId: number, taskId: number) => {
     return fetch(`/api/users/${userId}/tasks/${taskId}`);
   };
 
   static createAlert = async (
-    userId: string,
-    taskId: string,
+    userId: number,
+    taskId: number,
     alert: AlertData,
     alertDestination: string,
     description: string
@@ -44,7 +56,7 @@ export default class DataService {
     const body = {
       userId,
       taskId,
-      alertDue: add(new Date(), { seconds: 30 }),
+      alertDue: alert.alertDue,
       alertType: alert.reminderMethod,
       alertDestination,
       description,

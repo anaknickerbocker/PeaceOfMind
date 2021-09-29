@@ -7,13 +7,16 @@ const tasks = express.Router();
 tasks.post('/', async (req: Request, res: Response) => {
   try {
     const result = await TasksService.createTask(
-      req.body.userId,
+      parseInt(req.body.userId),
       req.body.description,
       req.body.taskDateTime,
-      req.body.recurring || false
+      req.body.complete || false,
+      req.body.recurring || false,
+      req.body.alerts
     );
     res.json(result);
-  } catch {
+  } catch (e) {
+    console.error(e);
     res.status(404);
   }
 });
@@ -21,9 +24,12 @@ tasks.post('/', async (req: Request, res: Response) => {
 // Get all tasks for a user
 tasks.get('/', async (req: Request, res: Response) => {
   try {
-    const result = await TasksService.getAllTasksForUser(req.body.userId);
+    const result = await TasksService.getAllTasksForUser(
+      parseInt(req.body.userId)
+    );
     res.json(result);
-  } catch {
+  } catch (e) {
+    console.error(e);
     res.status(404);
   }
 });
@@ -31,9 +37,10 @@ tasks.get('/', async (req: Request, res: Response) => {
 // Get one task
 tasks.get('/:taskId', async (req: Request, res: Response) => {
   try {
-    const result = await TasksService.getTask(req.params.taskId);
+    const result = await TasksService.getTask(parseInt(req.params.taskId));
     res.json(result);
-  } catch {
+  } catch (e) {
+    console.error(e);
     res.status(404);
   }
 });
@@ -42,14 +49,18 @@ tasks.get('/:taskId', async (req: Request, res: Response) => {
 tasks.patch('/:taskId', async (req: Request, res: Response) => {
   try {
     const changes = {
-      userId: req.body.userId,
+      userId: parseInt(req.body.userId),
       description: req.body.description,
       taskDateTime: req.body.taskDateTime,
       recurring: req.body.recurring,
     };
-    const result = await TasksService.updateTask(req.params.taskId, changes);
+    const result = await TasksService.updateTask(
+      parseInt(req.params.taskId),
+      changes
+    );
     res.json(result);
-  } catch {
+  } catch (e) {
+    console.error(e);
     res.status(404);
   }
 });
@@ -57,9 +68,10 @@ tasks.patch('/:taskId', async (req: Request, res: Response) => {
 // Delete a task
 tasks.delete('/:taskId', async (req: Request, res: Response) => {
   try {
-    const result = await TasksService.deleteTask(req.params.taskId);
+    const result = await TasksService.deleteTask(parseInt(req.params.taskId));
     res.json(result);
-  } catch {
+  } catch (e) {
+    console.error(e);
     res.status(404);
   }
 });

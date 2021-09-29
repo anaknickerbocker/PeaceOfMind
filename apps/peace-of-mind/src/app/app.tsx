@@ -7,7 +7,7 @@ import Login from './components/Login/Login';
 import Profile from './components/Profile/Profile';
 import React from 'react';
 import Reminders from './components/Reminders/Reminders';
-import Tasks from './components/CreateTasks/CreateTasks';
+import CreateTasks from './components/CreateTasks/CreateTasks';
 import useToken from './components/useToken';
 
 const App = () => {
@@ -34,7 +34,7 @@ const App = () => {
       <GlobalState>
         <BrowserRouter>
           <HeaderLink />
-          <h1 style={{ textAlign: 'center' }}> PEACE OF MIND </h1>
+          <h1 style={{ textAlign: 'center' }}> Peace of Mind </h1>
           <Switch>
             <Route exact path="/">
               <Profile />

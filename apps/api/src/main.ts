@@ -5,6 +5,7 @@ import express from 'express';
 import path from 'path';
 import alertHistories from './app/routes/alertHistories';
 import alerts from './app/routes/alerts';
+import dev from './app/routes/dev';
 import tasks from './app/routes/tasks';
 import users from './app/routes/users';
 import CronService from './app/services/CronService';
@@ -57,6 +58,8 @@ app.use(
   },
   alertHistories
 );
+
+app.use('/api/dev', dev);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(CLIENT_BUILD_PATH, '/index.html'));

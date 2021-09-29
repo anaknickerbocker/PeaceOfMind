@@ -1,15 +1,13 @@
 import { Alert, AlertHistory, Task, User } from '@peace-of-mind/api-interfaces';
-import r, { Cursor } from 'rethinkdb';
+import { PrismaClient } from '@prisma/client';
+import { add } from 'date-fns';
 
 export default class DataService {
   private static instance: DataService;
-  private connection: r.Connection;
+  private prisma: PrismaClient;
 
   private constructor() {
-    r.connect({ host: process.env.DB_URL, port: 28015 }, (err, conn) => {
-      if (err) throw err;
-      this.connection = conn;
-    });
+    this.prisma = new PrismaClient();
   }
 
   public static getInstance() {
@@ -21,201 +19,220 @@ export default class DataService {
 
   // Users
   createUser(name: string, sms: string, voice: string, email: string) {
-    return r
-      .table('users')
-      .insert({
+    return this.prisma.users.create({
+      data: {
+        userId: undefined,
         name,
         sms,
         voice,
         email,
-      })
-      .run(this.connection);
+      },
+    });
   }
 
   async getAllUsers(): Promise<Array<User>> {
-    const cursor = await r.table('users').run(this.connection);
-    return cursor.toArray();
+    return this.prisma.users.findMany();
   }
 
-  getUser(userId: string): Promise<User> {
-    return r.table('users').get(userId).run(this.connection) as Promise<User>;
+  getUser(userId: number): Promise<User> {
+    return this.prisma.users.findFirst({ where: { userId } });
   }
 
-  updateUser(userId: string, changes: Partial<User>) {
-    return r
-      .table('users')
-      .get(userId)
-      .update({ ...changes })
-      .run(this.connection);
+  updateUser(userId: number, changes: Partial<User>) {
+    return this.prisma.users.update({
+      where: { userId },
+      data: { ...changes },
+    });
   }
 
-  deleteUser(userId: string) {
-    return r.table('users').get(userId).delete().run(this.connection);
+  deleteUser(userId: number) {
+    return this.prisma.users.delete({ where: { userId } });
   }
 
   // Tasks
   createTask(
-    userId: string,
+    userId: number,
     description: string,
     taskDateTime: string,
-    recurring: boolean
+    complete: boolean,
+    recurring: boolean,
+    alerts?: Array<Alert>
   ) {
-    return r
-      .table('tasks')
-      .insert({ userId, description, taskDateTime, recurring })
-      .run(this.connection);
+    let createData;
+    if (alerts?.length) {
+      const newAlerts = alerts.map((alert) => ({
+        userId,
+        taskId: alert.taskId,
+        alertDue: alert.alertDue,
+        alertType: alert.alertType,
+        alertDestination: alert.alertDestination,
+        description,
+      }));
+      createData = {
+        data: {
+          taskId: undefined,
+          userId,
+          description,
+          taskDateTime: new Date().toISOString(),
+          complete,
+          recurring,
+          alerts: { createMany: { data: newAlerts } },
+        },
+        include: {
+          alerts: true,
+        },
+      };
+    } else {
+      createData = {
+        data: {
+          taskId: undefined,
+          userId,
+          description,
+          taskDateTime: new Date().toISOString(),
+          complete,
+          recurring,
+        },
+      };
+    }
+    console.log('createData: ', JSON.stringify(createData, null, 2));
+    return this.prisma.tasks.create(createData);
   }
 
-  async getAllTasksForUser(userId: string) {
-    const cursor = await r
-      .table('tasks')
-      .filter({ userId })
-      .run(this.connection);
-    return cursor.toArray();
+  getAllTasksForUser(userId: number) {
+    return this.prisma.tasks.findMany({ where: { userId } });
   }
 
-  getTask(taskId: string) {
-    return r.table('tasks').get(taskId).run(this.connection);
+  getTask(taskId: number) {
+    return this.prisma.tasks.findFirst({ where: { taskId } });
   }
 
-  updateTask(taskId: string, changes: Partial<Task>) {
-    return r
-      .table('tasks')
-      .get(taskId)
-      .update({ ...changes })
-      .run(this.connection);
+  updateTask(taskId: number, changes: Partial<Task>) {
+    return this.prisma.tasks.update({
+      where: { taskId },
+      data: { ...changes },
+    });
   }
 
-  deleteTask(taskId: string) {
-    return r.table('tasks').get(taskId).delete().run(this.connection);
+  deleteTask(taskId: number) {
+    return this.prisma.tasks.delete({ where: { taskId } });
   }
 
   // Alerts
-  createAlert(
-    userId: string,
-    taskId: string,
+  async createAlert(
+    userId: number,
+    taskId: number,
     alertDue: string,
     alertType: 'sms' | 'voice' | 'email',
     alertDestination: string,
     description: string
   ) {
-    return r
-      .table('alerts')
-      .insert({
+    return this.prisma.alerts.create({
+      data: {
+        alertId: undefined,
         userId,
         taskId,
         alertDue,
         alertType,
         alertDestination,
         description,
-      })
-      .run(this.connection);
+      },
+    });
   }
 
-  async getAllAlertsForUser(userId: string) {
-    const cursor = await r
-      .table('alerts')
-      .filter({ userId })
-      .run(this.connection);
-    return cursor.toArray();
+  async getAllAlertsForUser(userId: number) {
+    return this.prisma.alerts.findMany({ where: { userId } });
   }
 
-  async getAllAlertsForTask(taskId: string) {
-    const cursor = await r
-      .table('alerts')
-      .filter({ taskId })
-      .run(this.connection);
-    return cursor.toArray();
+  async getAllAlertsForTask(taskId: number) {
+    return this.prisma.alerts.findMany({ where: { taskId } });
   }
 
-  getAlert(alertId: string) {
-    return r.table('alerts').get(alertId).run(this.connection);
+  getAlert(alertId: number) {
+    return this.prisma.alerts.findFirst({ where: { alertId } });
   }
 
-  updateAlert(alertId: string, changes: Partial<Alert>) {
-    return r
-      .table('alerts')
-      .get(alertId)
-      .update({ ...changes })
-      .run(this.connection);
+  updateAlert(alertId: number, changes: Partial<Alert>) {
+    return this.prisma.alerts.update({
+      where: { alertId },
+      data: { ...changes },
+    });
   }
 
-  deleteAlert(alertId: string) {
-    return r.table('alerts').get(alertId).delete().run(this.connection);
+  deleteAlert(alertId: number) {
+    return this.prisma.alerts.delete({ where: { alertId } });
   }
 
   // Alert Histories
-  createAlertHistory(
-    alert: Alert | Partial<Alert>
-  ) {
-    return r.table('alertHistories').insert({
-      ...alert,
-      alertSent: new Date()
-    }).run(this.connection);
+  createAlertHistory(alert: Alert | Partial<Alert>) {
+    return this.prisma.alertHistories.create({
+      data: {
+        alertHistoryId: undefined,
+        alertSent: new Date(),
+        userId: alert.userId,
+        taskId: alert.taskId,
+        alertId: alert.alertId,
+        alertType: alert.alertType,
+        alertDestination: alert.alertDestination,
+      },
+    });
   }
 
-  async getAllAlertHistoriesForUser(userId: string) {
-    const cursor = await r
-      .table('alertHistories')
-      .filter({ userId })
-      .run(this.connection);
-    return cursor.toArray();
+  getAllAlertHistoriesForUser(userId: number) {
+    return this.prisma.alertHistories.findMany({ where: { userId } });
   }
 
-  async getAllAlertHistoriesForTask(taskId: string) {
-    const cursor = await r
-      .table('alertHistories')
-      .filter({ taskId })
-      .run(this.connection);
-    return cursor.toArray();
+  async getAllAlertHistoriesForTask(taskId: number) {
+    return this.prisma.alertHistories.findMany({ where: { taskId } });
   }
 
-  async getAllAlertHistoriesForAlert(alertId: string) {
-    const cursor = await r
-      .table('alertHistories')
-      .filter({ alertId })
-      .run(this.connection);
-    return cursor.toArray();
+  async getAllAlertHistoriesForAlert(alertId: number) {
+    return this.prisma.alertHistories.findMany({ where: { alertId } });
   }
 
-  getAlertHistory(alertId: string) {
-    return r.table('alertHistories').get(alertId).run(this.connection);
+  getAlertHistory(alertId: number) {
+    return this.prisma.alertHistories.findFirst({ where: { alertId } });
   }
 
-  updateAlertHistory(alertHistoryId: string, changes: Partial<AlertHistory>) {
-    return r
-      .table('alertHistories')
-      .get(alertHistoryId)
-      .update({ ...changes })
-      .run(this.connection);
+  updateAlertHistory(alertHistoryId: number, changes: Partial<AlertHistory>) {
+    return this.prisma.alertHistories.update({
+      where: { alertHistoryId },
+      data: { ...changes },
+    });
   }
 
-  deleteAlertHistory(alertHistoryId: string) {
-    return r
-      .table('alertHistories')
-      .get(alertHistoryId)
-      .delete()
-      .run(this.connection);
+  deleteAlertHistory(alertHistoryId: number) {
+    return this.prisma.alertHistories.delete({ where: { alertHistoryId } });
   }
 
   async getAlertsDueNow() {
-    const cursor: Cursor = await r
-      .table('alerts')
-      .filter((alert) => alert('alertDue')
-      .gt(r.now())
-      .and(alert('alertDue').lt(r.now().add(60))))
-      .orderBy('alertDue')
-      .run(this.connection);
-    return cursor.toArray();
+    return this.prisma.alerts.findMany({
+      where: {
+        AND: [
+          {
+            alertDue: {
+              gte: new Date(),
+            },
+          },
+          {
+            alertDue: {
+              lt: add(new Date(), { seconds: 60 }),
+            },
+          },
+        ],
+      },
+      orderBy: [{ alertDue: 'desc' }],
+    });
   }
 
-  // Get all alerts, for testing purposes
-  async getAlertsAnytime() {
-    const cursor: Cursor = await r
-      .table('alerts')
-      .filter((alert) => alert('alertDue').lt(r.now()))
-      .orderBy('alertDue')
-      .run(this.connection);
-    return cursor.toArray();
+  async getAllTasks() {
+    return this.prisma.tasks.findMany();
+  }
+
+  async getAllAlerts() {
+    return this.prisma.alerts.findMany();
+  }
+
+  async getAllAlertHistories() {
+    return this.prisma.alertHistories.findMany();
   }
 }
