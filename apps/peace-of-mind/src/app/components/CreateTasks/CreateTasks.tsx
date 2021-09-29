@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
 import { BsFillBellFill } from 'react-icons/bs';
 
@@ -10,7 +10,7 @@ import { add } from 'date-fns';
 
 export interface AlertData {
   reminderNumber: string;
-  reminderMethod: string;
+  alertType: string;
   reminderInterval: string;
   alertDue: string;
 }
@@ -24,7 +24,6 @@ export interface FormData {
 
 const CreateTasks = () => {
   const userId = 1;
-  const [newTask, setNewTask] = useState(false);
   const initialFormData: FormData = {
     taskDescription: '',
     taskDateTime: '',
@@ -32,7 +31,7 @@ const CreateTasks = () => {
     alerts: [
       {
         reminderNumber: '',
-        reminderMethod: '',
+        alertType: '',
         reminderInterval: '',
         alertDue: '',
       },
@@ -57,7 +56,7 @@ const CreateTasks = () => {
       }[] = formData.alerts.map((alert) => ({
         userId,
         alertDue: add(new Date(), { seconds: 60 }).toISOString(),
-        alertType: alert.reminderMethod,
+        alertType: alert.alertType,
         alertDestination: 'ana.knickerbocker@gmail.com', // Ana's email
         description: formData.taskDescription,
       }));
@@ -65,17 +64,13 @@ const CreateTasks = () => {
         userId,
         formData,
         newAlerts
-      ).then((res) => res.json());
+      ).then(() => setFormData(undefined));
     }
     setTaskReminders([...taskReminders, formData]);
-    setNewTask(false);
   };
 
   const addTask = () => {
-    console.log(newTask);
     setFormData(initialFormData);
-    setNewTask(true);
-    console.log(newTask);
   };
 
   const removeTask = (index: number) => {
@@ -91,7 +86,7 @@ const CreateTasks = () => {
           ...existingAlerts,
           {
             reminderNumber: '',
-            reminderMethod: '',
+            alertType: '',
             reminderInterval: '',
             alertDue: '',
           },
@@ -166,77 +161,75 @@ const CreateTasks = () => {
           </div>
           <h2>Create Alerts for Your Task</h2>
           {formData?.alerts?.map((row, index) => (
-            <>
-              <div className="input">
-                <div className="input-style">
-                  <input
-                    value={row.reminderNumber}
-                    placeholder="  #"
-                    style={{
-                      width: '30px',
-                      borderRadius: '100px',
-                      paddingTop: '5px',
-                      paddingBottom: '5px',
-                      marginTop: '30px',
-                    }}
-                    type="text"
-                    id={`reminderNumber-${index}`}
-                    name="reminderNumber"
-                    onChange={(e) => changeHandler(e, `reminderNumber`, index)}
-                  />
-                </div>
-                <select
+            <div className="input">
+              <div className="input-style">
+                <input
+                  value={row.reminderNumber}
+                  placeholder="  #"
                   style={{
-                    marginRight: '10px',
-                    marginTop: '30px',
-                    paddingRight: '20px',
+                    width: '30px',
+                    borderRadius: '100px',
                     paddingTop: '5px',
                     paddingBottom: '5px',
-                    borderRadius: '100px',
-                  }}
-                  name="reminderInterval"
-                  id={`reminderInterval-${index}`}
-                  value={row.reminderInterval}
-                  onChange={(e) => changeHandler(e, `reminderInterval`, index)}
-                >
-                  <option value="selectOne">---</option>
-                  <option value="Minutes">Minutes</option>{' '}
-                  <option value="Hours">Hours</option>{' '}
-                  <option value="Days">Days</option>
-                </select>
-                <BsFillBellFill
-                  style={{
-                    backgroundColor: 'white',
-                    borderRadius: '100px',
-                    marginLeft: '50px',
-                    marginRight: '10px',
-                    paddingTop: '5px',
-                    paddingBottom: '5px',
-                    paddingRight: '5px',
-                    paddingLeft: '5px',
                     marginTop: '30px',
                   }}
+                  type="text"
+                  id={`reminderNumber-${index}`}
+                  name="reminderNumber"
+                  onChange={(e) => changeHandler(e, `reminderNumber`, index)}
                 />
-                <select
-                  value={row.reminderMethod}
-                  style={{
-                    paddingTop: '5px',
-                    paddingBottom: '5px',
-                    paddingRight: '30px',
-                    marginTop: '30px',
-                    borderRadius: '100px',
-                  }}
-                  name="reminderMethod"
-                  id={`reminderMethod-${index}`}
-                  onChange={(e) => changeHandler(e, `reminderMethod`, index)}
-                >
-                  <option value="selectOne">---</option>
-                  <option value="sms">SMS</option>
-                  <option value="email">Email</option>{' '}
-                  <option value="voice">Voice</option>
-                </select>
               </div>
-            </>
+              <select
+                style={{
+                  marginRight: '10px',
+                  marginTop: '30px',
+                  paddingRight: '20px',
+                  paddingTop: '5px',
+                  paddingBottom: '5px',
+                  borderRadius: '100px',
+                }}
+                name="reminderInterval"
+                id={`reminderInterval-${index}`}
+                value={row.reminderInterval}
+                onChange={(e) => changeHandler(e, `reminderInterval`, index)}
+              >
+                <option value="selectOne">---</option>
+                <option value="Minutes">Minutes</option>{' '}
+                <option value="Hours">Hours</option>{' '}
+                <option value="Days">Days</option>
+              </select>
+              <BsFillBellFill
+                style={{
+                  backgroundColor: 'white',
+                  borderRadius: '100px',
+                  marginLeft: '50px',
+                  marginRight: '10px',
+                  paddingTop: '5px',
+                  paddingBottom: '5px',
+                  paddingRight: '5px',
+                  paddingLeft: '5px',
+                  marginTop: '30px',
+                }}
+              />
+              <select
+                value={row.alertType}
+                style={{
+                  paddingTop: '5px',
+                  paddingBottom: '5px',
+                  paddingRight: '30px',
+                  marginTop: '30px',
+                  borderRadius: '100px',
+                }}
+                name="reminderMethod"
+                id={`reminderMethod-${index}`}
+                onChange={(e) => changeHandler(e, `alertType`, index)}
+              >
+                <option value="selectOne">---</option>
+                <option value="sms">SMS</option>
+                <option value="email">Email</option>{' '}
+                <option value="voice">Voice</option>
+              </select>
+            </div>
           ))}
           <button
             style={{
