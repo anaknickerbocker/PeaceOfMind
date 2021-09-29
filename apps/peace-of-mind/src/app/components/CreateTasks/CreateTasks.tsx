@@ -7,6 +7,8 @@ import { TaskList } from '../TaskList/TaskList';
 import DataService from '../../services/DataService';
 import { add } from 'date-fns';
 import { Task } from '@peace-of-mind/api-interfaces';
+import {BellOutlined} from '@ant-design/icons';
+import "antd/dist/antd.css";
 
 export interface AlertData {
   reminderNumber: string;
@@ -213,7 +215,7 @@ const CreateTasks = () => {
                 <option value="Hours">Hours</option>{' '}
                 <option value="Days">Days</option>
               </select>
-              <BsFillBellFill
+              <BellOutlined
                 style={{
                   backgroundColor: 'white',
                   borderRadius: '100px',

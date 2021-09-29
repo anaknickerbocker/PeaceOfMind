@@ -59,14 +59,13 @@ const Profile = () => {
         <p>Email: {email}</p>
         <p>Phone number: {phone}</p>
         </Card>
-          <Button type= "primary"> Edit Profile</Button>
-          {/* <button 
+        <Button 
             style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginLeft: '90px', marginTop: '30px'}}
-            type="submit"
+            type="default"
             onClick={handleEdit}
           >
             Edit Profile
-          </button> */}
+          </Button >
       </div>
     }
     {!profileCreated && 
@@ -115,8 +114,8 @@ const Profile = () => {
       </Card>
       <div >
           <Button 
-            //  style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
-             type ="primary"
+             style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginLeft: '90px', marginTop: '30px'}}
+             type ="default"
             onClick={handleSubmit}
           >
             Submit
