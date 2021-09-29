@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model alertHistories {
+  alertHistoryId   Int      @id @default(autoincrement())
+  taskId           Int
+  userId           Int
+  alertId          Int
+  alertSent        DateTime @default(now())
+  alertType        String
+  alertDestination String
+  alerts           alerts   @relation(fields: [alertId], references: [alertId], onDelete: Cascade)
+  tasks            tasks    @relation(fields: [taskId], references: [taskId], onDelete: Cascade)
+  users            users    @relation(fields: [userId], references: [userId], onDelete: Cascade)
+}
+
+model alerts {
+  alertId          Int              @id @default(autoincrement())
+  taskId           Int
+  userId           Int
+  alertDue         DateTime         @default(now())
+  alertType        String
+  alertDestination String
+  description      String
+  tasks            tasks            @relation(fields: [taskId], references: [taskId], onDelete: Cascade)
+  users            users            @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  alertHistories   alertHistories[]
+}
+
+model tasks {
+  taskId         Int              @id @default(autoincrement())
+  userId         Int
+  description    String
+  taskDateTime   DateTime         @default(now())
+  complete       Boolean
+  recurring      Boolean?
+  users          users            @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  alertHistories alertHistories[]
+  alerts         alerts[]
+}
+
+model users {
+  userId         Int              @id @default(autoincrement())
+  name           String
+  sms            String?
+  voice          String?
+  email          String?
+  alertHistories alertHistories[]
+  alerts         alerts[]
+  tasks          tasks[]
+}

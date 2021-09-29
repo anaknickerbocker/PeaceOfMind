@@ -1,38 +1,40 @@
-import { Task } from '@peace-of-mind/api-interfaces';
+import { Alert, Task } from '@peace-of-mind/api-interfaces';
 import DataService from './DataService';
 
 export default class TasksService {
   private static dataService = DataService.getInstance();
 
   static createTask(
-    userId: string,
+    userId: number,
     description: string,
     taskDateTime: string,
-    recurring: boolean
+    complete: boolean,
+    recurring: boolean,
+    alerts?: Array<Alert>
   ) {
     return this.dataService.createTask(
       userId,
       description,
       taskDateTime,
-      recurring
+      complete,
+      recurring,
+      alerts
     );
   }
 
-  static getAllTasksForUser(userId: string) {
-    console.log('getAllTasksForUser');
-    console.log(`userId`, userId);
+  static getAllTasksForUser(userId: number) {
     return this.dataService.getAllTasksForUser(userId);
   }
 
-  static getTask(taskId: string) {
+  static getTask(taskId: number) {
     return this.dataService.getTask(taskId);
   }
 
-  static updateTask(taskId: string, changes: Partial<Task>) {
+  static updateTask(taskId: number, changes: Partial<Task>) {
     return this.dataService.updateTask(taskId, changes);
   }
 
-  static deleteTask(taskId: string) {
+  static deleteTask(taskId: number) {
     return this.dataService.deleteTask(taskId);
   }
 }

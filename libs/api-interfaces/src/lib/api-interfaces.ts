@@ -1,5 +1,5 @@
 export interface User {
-  userId: string;
+  userId: number;
   name: string;
   sms?: string;
   voice?: string;
@@ -7,8 +7,8 @@ export interface User {
 }
 
 export interface Task {
-  userId: string;
-  taskId: string;
+  userId: number;
+  taskId: number;
   description: string;
   taskDateTime: string; // datetime
   recurring: boolean;
@@ -16,9 +16,9 @@ export interface Task {
 }
 
 export interface Alert {
-  alertId: string;
-  userId: string;
-  taskId: string;
+  alertId: number;
+  userId: number;
+  taskId: number;
   alertDue: string; // datetime
   alertType: 'sms' | 'voice' | 'email';
   alertDestination: string; // phone number or email
@@ -26,10 +26,10 @@ export interface Alert {
 }
 
 export interface AlertHistory {
-  alertHistoryId: string;
-  userId: string;
-  taskId: string;
-  alertId: string;
+  alertHistoryId: number;
+  userId: number;
+  taskId: number;
+  alertId: number;
   alertType: 'sms' | 'voice' | 'email';
   alertDestination: string; // phone number or email
   alertSent: string; // datetime

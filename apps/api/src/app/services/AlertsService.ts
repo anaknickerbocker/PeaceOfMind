@@ -5,8 +5,8 @@ export default class AlertsService {
   private static dataService = DataService.getInstance();
 
   static createAlert(
-    userId: string,
-    taskId: string,
+    userId: number,
+    taskId: number,
     alertDue: string,
     alertType: 'sms' | 'voice' | 'email',
     alertDestination: string,
@@ -22,23 +22,23 @@ export default class AlertsService {
     );
   }
 
-  static getAllAlertsForUser(userId: string) {
+  static getAllAlertsForUser(userId: number) {
     return this.dataService.getAllAlertsForUser(userId);
   }
 
-  static getAllAlertsForTask(taskId: string) {
+  static getAllAlertsForTask(taskId: number) {
     return this.dataService.getAllAlertsForTask(taskId);
   }
 
-  static getAlert(alertId: string) {
+  static getAlert(alertId: number) {
     return this.dataService.getAlert(alertId);
   }
 
-  static updateAlert(alertId: string, changes: Partial<AlertHistory>) {
+  static updateAlert(alertId: number, changes: Partial<AlertHistory>) {
     return this.dataService.updateAlert(alertId, changes);
   }
 
-  static deleteAlert(alertId: string) {
+  static deleteAlert(alertId: number) {
     return this.dataService.deleteAlert(alertId);
   }
 }

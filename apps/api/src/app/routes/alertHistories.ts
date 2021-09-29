@@ -14,7 +14,8 @@ alertHistories.post('/', async (req: Request, res: Response) => {
       req?.body?.description || ''
     );
     res.json(result);
-  } catch {
+  } catch (e) {
+    console.error(e);
     res.status(404);
   }
 });
@@ -25,7 +26,8 @@ alertHistories.get('/', async (req: Request, res: Response) => {
       req.body.alertId
     );
     res.json(result);
-  } catch {
+  } catch (e) {
+    console.error(e);
     res.status(404);
   }
 });
@@ -33,10 +35,11 @@ alertHistories.get('/', async (req: Request, res: Response) => {
 alertHistories.get('/:alertHistoryId', async (req: Request, res: Response) => {
   try {
     const result = await AlertHistoriesService.getAlertHistory(
-      req.params.alertHistoryId
+      parseInt(req.params.alertHistoryId)
     );
     res.json(result);
-  } catch {
+  } catch (e) {
+    console.error(e);
     res.status(404);
   }
 });
@@ -48,14 +51,15 @@ alertHistories.patch(
       const changes = {
         alertType: req?.body?.alertType || '',
         alertDestination: req?.body?.alertDestination || '',
-        description: req?.body?.description || ''
+        description: req?.body?.description || '',
       };
       const result = await AlertHistoriesService.updateAlertHistory(
-        req.params.alertHistoryId,
+        parseInt(req.params.alertHistoryId),
         changes
       );
       res.json(result);
-    } catch {
+    } catch (e) {
+      console.error(e);
       res.status(404);
     }
   }
@@ -66,10 +70,11 @@ alertHistories.delete(
   async (req: Request, res: Response) => {
     try {
       const result = await AlertHistoriesService.deleteAlertHistory(
-        req.params.alertHistoryId
+        parseInt(req.params.alertHistoryId)
       );
       res.json(result);
-    } catch {
+    } catch (e) {
+      console.error(e);
       res.status(404);
     }
   }

@@ -48,6 +48,7 @@ export default class AlertingService {
   }
 
   async sendSms(smsAlerts: Array<Alert>): Promise<void> {
+    console.log('smsAlerts: ', smsAlerts);
     await Promise.allSettled(
       smsAlerts.map(async (alert) => {
         await this.dataService.createAlertHistory(alert);
@@ -61,6 +62,7 @@ export default class AlertingService {
   }
 
   async sendVoice(voiceAlerts: Array<Alert>): Promise<void> {
+    console.log('voiceAlerts: ', voiceAlerts);
     await Promise.allSettled(
       voiceAlerts.map(async (alert) => {
         await this.dataService.createAlertHistory(alert);
@@ -74,6 +76,7 @@ export default class AlertingService {
   }
 
   async sendEmail(emailAlerts: Array<Alert>): Promise<void> {
+    console.log('emailAlerts: ', emailAlerts);
     await Promise.allSettled(
       emailAlerts.map(async (alert) => {
         await this.dataService.createAlertHistory(alert);

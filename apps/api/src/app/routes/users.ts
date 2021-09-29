@@ -1,6 +1,5 @@
 import express from 'express';
 import UsersService from '../services/UsersService';
-import tasks from './tasks';
 
 const users = express.Router();
 
@@ -14,7 +13,8 @@ users.post('/', async (req, res) => {
       req.body.email || ''
     );
     res.json(result);
-  } catch {
+  } catch (e) {
+    console.error(e);
     res.status(404);
   }
 });
@@ -24,7 +24,8 @@ users.get('/', async (req, res) => {
   try {
     const result = await UsersService.getAllUsers();
     res.json(result);
-  } catch {
+  } catch (e) {
+    console.error(e);
     res.status(404);
   }
 });
@@ -32,9 +33,10 @@ users.get('/', async (req, res) => {
 // Get one user
 users.get('/:userId', async (req, res) => {
   try {
-    const result = await UsersService.getUser(req.params.userId);
+    const result = await UsersService.getUser(parseInt(req.params.userId));
     res.json(result);
-  } catch {
+  } catch (e) {
+    console.error(e);
     res.status(404);
   }
 });
@@ -48,9 +50,13 @@ users.patch('/:userId', async (req, res) => {
     email: req.body.email || '',
   };
   try {
-    const result = await UsersService.updateUser(req.params.userId, changes);
+    const result = await UsersService.updateUser(
+      parseInt(req.params.userId),
+      changes
+    );
     res.json(result);
-  } catch {
+  } catch (e) {
+    console.error(e);
     res.status(404);
   }
 });
@@ -58,9 +64,10 @@ users.patch('/:userId', async (req, res) => {
 // Delete one user
 users.delete('/:userId', async (req, res) => {
   try {
-    const result = await UsersService.deleteUser(req.params.userId);
+    const result = await UsersService.deleteUser(parseInt(req.params.userId));
     res.json(result);
-  } catch {
+  } catch (e) {
+    console.error(e);
     res.status(404);
   }
 });
