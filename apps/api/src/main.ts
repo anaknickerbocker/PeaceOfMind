@@ -16,7 +16,11 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const app = express();
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 new CronService();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
