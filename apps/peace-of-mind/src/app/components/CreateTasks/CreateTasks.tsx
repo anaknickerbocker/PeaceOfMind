@@ -8,6 +8,7 @@ import DataService from '../../services/DataService';
 import { add } from 'date-fns';
 import { Task } from '@peace-of-mind/api-interfaces';
 import {BellOutlined} from '@ant-design/icons';
+import {Card} from 'antd';
 import "antd/dist/antd.css";
 
 export interface AlertData {
@@ -137,14 +138,20 @@ const CreateTasks = () => {
 
   return (
     <div className="task-wrapper">
-      {/*<PrettyDiv data={{ formData }} />*/}
+    {!formData &&
+      <Card 
+        title='Tasks'
+        style={{backgroundColor: '#E5C2F9'}}> 
       <TaskList tasks={tasks} setTasks={setTasks} />
+      </Card>
+    }
+      {!formData &&
       <div>
         <h2>Create a New Task</h2>
         <button
           style={{
             borderRadius: '100px',
-            marginLeft: '120px',
+            marginLeft: '70px',
             paddingTop: '5px',
             paddingBottom: '5px',
           }}
@@ -154,9 +161,12 @@ const CreateTasks = () => {
           Add Task
         </button>
       </div>
+      }
       {formData && (
         <form onSubmit={handleSubmit}>
-          <p>Task description: </p>
+        <Card 
+          style={{backgroundColor: '#E5C2F9'}}> 
+          <h3>Task description: </h3>
           <div className="input">
             <input
               value={formData.taskDescription}
@@ -174,7 +184,10 @@ const CreateTasks = () => {
               }
             />
           </div>
-          <h2>Create Alerts for Your Task</h2>
+          </Card>
+          <Card 
+            style={{backgroundColor: '#E5C2F9'}}> 
+          <h3>Create Alerts for Your Task:</h3>
           {formData?.alerts?.map((row, index) => (
             <div className="input">
               <div className="input-style">
@@ -186,7 +199,6 @@ const CreateTasks = () => {
                     borderRadius: '100px',
                     paddingTop: '5px',
                     paddingBottom: '5px',
-                    marginTop: '30px',
                   }}
                   type="text"
                   id={`reminderNumber-${index}`}
@@ -198,7 +210,6 @@ const CreateTasks = () => {
               <select
                 style={{
                   marginRight: '10px',
-                  marginTop: '30px',
                   paddingRight: '20px',
                   paddingTop: '5px',
                   paddingBottom: '5px',
@@ -225,7 +236,6 @@ const CreateTasks = () => {
                   paddingBottom: '5px',
                   paddingRight: '5px',
                   paddingLeft: '5px',
-                  marginTop: '30px',
                 }}
               />
               <select
@@ -234,7 +244,6 @@ const CreateTasks = () => {
                   paddingTop: '5px',
                   paddingBottom: '5px',
                   paddingRight: '30px',
-                  marginTop: '30px',
                   borderRadius: '100px',
                 }}
                 name="reminderMethod"
@@ -252,6 +261,7 @@ const CreateTasks = () => {
           <button
             style={{
               borderRadius: '100px',
+              marginTop: '20 px',
               marginLeft: '120px',
               paddingTop: '5px',
               paddingBottom: '5px',
@@ -261,6 +271,7 @@ const CreateTasks = () => {
           >
             Add Alert
           </button>
+          </Card>
           <div className="submit">
             <button
               type="submit"
