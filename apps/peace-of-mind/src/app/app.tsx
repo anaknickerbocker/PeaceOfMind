@@ -10,6 +10,12 @@ import Tracking from './components/Tracking/Tracking';
 import Reminders from './components/Reminders/Reminders';
 import CreateTasks from './components/CreateTasks/CreateTasks';
 import useToken from './components/useToken';
+import {Menu, Layout, Card} from 'antd';
+import 'antd/dist/antd.css'
+
+const { Footer, Header } = Layout
+
+import './app.css';
 
 const App = () => {
   const { token, setToken } = useToken();
@@ -34,11 +40,15 @@ const App = () => {
       {/* <DarkMode /> */}
       <GlobalState>
         <BrowserRouter>
-          <HeaderLink />
+          <div style={{marginTop: "30 px"}}></div>
+          {/* <Card 
+           style={{backgroundColor: '#E5C2F9', marginLeft: '620px', marginRight: '620px'}}> */}
+            <HeaderLink />
+          {/* </Card> */}
           <h1 style={{ textAlign: 'center' }}> Peace of Mind </h1>
           <Switch>
             <Route exact path="/">
-              <Profile />
+              <CreateTasks />
             </Route>
             <Route path="/tasks">
               <CreateTasks />

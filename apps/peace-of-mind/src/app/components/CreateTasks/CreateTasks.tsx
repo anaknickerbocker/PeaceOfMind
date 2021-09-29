@@ -195,7 +195,7 @@ const CreateTasks = () => {
               <div className="input-style">
                 <input
                   value={row.reminderNumber}
-                  placeholder="  #"
+                  placeholder=" #"
                   style={{
                     width: '30px',
                     borderRadius: '100px',
@@ -263,8 +263,8 @@ const CreateTasks = () => {
           <button
             style={{
               borderRadius: '100px',
-              marginTop: '20 px',
-              marginLeft: '120px',
+              marginTop: '50 px',
+              marginLeft: '108px',
               paddingTop: '5px',
               paddingBottom: '5px',
             }}
