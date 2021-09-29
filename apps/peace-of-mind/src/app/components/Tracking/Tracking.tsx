@@ -1,7 +1,7 @@
 
 import React, { useState, useContext } from 'react';
 import AppContext from '../context/AppContext';
-import { Calendar, Card, Badge } from 'antd';
+import { Calendar, Card, Layout } from 'antd';
 import {MehOutlined, SmileOutlined, FrownOutlined} from '@ant-design/icons';
 import "antd/dist/antd.css";
 
@@ -10,9 +10,11 @@ export default function Tracking() {
     taskReminders
   } = useContext(AppContext)
 
-  const meh = <MehOutlined style={{fontSize: '30px'}}/>
-  const smile = <SmileOutlined style={{fontSize: '30px'}}/>
-  const frown = <FrownOutlined style={{fontSize: '30px'}}/>
+  const { Footer } = Layout
+
+  const meh = <MehOutlined style={{fontSize: '10px'}}/>
+  const smile = <SmileOutlined style={{fontSize: '10px'}}/>
+  const frown = <FrownOutlined style={{fontSize: '10px'}}/>
 
 
   function getListData(value: any) {
@@ -73,40 +75,26 @@ export default function Tracking() {
       <ul className="events">
         {listData.map(item => (
           <div>
-            {/* {<MehOutlined style={{fontSize: '30px'}}/>} */}
             {item.content}
           </div>
         ))}
       </ul>
     );
   }
-  
-  // function getMonthData(value: any) {
-  //   if (value.month() === 8) {
-  //     return 1394;
-  //   }
-  // }
-  
-  function monthCellRender(value: any) {
-    const num = 1394;
-    return num ? (
-      <div className="notes-month">
-        <section>{num}</section>
-        <span>Backlog number</span>
-      </div>
-    ) : null;
-  }
 
   
   return (
     <div>
       <Card 
-      style={{backgroundColor: '#E5C2F9', marginLeft: '100px', marginRight: '100px'}}
+      style={{backgroundColor: '#E5C2F9', marginLeft: '400px', marginRight: '400px'}}
       >
         <Calendar
-        dateCellRender={dateCellRender} monthCellRender={monthCellRender}
+        dateCellRender={dateCellRender} 
         />
       </Card>
+    <Footer style={{ textAlign: 'center', backgroundColor: '#E5C2F9', marginLeft: '500px', width: '500px'}}>
+       “I have learned over the years that when one’s mind is made up, this diminishes fear; knowing what must be done does away with fear.” – Rosa Parks
+    </Footer>
     </div>
   
 
