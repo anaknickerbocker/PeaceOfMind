@@ -38,7 +38,7 @@ const App = () => {
     >
       <GlobalState>
         <BrowserRouter>
-            <HeaderLink />
+          <HeaderLink />
           <Switch>
             <Route exact path="/">
               <CreateTasks />

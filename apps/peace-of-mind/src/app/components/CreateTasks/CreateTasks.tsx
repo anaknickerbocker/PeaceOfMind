@@ -5,8 +5,8 @@ import { TaskList } from '../TaskList/TaskList';
 import DataService from '../../services/DataService';
 import { add, formatISO } from 'date-fns';
 import { Task } from '@peace-of-mind/api-interfaces';
-import { BellOutlined } from '@ant-design/icons';
-import { Card, Layout, Row, Col, Divider } from 'antd';
+import { BellOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Card, Layout, Row, Col, Divider, Button } from 'antd';
 import 'antd/dist/antd.css';
 import { DatePicker, formatReturnDate } from '@twilio-paste/core/date-picker';
 import { TimePicker, formatReturnTime } from '@twilio-paste/core/time-picker';
@@ -163,18 +163,18 @@ const CreateTasks = () => {
         <Col className="gutter-row">
         <Divider orientation='left'>Create A New Task</Divider>
         <div style={{ backgroundColor: '#FFF6EE', width: '350px'}}>
-          <button
+          <Button
             style={{
               borderRadius: '100px',
               marginLeft: '130px',
               paddingTop: '5px',
               paddingBottom: '5px',
             }}
-            type="submit"
+            type="default"
             onClick={addTask}
           >
             Add Task
-          </button>
+          </Button>
           </div>
         </Col>
       </Row>
@@ -186,7 +186,7 @@ const CreateTasks = () => {
             <Card style={{ backgroundColor: '#FFF6EE', width: '350px' }}>
               <TaskList tasks={tasks} setTasks={setTasks} />
             </Card>
-          </Col>
+          </Col>  
         </Row>
       )}
       {formData && (
@@ -269,9 +269,9 @@ const CreateTasks = () => {
           </Col>
         </Row>
           <Card style={{ backgroundColor: '#FFF6EE', width: '350px' }}>
+          <p>Enter Notification Interval and Method:</p>
             {formData?.alerts?.map((row, index) => (
-              <div>
-              <div className="input">
+            <div  className="input">
                 <div className="input-style">
                   <input
                     value={row.reminderNumber}
@@ -279,8 +279,8 @@ const CreateTasks = () => {
                     style={{
                       width: '30px',
                       borderRadius: '100px',
-                      paddingTop: '5px',
-                      paddingBottom: '5px',
+                      paddingTop: '2px',
+                      paddingBottom: '2px',
                       marginLeft: '10px'
                     }}
                     type="text"
@@ -294,8 +294,8 @@ const CreateTasks = () => {
                   style={{
                     marginRight: '10px',
                     paddingRight: '20px',
-                    paddingTop: '5px',
-                    paddingBottom: '5px',
+                    paddingTop: '2px',
+                    paddingBottom: '2px',
                     borderRadius: '100px',
                   }}
                   name="reminderInterval"
@@ -309,62 +309,57 @@ const CreateTasks = () => {
                   <option value="Hours">Hours</option>{' '}
                   <option value="Days">Days</option>
                 </select>
-                <p style={{paddingTop: '10px'}}>After Task Due</p>
                 <br />
-            </div>
-            <div className="input">
-                <BellOutlined
-                  style={{
-                    backgroundColor: 'white',
-                    borderRadius: '100px',
-                    marginLeft: '50px',
-                    marginRight: '30px',
-                    paddingTop: '5px',
-                    paddingBottom: '5px',
-                    paddingRight: '5px',
-                    paddingLeft: '5px',
-                  }}
-                />
-                <p style={{marginRight: '30px', paddingTop: '8px'}}>Via</p>
-                <select
-                  value={row.alertType}
-                  style={{
-                    paddingTop: '5px',
-                    paddingBottom: '5px',
-                    paddingRight: '30px',
-                    borderRadius: '100px',
-                  }}
-                  name="alertType"
-                  id={`alertType-${index}`}
-                  key={`alertType-${index}`}
-                  onChange={(e) => changeHandler(e, `alertType`, index)}
-                >
-                  <option value="selectOne">---</option>
-                  <option value="sms">SMS</option>
-                  <option value="email">Email</option>{' '}
-                  <option value="voice">Voice</option>
-                </select>
-                </div>
-                <Divider />
-              </div>
+                  <BellOutlined
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: '100px',
+                      marginLeft: '20px',
+                      marginRight: '10px',
+                      paddingTop: '8px',
+                      paddingBottom: '8px',
+                      paddingRight: '8px',
+                      paddingLeft: '8px',
+                    }}
+                  />
+                  <select
+                    value={row.alertType}
+                    style={{
+                      paddingTop: '2px',
+                      paddingBottom: '2px',
+                      paddingRight: '30px',
+                      borderRadius: '100px',
+                    }}
+                    name="alertType"
+                    id={`alertType-${index}`}
+                    key={`alertType-${index}`}
+                    onChange={(e) => changeHandler(e, `alertType`, index)}
+                  >
+                    <option value="selectOne">---</option>
+                    <option value="sms">SMS</option>
+                    <option value="email">Email</option>{' '}
+                    <option value="voice">Voice</option>
+                  </select>
+          </div>
               
             ))}
-            <button
+            <Button
+              type="default"
               style={{
                 borderRadius: '100px',
                 marginTop: '20px',
-                marginLeft: '110px',
+                marginLeft: '140px',
                 paddingTop: '5px',
                 paddingBottom: '5px',
               }}
+              icon={<PlusOutlined />}
               onClick={(e) => addAlert(e)}
             >
-              Add Alert
-            </button>
+            </Button>
           </Card>
           <div className="submit">
-            <button
-              type="submit"
+            <Button
+              type="default"
               style={{
                 borderRadius: '100px',
                 marginTop: '20px',
@@ -374,7 +369,7 @@ const CreateTasks = () => {
               onClick={(e) => handleSubmit(e)}
             >
               Save Task
-            </button>
+            </Button>
           </div>
         </form>
       )}
