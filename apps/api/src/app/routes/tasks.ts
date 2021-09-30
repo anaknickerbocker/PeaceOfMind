@@ -7,7 +7,7 @@ const tasks = express.Router();
 tasks.post('/', async (req: Request, res: Response) => {
   try {
     const result = await TasksService.createTask(
-      parseInt(req.body.userId),
+      Number(req.query.userId),
       req.body.description,
       req.body.taskDateTime,
       req.body.complete || false,
@@ -25,7 +25,7 @@ tasks.post('/', async (req: Request, res: Response) => {
 tasks.get('/', async (req: Request, res: Response) => {
   try {
     const result = await TasksService.getAllTasksForUser(
-      parseInt(req.body.userId)
+      Number(req.query.userId)
     );
     res.json(result);
   } catch (e) {
@@ -37,7 +37,7 @@ tasks.get('/', async (req: Request, res: Response) => {
 // Get one task
 tasks.get('/:taskId', async (req: Request, res: Response) => {
   try {
-    const result = await TasksService.getTask(parseInt(req.params.taskId));
+    const result = await TasksService.getTask(Number(req.params.taskId));
     res.json(result);
   } catch (e) {
     console.error(e);
@@ -49,13 +49,13 @@ tasks.get('/:taskId', async (req: Request, res: Response) => {
 tasks.patch('/:taskId', async (req: Request, res: Response) => {
   try {
     const changes = {
-      userId: parseInt(req.body.userId),
+      userId: Number(req.query.userId),
       description: req.body.description,
       taskDateTime: req.body.taskDateTime,
       recurring: req.body.recurring,
     };
     const result = await TasksService.updateTask(
-      parseInt(req.params.taskId),
+      Number(req.params.taskId),
       changes
     );
     res.json(result);
@@ -68,7 +68,7 @@ tasks.patch('/:taskId', async (req: Request, res: Response) => {
 // Delete a task
 tasks.delete('/:taskId', async (req: Request, res: Response) => {
   try {
-    const result = await TasksService.deleteTask(parseInt(req.params.taskId));
+    const result = await TasksService.deleteTask(Number(req.params.taskId));
     res.json(result);
   } catch (e) {
     console.error(e);

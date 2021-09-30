@@ -5,11 +5,11 @@ export default class DataService {
     return fetch(`/api/users/${userId}`);
   };
   static getAllTasks = (userId: number) => {
-    return fetch(`/api/users/${userId}/tasks`);
+    return fetch(`/api/tasks?userId=${userId}`);
   };
 
   static getTask = (userId: number, taskId: number) => {
-    return fetch(`/api/users/${userId}/tasks/${taskId}`);
+    return fetch(`/api/tasks/${taskId}?userId=${userId}`);
   };
 
   static createTask = (
@@ -31,7 +31,7 @@ export default class DataService {
       recurring: false,
       alerts,
     };
-    return fetch(`/api/users/${userId}/tasks`, {
+    return fetch(`/api/tasks?userId=${userId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export default class DataService {
   };
 
   static getAlerts = (userId: number, taskId: number) => {
-    return fetch(`/api/users/${userId}/tasks/${taskId}`);
+    return fetch(`/api/alerts?userId=${userId}&taskId=${taskId}`);
   };
 
   static createAlert = async (
@@ -59,7 +59,7 @@ export default class DataService {
       alertDestination,
       description,
     };
-    return fetch(`/api/users/${userId}/tasks/${taskId}/alerts`, {
+    return fetch(`/api/alerts?userId=${userId}&taskId=${taskId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

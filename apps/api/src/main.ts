@@ -36,35 +36,9 @@ app.use('/api/login', (req, res) => {
 });
 
 app.use('/api/users', users);
-app.use(
-  '/api/users/:userId/tasks',
-  (req, res, next) => {
-    req.body.userId = req.params.userId;
-    next();
-  },
-  tasks
-);
-app.use(
-  '/api/users/:userId/tasks/:taskId/alerts',
-  (req, res, next) => {
-    req.body.userId = req.params.userId;
-    req.body.taskId = req.params.taskId;
-    next();
-  },
-  alerts
-);
-
-app.use(
-  '/api/users/:userId/tasks/:taskId/alerts/:alertId/alertHistories',
-  (req, res, next) => {
-    req.body.userId = req.params.userId;
-    req.body.taskId = req.params.taskId;
-    req.body.alertId = req.params.alertId;
-    next();
-  },
-  alertHistories
-);
-
+app.use('/api/tasks', tasks);
+app.use('/api/alerts', alerts);
+app.use('/api/alertHistories', alertHistories);
 app.use('/api/dev', dev);
 
 app.get('*', (req, res) => {
