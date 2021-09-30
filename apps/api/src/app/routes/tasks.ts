@@ -66,6 +66,18 @@ tasks.patch('/:taskId', async (req: Request, res: Response) => {
   }
 });
 
+tasks.patch('/:taskId/complete', async (req: Request, res: Response) => {
+  try {
+    const result = await TasksService.updateTask(Number(req.params.taskId), {
+      complete: true,
+    });
+    res.json(result);
+  } catch (e) {
+    console.error(e);
+    res.status(404);
+  }
+});
+
 // Delete a task
 tasks.delete('/:taskId', async (req: Request, res: Response) => {
   try {
