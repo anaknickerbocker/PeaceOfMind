@@ -6,11 +6,11 @@ import DataService from '../../services/DataService';
 import { add, formatISO } from 'date-fns';
 import { Task } from '@peace-of-mind/api-interfaces';
 import { BellOutlined } from '@ant-design/icons';
-import { Card, Layout } from 'antd';
+import { Card, Layout, Row, Col, Divider } from 'antd';
 import 'antd/dist/antd.css';
 import { DatePicker, formatReturnDate } from '@twilio-paste/core/date-picker';
 import { TimePicker, formatReturnTime } from '@twilio-paste/core/time-picker';
-import { HelpText, Label } from '@twilio-paste/core';
+import { HelpText, Label} from '@twilio-paste/core';
 import { Box } from '@twilio-paste/core';
 
 export interface AlertData {
@@ -159,17 +159,14 @@ const CreateTasks = () => {
   return (
     <div className="task-wrapper">
       {!formData && (
-        <Card title="Tasks" style={{ backgroundColor: '#E5C2F9' }}>
-          <TaskList tasks={tasks} setTasks={setTasks} />
-        </Card>
-      )}
-      {!formData && (
-        <div>
-          <h2>Create a New Task</h2>
+      <Row>
+        <Col className="gutter-row">
+        <Divider orientation='left'>Create A New Task</Divider>
+        <div style={{ backgroundColor: '#FFF6EE', width: '350px'}}>
           <button
             style={{
               borderRadius: '100px',
-              marginLeft: '70px',
+              marginLeft: '130px',
               paddingTop: '5px',
               paddingBottom: '5px',
             }}
@@ -178,16 +175,30 @@ const CreateTasks = () => {
           >
             Add Task
           </button>
-        </div>
+          </div>
+        </Col>
+      </Row>
+      )}
+      {!formData && (
+        <Row>
+          <Col className="gutter-row">
+            <Divider orientation='left' >Current Tasks</Divider>
+            <Card style={{ backgroundColor: '#FFF6EE', width: '350px' }}>
+              <TaskList tasks={tasks} setTasks={setTasks} />
+            </Card>
+          </Col>
+        </Row>
       )}
       {formData && (
         <form>
-          <Card style={{ backgroundColor: '#E5C2F9' }}>
-            <h3>Task description: </h3>
+        <Row>
+          <Col className="gutter-row">
+          <Divider orientation='left' >Create A New Task</Divider>
+          <Card style={{ backgroundColor: '#FFF6EE', width: '350px'  }}>
             <div className="input">
               <Label htmlFor="taskDescription" required>
-                Task Description:
-              </Label>
+                Enter Task Description:
+
               <input
                 value={formData.taskDescription}
                 type="text"
@@ -203,13 +214,16 @@ const CreateTasks = () => {
                   setFormData({ ...formData, taskDescription: e.target.value })
                 }
               />
+              </Label>
+              </div>
+              <div style={{ marginTop: '30px'}}>
               <Box
                 backgroundColor="colorBackgroundSuccessWeakest"
                 display="inline-block"
                 padding="space40"
               >
                 <Label htmlFor="taskDueDate" required>
-                  Task Due Date
+                  Select Task Due Date:
                 </Label>
                 <DatePicker
                   aria-describedby="taskDueDate"
@@ -223,15 +237,17 @@ const CreateTasks = () => {
                   }
                   required
                 />
-                <HelpText id="taskDueDate">Please select a date.</HelpText>
+                {/* <HelpText id="taskDueDate">Please select a date.</HelpText> */}
               </Box>
+              </div>
+              <div style={{ marginTop: '30px'}}>
               <Box
                 backgroundColor="colorBackgroundSuccessWeakest"
                 display="inline-block"
                 padding="space40"
               >
                 <Label htmlFor="taskDueTime" required>
-                  Start time
+                  Select Start time:
                 </Label>
                 <TimePicker
                   aria-describedby="taskDueTime"
@@ -245,23 +261,27 @@ const CreateTasks = () => {
                   }
                   required
                 />
-                <HelpText id="taskDueTime">Please select a time.</HelpText>
+                {/* <HelpText id="taskDueTime">Please select a time.</HelpText> */}
               </Box>
             </div>
           </Card>
-          <Card style={{ backgroundColor: '#E5C2F9' }}>
-            <h3>Create Alerts for Your Task:</h3>
+          <Divider orientation='left' >Create Task Alerts</Divider>
+          </Col>
+        </Row>
+          <Card style={{ backgroundColor: '#FFF6EE', width: '350px' }}>
             {formData?.alerts?.map((row, index) => (
+              <div>
               <div className="input">
                 <div className="input-style">
                   <input
                     value={row.reminderNumber}
-                    placeholder="  #"
+                    placeholder=" #"
                     style={{
                       width: '30px',
                       borderRadius: '100px',
                       paddingTop: '5px',
                       paddingBottom: '5px',
+                      marginLeft: '10px'
                     }}
                     type="text"
                     id={`reminderNumber-${index}`}
@@ -289,21 +309,23 @@ const CreateTasks = () => {
                   <option value="Hours">Hours</option>{' '}
                   <option value="Days">Days</option>
                 </select>
-                <p>After Task Due</p>
+                <p style={{paddingTop: '10px'}}>After Task Due</p>
                 <br />
+            </div>
+            <div className="input">
                 <BellOutlined
                   style={{
                     backgroundColor: 'white',
                     borderRadius: '100px',
                     marginLeft: '50px',
-                    marginRight: '10px',
+                    marginRight: '30px',
                     paddingTop: '5px',
                     paddingBottom: '5px',
                     paddingRight: '5px',
                     paddingLeft: '5px',
                   }}
                 />
-                <p>via</p>
+                <p style={{marginRight: '30px', paddingTop: '8px'}}>Via</p>
                 <select
                   value={row.alertType}
                   style={{
@@ -322,13 +344,16 @@ const CreateTasks = () => {
                   <option value="email">Email</option>{' '}
                   <option value="voice">Voice</option>
                 </select>
+                </div>
+                <Divider />
               </div>
+              
             ))}
             <button
               style={{
                 borderRadius: '100px',
-                marginTop: '20 px',
-                marginLeft: '120px',
+                marginTop: '20px',
+                marginLeft: '110px',
                 paddingTop: '5px',
                 paddingBottom: '5px',
               }}
@@ -356,7 +381,7 @@ const CreateTasks = () => {
       <Footer
         style={{
           textAlign: 'center',
-          backgroundColor: '#E5C2F9',
+          backgroundColor: '#FFF6EE',
           width: '400px',
         }}
       >

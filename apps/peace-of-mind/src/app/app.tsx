@@ -22,30 +22,23 @@ const App = () => {
 
   if (!token) {
     return (
-      <div style={{ minHeight: '100vh', backgroundColor: '#E5C2F9' }}>
+      <div style={{ minHeight: '100vh', backgroundColor: '#FFF6EE' }}>
         <Login setToken={setToken} />
       </div>
     );
   }
 
   return (
-    // <Theme.Provider theme="default">
     <div
       style={{
         minHeight: '100vh',
-        backgroundColor: '#E5C2F9',
+        backgroundColor: '#FFF6EE',
         fontFamily: 'Verdana',
       }}
     >
-      {/* <DarkMode /> */}
       <GlobalState>
         <BrowserRouter>
-          <div style={{marginTop: "30 px"}}></div>
-          {/* <Card 
-           style={{backgroundColor: '#E5C2F9', marginLeft: '620px', marginRight: '620px'}}> */}
             <HeaderLink />
-          {/* </Card> */}
-          <h1 style={{ textAlign: 'center' }}> Peace of Mind </h1>
           <Switch>
             <Route exact path="/">
               <CreateTasks />

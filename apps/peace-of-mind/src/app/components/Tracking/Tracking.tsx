@@ -1,7 +1,7 @@
 
 import React, { useState, useContext } from 'react';
 import AppContext from '../context/AppContext';
-import { Calendar, Card, Layout } from 'antd';
+import { Calendar, Card, Layout, Divider } from 'antd';
 import {MehOutlined, SmileOutlined, FrownOutlined} from '@ant-design/icons';
 import "antd/dist/antd.css";
 
@@ -85,16 +85,17 @@ export default function Tracking() {
   
   return (
     <div>
+      <Divider> Mood Tracking </Divider>
       <Card 
-      style={{backgroundColor: '#E5C2F9', marginLeft: '400px', marginRight: '400px'}}
+        style={{backgroundColor: '#FFF6EE', marginTop: '30px', marginLeft: '400px', marginRight: '400px'}}
       >
         <Calendar
         dateCellRender={dateCellRender} 
         />
       </Card>
-    <Footer style={{ textAlign: 'center', backgroundColor: '#E5C2F9', marginLeft: '500px', width: '500px'}}>
-       “I have learned over the years that when one’s mind is made up, this diminishes fear; knowing what must be done does away with fear.” – Rosa Parks
-    </Footer>
+      <Footer style={{ textAlign: 'center', backgroundColor: '#FFF6EE', marginLeft: '500px', width: '500px'}}>
+        “I have learned over the years that when one’s mind is made up, this diminishes fear; knowing what must be done does away with fear.” – Rosa Parks
+      </Footer>
     </div>
   
 

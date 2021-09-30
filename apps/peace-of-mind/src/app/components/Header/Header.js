@@ -28,7 +28,7 @@ const HeaderLink = ({ page }) => {
         shape='circle'
         size='large'
         style={{
-          backgroundColor: '#E5C2F9'
+          backgroundColor: '#FFF6EE'
         }}
         type="default"
       >
@@ -41,11 +41,13 @@ const HeaderLink = ({ page }) => {
 
 const Header = () => {
     return (
+      <div style={{ paddingTop: '30px'}}>
       <div className='header'>
         <HeaderLink page='tasks' />
         <HeaderLink page='reminders' />
         <HeaderLink page='profile' />
         <HeaderLink page='tracking' />
+      </div>
       </div>
     );
   };
