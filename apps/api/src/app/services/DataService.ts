@@ -94,7 +94,6 @@ export default class DataService {
         },
       };
     }
-    console.log('createData: ', JSON.stringify(createData, null, 2));
     return this.prisma.tasks.create(createData);
   }
 
@@ -120,6 +119,10 @@ export default class DataService {
 
   deleteTask(taskId: number) {
     return this.prisma.tasks.delete({ where: { taskId } });
+  }
+
+  deleteRemainingAlerts(taskId: number) {
+    return this.prisma.alerts.deleteMany({ where: { taskId } });
   }
 
   // Alerts
@@ -171,11 +174,10 @@ export default class DataService {
   createAlertHistory(alert: Alert | Partial<Alert>) {
     return this.prisma.alertHistories.create({
       data: {
-        alertHistoryId: undefined,
-        alertSent: new Date(),
-        userId: alert.userId,
         taskId: alert.taskId,
+        userId: alert.userId,
         alertId: alert.alertId,
+        alertSent: new Date().toISOString(),
         alertType: alert.alertType,
         alertDestination: alert.alertDestination,
       },
