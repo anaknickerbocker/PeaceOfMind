@@ -2,6 +2,7 @@ import React, { FormEvent, useState, useContext } from 'react';
 import AppContext from '../context/AppContext';
 import {Card, Button, Layout, Row, Col, Divider} from 'antd';
 import "antd/dist/antd.css";
+import { Image } from 'antd';
 
 const { Footer } = Layout
 
@@ -50,6 +51,9 @@ const Profile = () => {
 
   return (
     <div className="profile-wrapper">
+       <div className='image' style={{marginBottom: '30px', marginTop: '30px'}}>
+        <img src={require('./pomlogo.png')} width="100px" height="50px" alt="logo"/>
+      </div>
     {profileCreated && (
       <Row>
         <Col className="gutter-row">
@@ -138,7 +142,10 @@ const Profile = () => {
     <Footer style={{ textAlign: 'center', backgroundColor: '#FFF6EE', width: '400px'}}>
     “I really think a champion is defined not by their wins but by how they can recover when they fall.” – Serena Williams
     </Footer>
+      
     </div>
+    
+     
   );
 };
 

@@ -12,6 +12,8 @@ import { DatePicker, formatReturnDate } from '@twilio-paste/core/date-picker';
 import { TimePicker, formatReturnTime } from '@twilio-paste/core/time-picker';
 import { HelpText, Label} from '@twilio-paste/core';
 import { Box } from '@twilio-paste/core';
+import { Image } from 'antd';
+import "antd/dist/antd.css";
 
 export interface AlertData {
   reminderNumber: string;
@@ -161,7 +163,11 @@ const CreateTasks = () => {
       {!formData && (
       <Row>
         <Col className="gutter-row">
-        <Divider orientation='left'>Create A New Task</Divider>
+        {/* <Divider orientation='left'>Create A New Task</Divider> */}
+        <div className='image' style={{marginBottom: '30px', marginTop: '30px'}}>
+        <img src={require('./pomlogo.png')} width="100px" height="50px" alt="logo"/>
+      </div>
+        
         <div style={{ backgroundColor: '#FFF6EE', width: '350px'}}>
           <button
             style={{
@@ -193,7 +199,7 @@ const CreateTasks = () => {
         <form>
         <Row>
           <Col className="gutter-row">
-          <Divider orientation='left' >Create A New Task</Divider>
+          {/* <Divider orientation='left' >Create A New Task</Divider> */}
           <Card style={{ backgroundColor: '#FFF6EE', width: '350px'  }}>
             <div className="input">
               <Label htmlFor="taskDescription" required>

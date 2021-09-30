@@ -40,7 +40,8 @@ const Login = (props: { setToken: (userToken: { token: string }) => void }) => {
   return (
     <div className="login-wrapper">
       <div className='image' style={{marginBottom: '30px', marginTop: '30px'}}>
-        <img src={require('./pomlogo.png')} width="300px" height="120px" />
+        <img src={require('./LogoVariations.png')} width="300px" height="400px" alt="logo"/>
+        {/* <img src={require('./pomlogo.png')} width="300px" height="120px" /> */}
       </div>
       <h1>Please Log In</h1>
       {/*<Image width={200} src={logo} alt="logo" />*/}

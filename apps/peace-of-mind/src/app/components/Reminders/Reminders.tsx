@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import AppContext from '../context/AppContext';
 import { Card, Steps, Row, Col, Divider, Switch, Layout } from 'antd';
 import "antd/dist/antd.css";
+import { Image } from 'antd';
 const { Footer } = Layout
 
 import './Reminders.css';
@@ -18,7 +19,10 @@ export default function Reminders() {
   return (
     <div style={{display: "flex", flex: "row", justifyContent: "center"}}>
     <div>
-      <Divider orientation="left">Upcoming Task Alerts</Divider>
+      {/* <Divider orientation="left">Upcoming Task Alerts</Divider> */}
+      <div className='image' style={{marginBottom: '30px', marginTop: '30px'}}>
+        <img src={require('./pomlogo.png')} width="100px" height="50px" alt="logo"/>
+      </div>
         <Row>
           <Col className="gutter-row">
             <Card
