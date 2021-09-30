@@ -67,4 +67,13 @@ export default class DataService {
       body: JSON.stringify(body),
     });
   };
+
+  static markTaskAsComplete = async (userId: number, taskId: number) => {
+    return fetch(`/api/tasks/${taskId}/complete?userId=${userId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  };
 }
