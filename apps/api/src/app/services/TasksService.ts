@@ -37,4 +37,8 @@ export default class TasksService {
   static deleteTask(taskId: number) {
     return this.dataService.deleteTask(taskId);
   }
+
+  static deleteRemainingAlerts(taskId: number) {
+    return this.dataService.deleteRemainingAlerts(taskId);
+  }
 }

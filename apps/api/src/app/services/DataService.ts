@@ -122,6 +122,10 @@ export default class DataService {
     return this.prisma.tasks.delete({ where: { taskId } });
   }
 
+  deleteRemainingAlerts(taskId: number) {
+    return this.prisma.alerts.deleteMany({ where: { taskId } });
+  }
+
   // Alerts
   async createAlert(
     userId: number,

@@ -68,10 +68,13 @@ tasks.patch('/:taskId', async (req: Request, res: Response) => {
 
 tasks.patch('/:taskId/complete', async (req: Request, res: Response) => {
   try {
-    const result = await TasksService.updateTask(Number(req.params.taskId), {
+    const task = await TasksService.updateTask(Number(req.params.taskId), {
       complete: true,
     });
-    res.json(result);
+    const result = await TasksService.deleteRemainingAlerts(
+      Number(req.params.taskId)
+    );
+    res.json({ task, result });
   } catch (e) {
     console.error(e);
     res.status(404);
