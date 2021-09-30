@@ -25,7 +25,8 @@ tasks.post('/', async (req: Request, res: Response) => {
 tasks.get('/', async (req: Request, res: Response) => {
   try {
     const result = await TasksService.getAllTasksForUser(
-      Number(req.query.userId)
+      Number(req.query.userId),
+      Boolean(req.query.alerts)
     );
     res.json(result);
   } catch (e) {

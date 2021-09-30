@@ -98,8 +98,13 @@ export default class DataService {
     return this.prisma.tasks.create(createData);
   }
 
-  getAllTasksForUser(userId: number) {
-    return this.prisma.tasks.findMany({ where: { userId } });
+  getAllTasksForUser(userId: number, withAlerts: boolean) {
+    return withAlerts
+      ? this.prisma.tasks.findMany({
+          where: { userId },
+          include: { alerts: true },
+        })
+      : this.prisma.tasks.findMany({ where: { userId } });
   }
 
   getTask(taskId: number) {
