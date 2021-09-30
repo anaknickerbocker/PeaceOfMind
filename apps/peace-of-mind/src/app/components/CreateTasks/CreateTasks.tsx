@@ -5,8 +5,8 @@ import { TaskList } from '../TaskList/TaskList';
 import DataService from '../../services/DataService';
 import { add, formatISO } from 'date-fns';
 import { Task } from '@peace-of-mind/api-interfaces';
-import { BellOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Card, Layout, Row, Col, Divider, Button } from 'antd';
+import { BellOutlined, PlusOutlined } from '@ant-design/icons';
+import { Card, Layout, Row, Col, Divider, Button, Input, Select } from 'antd';
 import 'antd/dist/antd.css';
 import { DatePicker, formatReturnDate } from '@twilio-paste/core/date-picker';
 import { TimePicker, formatReturnTime } from '@twilio-paste/core/time-picker';
@@ -202,7 +202,7 @@ const CreateTasks = () => {
               <Label htmlFor="taskDescription" required>
                 Enter Task Description:
 
-              <input
+              <Input
                 value={formData.taskDescription}
                 type="text"
                 id="taskDescription"
@@ -220,14 +220,15 @@ const CreateTasks = () => {
               </Label>
               </div>
               <div style={{ marginTop: '30px'}}>
-              <Box
-                backgroundColor="colorBackgroundSuccessWeakest"
-                display="inline-block"
-                padding="space40"
-              >
-                <Label htmlFor="taskDueDate" required>
+              <Label htmlFor="taskDueDate" required>
                   Select Task Due Date:
                 </Label>
+              <Box
+                display="inline-block"
+                padding="space40"
+                style={{backgroundColor: 'white', borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
+              >
+
                 <DatePicker
                   aria-describedby="taskDueDate"
                   id="taskDueDate"
@@ -240,18 +241,17 @@ const CreateTasks = () => {
                   }
                   required
                 />
-                {/* <HelpText id="taskDueDate">Please select a date.</HelpText> */}
               </Box>
               </div>
               <div style={{ marginTop: '30px'}}>
-              <Box
-                backgroundColor="colorBackgroundSuccessWeakest"
-                display="inline-block"
-                padding="space40"
-              >
-                <Label htmlFor="taskDueTime" required>
+              <Label htmlFor="taskDueTime" required>
                   Select Start time:
                 </Label>
+              <Box
+                display="inline-block"
+                padding="space40"
+                style={{backgroundColor: 'white', borderRadius: '100px', paddingLeft: '30px', paddingTop: '5px', paddingBottom: '5px'}}
+              >
                 <TimePicker
                   aria-describedby="taskDueTime"
                   id="taskDueTime"
@@ -264,7 +264,6 @@ const CreateTasks = () => {
                   }
                   required
                 />
-                {/* <HelpText id="taskDueTime">Please select a time.</HelpText> */}
               </Box>
             </div>
           </Card>
@@ -276,14 +275,15 @@ const CreateTasks = () => {
             {formData?.alerts?.map((row, index) => (
             <div  className="input">
                 <div className="input-style">
-                  <input
+                  <Input
                     value={row.reminderNumber}
-                    placeholder=" #"
+                    placeholder="#"
                     style={{
                       width: '30px',
                       borderRadius: '100px',
                       paddingTop: '2px',
                       paddingBottom: '2px',
+                      paddingRight: '2px',
                       marginLeft: '10px'
                     }}
                     type="text"
