@@ -22,46 +22,78 @@ export default function Tracking() {
     switch (value.date()) {
       case 8:
         listData = [
-          { content: meh },
-
+          { content: "Walk" },
         ];
         break;
         case 9:
         listData = [
-          { content: smile },
-
+          // { content: smile },
+          { content: "Walk" },
         ];
         break;
         case 10:
         listData = [
-          { content: frown },
-
+          { content: "Walk" },
         ];
         break;
         case 11:
         listData = [
-          { content: meh },
-
+          { content: "Walk" },
         ];
         break;
       case 12:
         listData = [
-          { content: smile },
+          { content: "Walk" }
         ];
         break;
         case 13:
         listData = [
-          { content: frown },
+          { content: "Walk" },
         ];
         break;
         case 14:
         listData = [
-          { content: smile },
+          { content: "Walk" }
         ];
         break;
       case 15:         
         listData = [
-          { content: meh },
+          { content: "Yoga" }
+        ];
+        break;
+      case 16:         
+        listData = [
+          { content: "Yoga" }
+        ];
+        break;
+      case 17:         
+        listData = [
+          { content: "Yoga" }
+        ];
+        break;
+      case 18:         
+        listData = [
+          { content: "Yoga" }
+        ];
+        break;
+      case 19:         
+        listData = [
+          { content: "Yoga" }
+        ];
+        break;
+      case 20:         
+        listData = [
+          { content: "Yoga" }
+        ];
+        break;
+      case 21:         
+        listData = [
+          { content: "Yoga" }
+        ];
+        break;
+      case 22:         
+        listData = [
+          { content: "Yoga" }
         ];
         break;
       default:
