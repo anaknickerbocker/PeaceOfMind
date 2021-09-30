@@ -1,5 +1,5 @@
 # Peace of Mind
-![](./assets/Logo Variations.jpg)
+![](./assets/LogoVariations.jpg)
 
 ## Description
 
