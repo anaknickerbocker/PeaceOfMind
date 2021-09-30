@@ -1,6 +1,6 @@
 import React, { FormEvent, useState, useContext } from 'react';
 import AppContext from '../context/AppContext';
-import {Card, Button, Layout} from 'antd';
+import {Card, Button, Layout, Row, Col, Divider} from 'antd';
 import "antd/dist/antd.css";
 
 const { Footer } = Layout
@@ -50,65 +50,70 @@ const Profile = () => {
 
   return (
     <div className="profile-wrapper">
-    {profileCreated &&
-      <div>
-        <Card
-          title="User Profile"
-          style={{backgroundColor: '#E5C2F9'}}
-        >
-        <p>First name: {name}</p>
-        <p>Last name: {nameSecond}</p>
-        <p>Email: {email}</p>
-        <p>Phone number: {phone}</p>
-        </Card>
-        <Button 
-            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginLeft: '90px', marginTop: '30px'}}
-            type="default"
-            onClick={handleEdit}
+    {profileCreated && (
+      <Row>
+        <Col className="gutter-row">
+          <Divider orientation='left'>User Profile</Divider>
+          <Card
+            style={{backgroundColor: '#FFF6EE', width: '350px'}}
           >
-            Edit Profile
+            <p>First name: {name}</p>
+            <p>Last name: {nameSecond}</p>
+            <p>Email: {email}</p>
+            <p>Phone number: {phone}</p>
+          </Card>
+          <Button 
+              style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginLeft: '120px', marginTop: '30px'}}
+              type="default"
+              onClick={handleEdit}
+            >
+              Edit Profile
           </Button >
-      </div>
-    }
-    {!profileCreated && 
+        </Col>
+      </Row>
+    )}
+    {!profileCreated && (
+            <Row>
+            <Col className="gutter-row">
+              <Divider orientation='left'>Create Your User Profile</Divider>
     <div>
       <Card
-          title="Create Your User Profile!"
-          style={{backgroundColor: '#E5C2F9', fontFamily: 'Verdana'}}
+          // title="Create Your User Profile!"
+          style={{backgroundColor: '#FFF6EE', fontFamily: 'Verdana', width: '350px'}}
       >
       {/* <h2>Create Your User Profile!</h2> */}
         <label>
-          <p>First name:</p>
+          <p style={{marginLeft: '40px'}}>First name:</p>
           <input
             value={firstName}
-            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', paddingRight: '30px'}}
+            style={{borderRadius: '100px', paddingTop: '5px', marginLeft: '40px', paddingBottom: '5px', paddingRight: '30px'}}
             type="text"
             onChange={(e) => setFirstName(e.target.value)}
           />
         </label>
         <label>
-          <p style={{marginTop: '20px'}}>Last name:</p>
+          <p style={{marginTop: '20px', marginLeft: '40px'}}>Last name:</p>
           <input
             value={lastName}
-            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', paddingRight: '30px'}}
+            style={{borderRadius: '100px', paddingTop: '5px', marginLeft: '40px', paddingBottom: '5px', paddingRight: '30px'}}
             type="text"
             onChange={(e) => setLastName(e.target.value)}
           />
         </label>
         <label>
-          <p style={{marginTop: '20px'}}>Email details:</p>
+          <p style={{marginTop: '20px', marginLeft: '40px'}}>Email details:</p>
           <input
             value={emailDetails}
-            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', paddingRight: '30px'}}
+            style={{borderRadius: '100px', paddingTop: '5px', marginLeft: '40px', paddingBottom: '5px', paddingRight: '30px'}}
             type="text"
             onChange={(e) => setEmailDetails(e.target.value)}
           />
         </label>
         <label>
-          <p style={{marginTop: '20px'}}>Phone details:</p>
+          <p style={{marginTop: '20px', marginLeft: '40px'}}>Phone details:</p>
           <input
             value={phoneDetails}
-            style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', paddingRight: '30px'}}
+            style={{borderRadius: '100px', paddingTop: '5px', marginLeft: '40px', paddingBottom: '5px', paddingRight: '30px'}}
             type="text"
             onChange={(e) => setPhoneDetails(e.target.value)}
           />
@@ -116,7 +121,7 @@ const Profile = () => {
       </Card>
       <div >
           <Button 
-             style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginLeft: '90px', marginTop: '30px'}}
+             style={{borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px', marginLeft: '120px', marginTop: '30px'}}
              type ="default"
             onClick={handleSubmit}
           >
@@ -126,9 +131,11 @@ const Profile = () => {
           <UserIcon decorative={false} title="Description of icon" /> */}
         </div>
       </div>
-    }
+      </Col>
+      </Row>
+    )}
 
-    <Footer style={{ textAlign: 'center', backgroundColor: '#E5C2F9', width: '400px'}}>
+    <Footer style={{ textAlign: 'center', backgroundColor: '#FFF6EE', width: '400px'}}>
     “I really think a champion is defined not by their wins but by how they can recover when they fall.” – Serena Williams
     </Footer>
     </div>

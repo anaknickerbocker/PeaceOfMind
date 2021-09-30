@@ -23,7 +23,7 @@ export default function Reminders() {
           <Col className="gutter-row">
             <Card
                 title="Take a leisure Walk"
-                style={{backgroundColor: '#E5C2F9'}}
+                style={{backgroundColor: '#FFF6EE'}}
                 extra={<Switch defaultChecked checkedChildren="Alert on" unCheckedChildren="Alert off"/>}
               >
               <Steps
@@ -44,7 +44,7 @@ export default function Reminders() {
           <Col className="gutter-row">
           <Card
               title="A minute of deep breathing"
-              style={{backgroundColor: '#E5C2F9'}}
+              style={{backgroundColor: '#FFF6EE'}}
               extra={<Switch defaultChecked checkedChildren="Alert on" unCheckedChildren="Alert off"/>}
             >
             <p style={{marginTop: "20px", fontSize: 'large'}}></p>
@@ -65,7 +65,7 @@ export default function Reminders() {
           <Col className="gutter-row">
             <Card
                 title="Go for a walk"
-                style={{backgroundColor: '#E5C2F9'}}
+                style={{backgroundColor: '#FFF6EE'}}
                 extra={<Switch defaultChecked checkedChildren="Alert on" unCheckedChildren="Alert off"/>}
               >
               <p style={{marginTop: "20px", fontSize: 'large'}}></p>
@@ -87,7 +87,7 @@ export default function Reminders() {
           <Col className="gutter-row">
           <Card
               title="Eat vegetables"
-              style={{backgroundColor: '#E5C2F9'}}
+              style={{backgroundColor: '#FFF6EE'}}
               extra={<Switch defaultChecked checkedChildren="Alert on" unCheckedChildren="Alert off"/>}
             >
             <Steps
@@ -108,7 +108,7 @@ export default function Reminders() {
           <Col className="gutter-row">
           <Card
               title="Call a family member"
-              style={{backgroundColor: '#E5C2F9'}}
+              style={{backgroundColor: '#FFF6EE'}}
               extra={<Switch defaultChecked checkedChildren="Alert on" unCheckedChildren="Alert off"/>}
             >
             <p style={{marginTop: "20px", fontSize: 'large'}}></p>
@@ -131,7 +131,7 @@ export default function Reminders() {
           <Col className="gutter-row">
             <Card
                 title="Text a friend"
-                style={{backgroundColor: '#E5C2F9'}}
+                style={{backgroundColor: '#FFF6EE'}}
                 extra={<Switch defaultChecked checkedChildren="Alert on" unCheckedChildren="Alert off"/>}
               >
               <p style={{marginTop: "20px", fontSize: 'large'}}></p>
@@ -149,7 +149,7 @@ export default function Reminders() {
           </Col>
         </Row>
         <Divider orientation="left"></Divider>
-        <Footer style={{ textAlign: 'center', backgroundColor: '#E5C2F9', width: '400px'}}>
+        <Footer style={{ textAlign: 'center', backgroundColor: '#FFF6EE', width: '400px'}}>
           “Think like a queen. A queen if not afraid to fail. Failure is another stepping stone to greatness.” – Oprah Winfrey
         </Footer>
     </div>
