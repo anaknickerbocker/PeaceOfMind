@@ -51,9 +51,6 @@ const Profile = () => {
 
   return (
     <div className="profile-wrapper">
-       <div className='image' style={{marginBottom: '30px', marginTop: '30px'}}>
-        <img src={require('./pomlogo.png')} width="100px" height="50px" alt="logo"/>
-      </div>
     {profileCreated && (
       <Row>
         <Col className="gutter-row">
@@ -79,7 +76,7 @@ const Profile = () => {
     {!profileCreated && (
             <Row>
             <Col className="gutter-row">
-              <Divider orientation='left'>Create Your User Profile</Divider>
+              <Divider>Create Your User Profile</Divider>
     <div>
       <Card
           // title="Create Your User Profile!"
