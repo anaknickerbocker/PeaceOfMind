@@ -207,18 +207,10 @@ export default class DataService {
   async getAlertsDueNow() {
     return this.prisma.alerts.findMany({
       where: {
-        AND: [
-          {
-            alertDue: {
-              gte: new Date().toISOString(),
-            },
-          },
-          {
-            alertDue: {
-              lt: add(new Date(), { seconds: 60 }).toISOString(),
-            },
-          },
-        ],
+        alertDue: {
+          gte: new Date(),
+          lt: add(new Date(), { seconds: 60 }),
+        },
       },
       orderBy: [{ alertDue: 'desc' }],
     });
