@@ -25,7 +25,8 @@ tasks.post('/', async (req: Request, res: Response) => {
 tasks.get('/', async (req: Request, res: Response) => {
   try {
     const result = await TasksService.getAllTasksForUser(
-      Number(req.query.userId)
+      Number(req.query.userId),
+      Boolean(req.query.alerts)
     );
     res.json(result);
   } catch (e) {
@@ -58,6 +59,18 @@ tasks.patch('/:taskId', async (req: Request, res: Response) => {
       Number(req.params.taskId),
       changes
     );
+    res.json(result);
+  } catch (e) {
+    console.error(e);
+    res.status(404);
+  }
+});
+
+tasks.patch('/:taskId/complete', async (req: Request, res: Response) => {
+  try {
+    const result = await TasksService.updateTask(Number(req.params.taskId), {
+      complete: true,
+    });
     res.json(result);
   } catch (e) {
     console.error(e);

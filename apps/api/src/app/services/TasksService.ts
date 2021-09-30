@@ -22,8 +22,8 @@ export default class TasksService {
     );
   }
 
-  static getAllTasksForUser(userId: number) {
-    return this.dataService.getAllTasksForUser(userId);
+  static getAllTasksForUser(userId: number, withAlerts: boolean) {
+    return this.dataService.getAllTasksForUser(userId, withAlerts);
   }
 
   static getTask(taskId: number) {
