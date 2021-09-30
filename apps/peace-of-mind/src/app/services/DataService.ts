@@ -26,7 +26,7 @@ export default class DataService {
     const body = {
       userId,
       description: formData.taskDescription,
-      taskDateTime: formData.taskDateTime,
+      taskDateTime: formData.taskDueDate,
       complete: formData.complete,
       recurring: false,
       alerts,
