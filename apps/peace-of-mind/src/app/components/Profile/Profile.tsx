@@ -102,7 +102,7 @@ const Profile = () => {
           />
         </label>
         <label>
-          <p style={{marginTop: '20px', marginLeft: '40px'}}>Email details:</p>
+          <p style={{marginTop: '20px', marginLeft: '40px'}}>Email:</p>
           <input
             value={emailDetails}
             style={{borderRadius: '100px', paddingTop: '5px', marginLeft: '40px', paddingBottom: '5px', paddingRight: '30px'}}
@@ -111,7 +111,7 @@ const Profile = () => {
           />
         </label>
         <label>
-          <p style={{marginTop: '20px', marginLeft: '40px'}}>Phone details:</p>
+          <p style={{marginTop: '20px', marginLeft: '40px'}}>Phone:</p>
           <input
             value={phoneDetails}
             style={{borderRadius: '100px', paddingTop: '5px', marginLeft: '40px', paddingBottom: '5px', paddingRight: '30px'}}
