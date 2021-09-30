@@ -6,8 +6,8 @@ const alerts = express.Router();
 alerts.post('/', async (req: Request, res: Response) => {
   try {
     const result = await AlertsService.createAlert(
-      req?.body?.userId || '',
-      req?.body?.taskId || '',
+      Number(req?.query?.userId) || undefined,
+      Number(req?.query?.taskId) || undefined,
       req?.body?.alertDue || '',
       req?.body?.alertType || '',
       req?.body?.alertDestination || '',
@@ -22,7 +22,9 @@ alerts.post('/', async (req: Request, res: Response) => {
 
 alerts.get('/', async (req: Request, res: Response) => {
   try {
-    const result = await AlertsService.getAllAlertsForTask(req.body.taskId);
+    const result = await AlertsService.getAllAlertsForTask(
+      Number(req.query.taskId)
+    );
     res.json(result);
   } catch (e) {
     console.error(e);
@@ -32,7 +34,7 @@ alerts.get('/', async (req: Request, res: Response) => {
 
 alerts.get('/:alertId', async (req: Request, res: Response) => {
   try {
-    const result = await AlertsService.getAlert(parseInt(req.params.alertId));
+    const result = await AlertsService.getAlert(Number(req.params.alertId));
     res.json(result);
   } catch (e) {
     console.error(e);
@@ -49,7 +51,7 @@ alerts.patch('/:alertId', async (req: Request, res: Response) => {
       description: req.body.description || '',
     };
     const result = await AlertsService.updateAlert(
-      parseInt(req.params.alertId),
+      Number(req.params.alertId),
       changes
     );
     res.json(result);
@@ -61,9 +63,7 @@ alerts.patch('/:alertId', async (req: Request, res: Response) => {
 
 alerts.delete('/:alertId', async (req: Request, res: Response) => {
   try {
-    const result = await AlertsService.deleteAlert(
-      parseInt(req.params.alertId)
-    );
+    const result = await AlertsService.deleteAlert(Number(req.params.alertId));
     res.json(result);
   } catch (e) {
     console.error(e);

@@ -6,9 +6,9 @@ const alertHistories = express.Router();
 alertHistories.post('/', async (req: Request, res: Response) => {
   try {
     const result = await AlertHistoriesService.createAlertHistory(
-      req?.body?.userId || '',
-      req?.body?.taskId || '',
-      req?.body?.alertId || '',
+      Number(req?.query?.userId) || undefined,
+      Number(req?.query?.taskId) || undefined,
+      Number(req?.query?.alertId) || undefined,
       req?.body?.alertType || '',
       req?.body?.alertDestination || '',
       req?.body?.description || ''
@@ -23,7 +23,7 @@ alertHistories.post('/', async (req: Request, res: Response) => {
 alertHistories.get('/', async (req: Request, res: Response) => {
   try {
     const result = await AlertHistoriesService.getAllAlertHistoriesForAlert(
-      req.body.alertId
+      Number(req.query.alertId)
     );
     res.json(result);
   } catch (e) {
@@ -35,7 +35,7 @@ alertHistories.get('/', async (req: Request, res: Response) => {
 alertHistories.get('/:alertHistoryId', async (req: Request, res: Response) => {
   try {
     const result = await AlertHistoriesService.getAlertHistory(
-      parseInt(req.params.alertHistoryId)
+      Number(req.params.alertHistoryId)
     );
     res.json(result);
   } catch (e) {
@@ -54,7 +54,7 @@ alertHistories.patch(
         description: req?.body?.description || '',
       };
       const result = await AlertHistoriesService.updateAlertHistory(
-        parseInt(req.params.alertHistoryId),
+        Number(req.params.alertHistoryId),
         changes
       );
       res.json(result);
@@ -70,7 +70,7 @@ alertHistories.delete(
   async (req: Request, res: Response) => {
     try {
       const result = await AlertHistoriesService.deleteAlertHistory(
-        parseInt(req.params.alertHistoryId)
+        Number(req.params.alertHistoryId)
       );
       res.json(result);
     } catch (e) {
