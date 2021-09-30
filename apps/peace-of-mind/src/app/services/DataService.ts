@@ -1,4 +1,4 @@
-import { AlertData, FormData } from '../components/CreateTasks/CreateTasks';
+import { FormData } from '../components/CreateTasks/CreateTasks';
 
 export default class DataService {
   static getUser = (userId: number) => {
@@ -42,30 +42,6 @@ export default class DataService {
 
   static getAlerts = (userId: number, taskId: number) => {
     return fetch(`/api/alerts?userId=${userId}&taskId=${taskId}`);
-  };
-
-  static createAlert = async (
-    userId: number,
-    taskId: number,
-    alert: AlertData,
-    alertDestination: string,
-    description: string
-  ) => {
-    const body = {
-      userId,
-      taskId,
-      alertDue: alert.alertDue,
-      alertType: alert.alertType,
-      alertDestination,
-      description,
-    };
-    return fetch(`/api/alerts?userId=${userId}&taskId=${taskId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
   };
 
   static markTaskAsComplete = async (userId: number, taskId: number) => {

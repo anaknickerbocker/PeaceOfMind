@@ -3,17 +3,14 @@ import AppContext from '../context/AppContext';
 import './CreateTasks.css';
 import { TaskList } from '../TaskList/TaskList';
 import DataService from '../../services/DataService';
-import { add, formatISO } from 'date-fns';
-import { Task } from '@peace-of-mind/api-interfaces';
+import { add } from 'date-fns';
+import { Task, User } from '@peace-of-mind/api-interfaces';
 import { BellOutlined, PlusOutlined } from '@ant-design/icons';
-import { Card, Layout, Row, Col, Divider, Button, Input, Select } from 'antd';
+import { Button, Card, Col, Divider, Input, Layout, Row } from 'antd';
 import 'antd/dist/antd.css';
 import { DatePicker, formatReturnDate } from '@twilio-paste/core/date-picker';
-import { TimePicker, formatReturnTime } from '@twilio-paste/core/time-picker';
-import { HelpText, Label} from '@twilio-paste/core';
-import { Box } from '@twilio-paste/core';
-import { Image } from 'antd';
-import "antd/dist/antd.css";
+import { formatReturnTime, TimePicker } from '@twilio-paste/core/time-picker';
+import { Box, Label } from '@twilio-paste/core';
 
 export interface AlertData {
   reminderNumber: string;
@@ -33,6 +30,7 @@ export interface FormData {
 const { Footer } = Layout;
 
 const CreateTasks = () => {
+  const [user, setUser] = React.useState<User>();
   const userId = 1;
   const [reloadTasks, setReloadTasks] = React.useState(true);
   const [initialPage, setInitialPage] = React.useState(true);
@@ -58,6 +56,20 @@ const CreateTasks = () => {
     useContext(AppContext);
 
   React.useEffect(() => {
+    DataService.getUser(1) // hardcoded as Ana
+      .then((res) => res.json())
+      .then((res) => {
+        setUser({
+          userId: res.userId,
+          name: res.name,
+          sms: res.sms,
+          voice: res.voice,
+          email: res.email,
+        });
+      });
+  }, []);
+
+  React.useEffect(() => {
     if (reloadTasks) {
       DataService.getAllTasks(1)
         .then((res) => res.json())
@@ -69,7 +81,7 @@ const CreateTasks = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setInitialPage(true);
-    if (formData) {
+    if (formData && user) {
       const dueDate = Date.parse(
         `${formData.taskDueDate} ${formData.taskDueTime}`
       );
@@ -97,12 +109,12 @@ const CreateTasks = () => {
             break;
         }
         return {
-          userId,
+          userId: user.userId,
           alertDue: add(new Date(dueDate), {
             seconds: secondsToAdd,
           }).toISOString(),
           alertType: alert.alertType,
-          alertDestination: 'ana.knickerbocker@gmail.com', // Ana's email
+          alertDestination: user[alert.alertType as keyof User] as string,
           description: formData.taskDescription,
         };
       });
@@ -164,25 +176,25 @@ const CreateTasks = () => {
   return (
     <div className="task-wrapper">
       {initialPage && (
-      <Row>
-        <Col className="gutter-row">
-        <Divider>Create A New Task</Divider>        
-        <div style={{ backgroundColor: '#FFF6EE', width: '350px'}}>
-          <Button
-            style={{
-              borderRadius: '100px',
-              marginLeft: '130px',
-              paddingTop: '5px',
-              paddingBottom: '5px',
-            }}
-            type="default"
-            onClick={addTask}
-          >
-            Add Task
-          </Button>
-          </div>
-        </Col>
-      </Row>
+        <Row>
+          <Col className="gutter-row">
+            <Divider>Create A New Task</Divider>
+            <div style={{ backgroundColor: '#FFF6EE', width: '350px' }}>
+              <Button
+                style={{
+                  borderRadius: '100px',
+                  marginLeft: '130px',
+                  paddingTop: '5px',
+                  paddingBottom: '5px',
+                }}
+                type="default"
+                onClick={addTask}
+              >
+                Add Task
+              </Button>
+            </div>
+          </Col>
+        </Row>
       )}
       {initialPage && (
         <Row>
@@ -191,91 +203,103 @@ const CreateTasks = () => {
             <Card style={{ backgroundColor: '#FFF6EE', width: '350px' }}>
               <TaskList tasks={tasks} setTasks={setTasks} />
             </Card>
-          </Col>  
+          </Col>
         </Row>
       )}
       {formData && !initialPage && (
         <form>
-        <Row>
-          <Col className="gutter-row">
-          <Divider >Create A New Task</Divider>
-          <Card style={{ backgroundColor: '#FFF6EE', width: '350px'  }}>
-            <div className="input">
-              <Label htmlFor="taskDescription" required>
-                Enter Task Description:
-
-              <Input
-                value={formData.taskDescription}
-                type="text"
-                id="taskDescription"
-                name="taskDescription"
-                style={{
-                  borderRadius: '100px',
-                  paddingTop: '5px',
-                  paddingBottom: '5px',
-                  paddingRight: '100px',
-                }}
-                onChange={(e) =>
-                  setFormData({ ...formData, taskDescription: e.target.value })
-                }
-              />
-              </Label>
-              </div>
-              <div style={{ marginTop: '30px'}}>
-              <Label htmlFor="taskDueDate" required>
-                  Select Task Due Date:
-                </Label>
-              <Box
-                display="inline-block"
-                padding="space40"
-                style={{backgroundColor: 'white', borderRadius: '100px', paddingTop: '5px', paddingBottom: '5px'}}
-              >
-
-                <DatePicker
-                  aria-describedby="taskDueDate"
-                  id="taskDueDate"
-                  name="taskDueDate"
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      taskDueDate: formatReturnDate(e.target.value, 'P'),
-                    })
-                  }
-                  required
-                />
-              </Box>
-              </div>
-              <div style={{ marginTop: '30px'}}>
-              <Label htmlFor="taskDueTime" required>
-                  Select Start time:
-                </Label>
-              <Box
-                display="inline-block"
-                padding="space40"
-                style={{backgroundColor: 'white', borderRadius: '100px', paddingLeft: '30px', paddingTop: '5px', paddingBottom: '5px'}}
-              >
-                <TimePicker
-                  aria-describedby="taskDueTime"
-                  id="taskDueTime"
-                  name="taskDueTime"
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      taskDueTime: formatReturnTime(e.target.value, 'p'),
-                    })
-                  }
-                  required
-                />
-              </Box>
-            </div>
-          </Card>
-          <Divider>Create Task Alerts</Divider>
-          </Col>
-        </Row>
+          <Row>
+            <Col className="gutter-row">
+              <Divider>Create A New Task</Divider>
+              <Card style={{ backgroundColor: '#FFF6EE', width: '350px' }}>
+                <div className="input">
+                  <Label htmlFor="taskDescription" required>
+                    Enter Task Description:
+                    <Input
+                      value={formData.taskDescription}
+                      type="text"
+                      id="taskDescription"
+                      name="taskDescription"
+                      style={{
+                        borderRadius: '100px',
+                        paddingTop: '5px',
+                        paddingBottom: '5px',
+                        paddingRight: '100px',
+                      }}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          taskDescription: e.target.value,
+                        })
+                      }
+                    />
+                  </Label>
+                </div>
+                <div style={{ marginTop: '30px' }}>
+                  <Label htmlFor="taskDueDate" required>
+                    Select Task Due Date:
+                  </Label>
+                  <Box
+                    display="inline-block"
+                    padding="space40"
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: '100px',
+                      paddingTop: '5px',
+                      paddingBottom: '5px',
+                    }}
+                  >
+                    <DatePicker
+                      aria-describedby="taskDueDate"
+                      id="taskDueDate"
+                      name="taskDueDate"
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          taskDueDate: formatReturnDate(e.target.value, 'P'),
+                        })
+                      }
+                      required
+                    />
+                  </Box>
+                </div>
+                <div style={{ marginTop: '30px' }}>
+                  <Label htmlFor="taskDueTime" required>
+                    Select Start time:
+                  </Label>
+                  <Box
+                    display="inline-block"
+                    padding="space40"
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: '100px',
+                      paddingLeft: '30px',
+                      paddingTop: '5px',
+                      paddingBottom: '5px',
+                    }}
+                  >
+                    <TimePicker
+                      aria-describedby="taskDueTime"
+                      id="taskDueTime"
+                      name="taskDueTime"
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          taskDueTime: formatReturnTime(e.target.value, 'p'),
+                        })
+                      }
+                      required
+                    />
+                  </Box>
+                </div>
+              </Card>
+              <Divider>Create Task Alerts</Divider>
+            </Col>
+          </Row>
           <Card style={{ backgroundColor: '#FFF6EE', width: '350px' }}>
-          <p>Enter Notification Interval and Method:</p>
+            <p>Enter Notification Interval and Method:</p>
             {formData?.alerts?.map((row, index) => (
-            <div  className="input">
+              <div className="input">
                 <div className="input-style">
                   <Input
                     value={row.reminderNumber}
@@ -286,7 +310,7 @@ const CreateTasks = () => {
                       paddingTop: '2px',
                       paddingBottom: '2px',
                       paddingRight: '2px',
-                      marginLeft: '10px'
+                      marginLeft: '10px',
                     }}
                     type="text"
                     id={`reminderNumber-${index}`}
@@ -315,38 +339,37 @@ const CreateTasks = () => {
                   <option value="Days">Days</option>
                 </select>
                 <br />
-                  <BellOutlined
-                    style={{
-                      backgroundColor: 'white',
-                      borderRadius: '100px',
-                      marginLeft: '20px',
-                      marginRight: '10px',
-                      paddingTop: '8px',
-                      paddingBottom: '8px',
-                      paddingRight: '8px',
-                      paddingLeft: '8px',
-                    }}
-                  />
-                  <select
-                    value={row.alertType}
-                    style={{
-                      paddingTop: '2px',
-                      paddingBottom: '2px',
-                      paddingRight: '30px',
-                      borderRadius: '100px',
-                    }}
-                    name="alertType"
-                    id={`alertType-${index}`}
-                    key={`alertType-${index}`}
-                    onChange={(e) => changeHandler(e, `alertType`, index)}
-                  >
-                    <option value="selectOne">---</option>
-                    <option value="sms">SMS</option>
-                    <option value="email">Email</option>{' '}
-                    <option value="voice">Voice</option>
-                  </select>
-          </div>
-              
+                <BellOutlined
+                  style={{
+                    backgroundColor: 'white',
+                    borderRadius: '100px',
+                    marginLeft: '20px',
+                    marginRight: '10px',
+                    paddingTop: '8px',
+                    paddingBottom: '8px',
+                    paddingRight: '8px',
+                    paddingLeft: '8px',
+                  }}
+                />
+                <select
+                  value={row.alertType}
+                  style={{
+                    paddingTop: '2px',
+                    paddingBottom: '2px',
+                    paddingRight: '30px',
+                    borderRadius: '100px',
+                  }}
+                  name="alertType"
+                  id={`alertType-${index}`}
+                  key={`alertType-${index}`}
+                  onChange={(e) => changeHandler(e, `alertType`, index)}
+                >
+                  <option value="selectOne">---</option>
+                  <option value="sms">SMS</option>
+                  <option value="email">Email</option>{' '}
+                  <option value="voice">Voice</option>
+                </select>
+              </div>
             ))}
             <Button
               type="default"
@@ -359,8 +382,7 @@ const CreateTasks = () => {
               }}
               icon={<PlusOutlined />}
               onClick={(e) => addAlert(e)}
-            >
-            </Button>
+            />
           </Card>
           <div className="submit">
             <Button
