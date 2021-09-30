@@ -33,6 +33,7 @@ const { Footer } = Layout;
 const CreateTasks = () => {
   const userId = 1;
   const [reloadTasks, setReloadTasks] = React.useState(true);
+  const [initialPage, setInitialPage] = React.useState(true);
   const [tasks, setTasks] = React.useState<Array<Task>>([]);
   const initialFormData: FormData = {
     taskDescription: '',
@@ -65,6 +66,7 @@ const CreateTasks = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    setInitialPage(true);
     if (formData) {
       const dueDate = Date.parse(
         `${formData.taskDueDate} ${formData.taskDueTime}`
@@ -112,6 +114,7 @@ const CreateTasks = () => {
 
   const addTask = () => {
     setFormData(initialFormData);
+    setInitialPage(false);
   };
 
   const removeTask = (index: number) => {
@@ -158,7 +161,7 @@ const CreateTasks = () => {
 
   return (
     <div className="task-wrapper">
-      {!formData && (
+      {initialPage && (
       <Row>
         <Col className="gutter-row">
         <Divider orientation='left'>Create A New Task</Divider>
@@ -179,7 +182,7 @@ const CreateTasks = () => {
         </Col>
       </Row>
       )}
-      {!formData && (
+      {initialPage && (
         <Row>
           <Col className="gutter-row">
             <Divider orientation='left' >Current Tasks</Divider>
@@ -189,7 +192,7 @@ const CreateTasks = () => {
           </Col>  
         </Row>
       )}
-      {formData && (
+      {formData && !initialPage && (
         <form>
         <Row>
           <Col className="gutter-row">
