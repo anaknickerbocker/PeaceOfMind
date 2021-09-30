@@ -166,11 +166,7 @@ const CreateTasks = () => {
       {initialPage && (
       <Row>
         <Col className="gutter-row">
-        {/* <Divider orientation='left'>Create A New Task</Divider> */}
-        <div className='image' style={{marginBottom: '30px', marginTop: '30px'}}>
-        <img src={require('./pomlogo.png')} width="100px" height="50px" alt="logo"/>
-      </div>
-        
+        <Divider>Create A New Task</Divider>        
         <div style={{ backgroundColor: '#FFF6EE', width: '350px'}}>
           <Button
             style={{
@@ -191,7 +187,7 @@ const CreateTasks = () => {
       {initialPage && (
         <Row>
           <Col className="gutter-row">
-            <Divider orientation='left' >Current Tasks</Divider>
+            <Divider>Current Tasks</Divider>
             <Card style={{ backgroundColor: '#FFF6EE', width: '350px' }}>
               <TaskList tasks={tasks} setTasks={setTasks} />
             </Card>
@@ -202,7 +198,7 @@ const CreateTasks = () => {
         <form>
         <Row>
           <Col className="gutter-row">
-          {/* <Divider orientation='left' >Create A New Task</Divider> */}
+          <Divider >Create A New Task</Divider>
           <Card style={{ backgroundColor: '#FFF6EE', width: '350px'  }}>
             <div className="input">
               <Label htmlFor="taskDescription" required>
@@ -273,7 +269,7 @@ const CreateTasks = () => {
               </Box>
             </div>
           </Card>
-          <Divider orientation='left' >Create Task Alerts</Divider>
+          <Divider>Create Task Alerts</Divider>
           </Col>
         </Row>
           <Card style={{ backgroundColor: '#FFF6EE', width: '350px' }}>

@@ -39,6 +39,9 @@ const App = () => {
       <GlobalState>
         <BrowserRouter>
           <HeaderLink />
+          <div className='image' style={{ marginTop: '10px'}}>
+            <img src={require('./pomlogo.png')} width="150px" height="70px" alt="logo"/>
+          </div>
           <Switch>
             <Route exact path="/">
               <CreateTasks />
