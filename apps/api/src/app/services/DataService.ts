@@ -1,5 +1,5 @@
 import { Alert, AlertHistory, Task, User } from '@peace-of-mind/api-interfaces';
-import { PrismaClient } from '@prisma/client';
+import { alerts, PrismaClient } from '@prisma/client';
 import { add } from 'date-fns';
 
 export default class DataService {
@@ -167,21 +167,27 @@ export default class DataService {
   }
 
   deleteAlert(alertId: number) {
-    return this.prisma.alerts.delete({ where: { alertId } });
+    this.prisma.alerts
+      .delete({ where: { alertId } })
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err.message));
   }
 
   // Alert Histories
-  createAlertHistory(alert: Alert | Partial<Alert>) {
-    return this.prisma.alertHistories.create({
-      data: {
-        taskId: alert.taskId,
-        userId: alert.userId,
-        alertId: alert.alertId,
-        alertSent: new Date().toISOString(),
-        alertType: alert.alertType,
-        alertDestination: alert.alertDestination,
-      },
-    });
+  createAlertHistory(alert: Alert | Partial<Alert> | alerts) {
+    this.prisma.alertHistories
+      .create({
+        data: {
+          taskId: alert.taskId,
+          userId: alert.userId,
+          alertId: alert.alertId,
+          alertSent: new Date().toISOString(),
+          alertType: alert.alertType,
+          alertDestination: alert.alertDestination,
+        },
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err.message));
   }
 
   getAllAlertHistoriesForUser(userId: number) {
